@@ -47,6 +47,14 @@ if (headerColors) {
   }
 }
 
+const mobileTextColorClass = (customStyles.backgroundColor || '').toLowerCase() === '#fcb800'
+  ? 'text-black'
+  : customHeaderConfig.textColor;
+
+const mobileHeaderColorConfig = (customStyles.backgroundColor || '').toLowerCase() === '#fcb800'
+  ? { ...customHeaderConfig, textColor: 'text-black', hoverTextColor: 'hover:opacity-80', hoverBackgroundColor: 'hover:bg-black/5' }
+  : customHeaderConfig;
+
 ---
 
 <header 
@@ -62,7 +70,7 @@ if (headerColors) {
   
   <!-- Navbar principal - ocupa el 100% del ancho -->
   <div 
-    class={`w-full bg-yellow`}
+    class={`w-full ${customHeaderConfig.backgroundColor}`}
     style={customStyles.backgroundColor ? `background-color: ${customStyles.backgroundColor}` : ''}
   >
     <!-- Navbar de Desktop (solo en pantallas lg y superiores) -->
@@ -72,7 +80,7 @@ if (headerColors) {
 
     <!-- Navegación Móvil -->
     <nav 
-      class={`mobile-nav lg:hidden w-full py-2 px-4 flex justify-between items-center ${customHeaderConfig.backgroundColor}`}
+      class={`mobile-nav lg:hidden w-full py-2 px-4 flex justify-between items-center ${mobileTextColorClass}`}
       style={customStyles.backgroundColor ? `background-color: ${customStyles.backgroundColor}` : ''}
     >
       <!-- Logo para Móvil -->
@@ -80,7 +88,7 @@ if (headerColors) {
         <a href={`/${currentLang}/`} class="flex-shrink-0">
           <LocalizedImage
             src={logosData.principal.url}
-            alt={logosData.principal.alt || "Ziba's Logo"}
+            alt={logosData.principal.alt || "Cappy Logo"}
             class="h-12 w-auto object-contain"
             loading="eager"
             width="120"
@@ -92,7 +100,7 @@ if (headerColors) {
       
       <!-- Mobile Menu Button -->
       <div class="menu-button-container">
-        <MobileMenuButton currentLang={currentLang} headerColorConfig={customHeaderConfig} />
+        <MobileMenuButton currentLang={currentLang} headerColorConfig={mobileHeaderColorConfig} />
       </div>
     </nav>
   </div>

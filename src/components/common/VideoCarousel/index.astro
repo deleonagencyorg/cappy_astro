@@ -1,14 +1,28 @@
 ---
 import { Image } from 'astro:assets';
+import HeroBanner from '../HeroBanner.astro';
+import LazyImage from '../LazyImage.astro';
 
 interface SlideItem {
-  desktop: string;
-  mobile: string;
-  alt: string;
+  type: 'image' | 'video' | 'html';
+  desktop?: string;
+  mobile?: string;
+  alt?: string;
   title?: string;
   subtitle?: string;
   description?: string;
   link?: string;
+  html?: {
+    backgroundImage: string;
+    backgroundImageMobile?: string;
+    image: string;
+    imageMobile?: string;
+    title: string;
+    subtitle?: string;
+    description?: string;
+    buttonText?: string;
+    buttonUrl?: string;
+  };
 }
 
 interface Props {
@@ -18,6 +32,9 @@ interface Props {
   overlayOpacity?: string;
   textColor?: string;
   showOverlay?: boolean;
+  width?: string;
+  borderRadius?: string;
+  containerClass?: string;
 }
 
 const {
@@ -26,90 +43,114 @@ const {
   mobileHeight = "300px",
   overlayOpacity = "50",
   textColor = "text-white",
-  showOverlay = true
+  showOverlay = true,
+  width = "100%",
+  borderRadius = "0",
+  containerClass = ""
 } = Astro.props;
 
-// Identificar el primer slide para precargar
 const firstSlide = slides[0] || {};
-const isFirstSlideVideo = firstSlide.desktop?.toLowerCase().endsWith('.mp4') || 
-                         firstSlide.desktop?.toLowerCase().endsWith('.webm');
 ---
 
-<div class="video-carousel-container">
+<div class="video-carousel-container" style={`width: ${width}; margin: 0 auto; --desktop-height: ${height}; --mobile-height: ${mobileHeight};`}>
   <!-- Swiper container -->
-  <div class="swiper-container video-carousel">
+  <div class="swiper-container video-carousel" style={`border-radius: ${borderRadius}; overflow: hidden;`}>
     <div class="swiper-wrapper">
       {slides.map((slide, index) => {
-        const isVideo = slide.desktop?.toLowerCase().endsWith('.mp4') || 
-                       slide.desktop?.toLowerCase().endsWith('.webm');
         const slideId = `slide-${index}`;
         
         return (
-          <div class="swiper-slide" id={slideId}>
-            <div class="slide-content" style={`height: ${height};`}>
-              <!-- Fallback image that shows while video loads or if video fails -->
-              <div class="fallback-image">
-                <img 
-                  src={isVideo ? slide.desktop.replace(/\.(mp4|webm)$/i, '.jpg') : slide.desktop} 
-                  alt={slide.alt || "Slide background"} 
-                  width="1920" 
-                  height="1080"
-                  loading={index === 0 ? "eager" : "lazy"}
+          <div class="swiper-slide" id={slideId} data-slide-type={slide.type}>
+            <div class="slide-content">
+              {slide.type === 'html' && slide.html ? (
+                <HeroBanner 
+                  backgroundImage={slide.html.backgroundImage}
+                  backgroundImageMobile={slide.html.backgroundImageMobile}
+                  image={slide.html.image}
+                  imageMobile={slide.html.imageMobile}
+                  title={slide.html.title}
+                  subtitle={slide.html.subtitle}
+                  description={slide.html.description}
+                  buttonText={slide.html.buttonText}
+                  buttonUrl={slide.html.buttonUrl}
                 />
-              </div>
-              
-              {isVideo ? (
-                <!-- Video background -->
-                <div class="video-container">
-                  <video 
-                    autoplay 
-                    muted 
-                    loop 
-                    playsinline
-                    class="slide-video"
-                    data-slide-id={slideId}
-                    preload={index === 0 ? "auto" : "metadata"}
-                  >
-                    <source src={slide.desktop} type={slide.desktop.toLowerCase().endsWith('.webm') ? 'video/webm' : 'video/mp4'}>
-                    <!-- If the browser doesn't support video, the fallback image will remain visible -->
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-              ) : (
-                <!-- Image background for non-video slides -->
-                <div class="image-container">
-                  <img 
-                    src={slide.desktop} 
-                    alt={slide.alt || "Slide background"} 
-                    class="slide-image desktop-image"
-                    loading={index === 0 ? "eager" : "lazy"}
-                  />
-                  <img 
-                    src={slide.mobile} 
-                    alt={slide.alt || "Slide background"} 
-                    class="slide-image mobile-image"
-                    loading={index === 0 ? "eager" : "lazy"}
-                  />
-                </div>
-              )}
-              
-              <!-- Overlay with text (conditional) -->
-              {showOverlay && (slide.title || slide.subtitle) && (
-                <div class={`overlay bg-black bg-opacity-${overlayOpacity}`}>
-                  <div class="text-content">
-                    {slide.title && <h1 class={`slide-title ${textColor}`}>{slide.title}</h1>}
-                    {slide.subtitle && <p class={`slide-subtitle ${textColor}`}>{slide.subtitle}</p>}
-                    {slide.link && (
-                      <a href={slide.link} class="slide-link">
-                        <span>Ver más</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                          <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                      </a>
-                    )}
+              ) : slide.type === 'video' ? (
+                <>
+                  <div class="fallback-image">
+                    <LazyImage 
+                      src={slide.desktop?.replace(/\.(mp4|webm)$/i, '.jpg') || ''} 
+                      alt={slide.alt || "Slide background"} 
+                      width="1920" 
+                      height="1080"
+                      loading={index === 0 ? "eager" : "lazy"}
+                    />
                   </div>
-                </div>
+                  <div class="video-container">
+                    <video 
+                      autoplay 
+                      muted 
+                      loop 
+                      playsinline
+                      class="slide-video"
+                      data-slide-id={slideId}
+                      preload={index === 0 ? "auto" : "metadata"}
+                    >
+                      <source src={slide.desktop} type={slide.desktop?.toLowerCase().endsWith('.webm') ? 'video/webm' : 'video/mp4'}>
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                  {showOverlay && (slide.title || slide.subtitle) && (
+                    <div class={`overlay bg-black bg-opacity-${overlayOpacity}`}>
+                      <div class="text-content">
+                        {slide.title && <h1 class={`slide-title ${textColor}`}>{slide.title}</h1>}
+                        {slide.subtitle && <p class={`slide-subtitle ${textColor}`}>{slide.subtitle}</p>}
+                        {slide.link && (
+                          <a href={slide.link} class="slide-link">
+                            <span>Ver más</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <line x1="5" y1="12" x2="19" y2="12"></line>
+                              <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div class="image-container">
+                    <LazyImage 
+                      src={slide.desktop || ''} 
+                      alt={slide.alt || "Slide background"} 
+                      class="slide-image desktop-image"
+                      loading={index === 0 ? "eager" : "lazy"}
+                    />
+                    <LazyImage 
+                      src={slide.mobile || slide.desktop || ''} 
+                      alt={slide.alt || "Slide background"} 
+                      class="slide-image mobile-image"
+                      loading={index === 0 ? "eager" : "lazy"}
+                    />
+                  </div>
+                  {showOverlay && (slide.title || slide.subtitle) && (
+                    <div class={`overlay bg-black bg-opacity-${overlayOpacity}`}>
+                      <div class="text-content">
+                        {slide.title && <h1 class={`slide-title ${textColor}`}>{slide.title}</h1>}
+                        {slide.subtitle && <p class={`slide-subtitle ${textColor}`}>{slide.subtitle}</p>}
+                        {slide.link && (
+                          <a href={slide.link} class="slide-link">
+                            <span>Ver más</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <line x1="5" y1="12" x2="19" y2="12"></line>
+                              <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -144,14 +185,24 @@ const isFirstSlideVideo = firstSlide.desktop?.toLowerCase().endsWith('.mp4') ||
   
   .video-carousel-container {
     position: relative;
-    width: 100%;
-    overflow: hidden;
+    overflow: visible;
   }
   
   .slide-content {
     position: relative;
     width: 100%;
     overflow: hidden;
+    height: var(--desktop-height);
+  }
+  
+  .swiper-container {
+    overflow: hidden;
+  }
+  
+  @media (max-width: 767px) {
+    .slide-content {
+      height: var(--mobile-height) !important;
+    }
   }
   
   .fallback-image {
@@ -276,11 +327,19 @@ const isFirstSlideVideo = firstSlide.desktop?.toLowerCase().endsWith('.mp4') ||
     }
   }
   
-  @media (max-width: 767px) {
-    .slide-content {
-      height: 300px !important;
+  .html-slide-active .slide-content {
+    animation: htmlSlideFadeIn 260ms ease both;
+  }
+
+  @keyframes htmlSlideFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
     }
   }
+  
 </style>
 
 <script>
@@ -289,98 +348,134 @@ const isFirstSlideVideo = firstSlide.desktop?.toLowerCase().endsWith('.mp4') ||
   import 'swiper/css';
   import 'swiper/css/navigation';
   import 'swiper/css/pagination';
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Swiper
-    const swiper = new Swiper('.video-carousel', {
-      modules: [Navigation, Pagination, Autoplay],
-      slidesPerView: 1,
-      spaceBetween: 0,
-      loop: true,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-    });
-    
-    // Handle video playback
-    const videos = document.querySelectorAll('.slide-video');
-    const fallbackImages = document.querySelectorAll('.fallback-image');
-    
-    // Function to play video
-    function playVideo(video) {
-      if (!video) return;
-      
-      const playPromise = video.play();
-      
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            // Video playback started successfully
-            const slideId = video.getAttribute('data-slide-id');
-            const fallbackImage = document.querySelector(`#${slideId} .fallback-image`);
-            if (fallbackImage) {
-              fallbackImage.style.opacity = '0';
-            }
-          })
-          .catch(error => {
-            // Auto-play was prevented
-            console.warn('Video playback was prevented:', error);
-          });
-      }
-    }
-    
-    // Function to pause all videos
-    function pauseAllVideos() {
-      videos.forEach(video => {
-        video.pause();
-      });
-    }
-    
-    // Play video on active slide
-    swiper.on('slideChange', () => {
-      pauseAllVideos();
-      
-      const activeSlide = swiper.slides[swiper.activeIndex];
-      const activeVideo = activeSlide?.querySelector('.slide-video');
-      
-      if (activeVideo) {
-        setTimeout(() => playVideo(activeVideo), 300);
+
+  let videoCarouselInstances: Swiper[] = [];
+
+  function cleanupVideoCarousels() {
+    videoCarouselInstances.forEach((instance) => {
+      try {
+        instance?.destroy?.(true, true);
+      } catch (e) {
       }
     });
-    
-    // Play initial video
-    const initialVideo = swiper.slides[swiper.activeIndex]?.querySelector('.slide-video');
-    if (initialVideo) {
-      playVideo(initialVideo);
-    }
-    
-    // Handle video loading and fallback
-    videos.forEach((video) => {
-      const slideId = video.getAttribute('data-slide-id');
-      const fallbackImage = document.querySelector(`#${slideId} .fallback-image`);
-      
-      // Hide fallback image once video can play
-      video.addEventListener('canplay', () => {
-        if (fallbackImage) {
-          fallbackImage.style.opacity = '0';
-        }
+    videoCarouselInstances = [];
+  }
+
+  function initializeVideoCarousels() {
+    cleanupVideoCarousels();
+
+    const containers = document.querySelectorAll('.swiper-container.video-carousel');
+    containers.forEach((containerEl) => {
+      if (!(containerEl instanceof HTMLElement)) return;
+      const container = containerEl;
+
+      const nextEl = container.querySelector('.swiper-button-next');
+      const prevEl = container.querySelector('.swiper-button-prev');
+      const paginationEl = container.querySelector('.swiper-pagination');
+
+      const swiper = new Swiper(container, {
+        modules: [Navigation, Pagination, Autoplay],
+        slidesPerView: 1,
+        spaceBetween: 0,
+        loop: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+        navigation: {
+          nextEl: nextEl instanceof HTMLElement ? nextEl : undefined,
+          prevEl: prevEl instanceof HTMLElement ? prevEl : undefined,
+        },
+        pagination: {
+          el: paginationEl instanceof HTMLElement ? paginationEl : undefined,
+          clickable: true,
+        },
       });
-      
-      // Show fallback image if video errors
-      video.addEventListener('error', () => {
-        if (fallbackImage) {
-          fallbackImage.style.opacity = '1';
+
+      videoCarouselInstances.push(swiper);
+
+      function updateHtmlSlideAnimation() {
+        const allSlides = swiper.slides || [];
+        allSlides.forEach((slideEl) => {
+          if (slideEl.classList) {
+            slideEl.classList.remove('html-slide-active');
+          }
+        });
+
+        const activeSlide = swiper.slides[swiper.activeIndex];
+        if (activeSlide && activeSlide.getAttribute('data-slide-type') === 'html') {
+          activeSlide.classList.add('html-slide-active');
         }
+      }
+
+      function playVideo(video) {
+        if (!video) return;
+
+        const playPromise = video.play();
+
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              const slideId = video.getAttribute('data-slide-id');
+              const fallbackImage = container.querySelector(`#${slideId} .fallback-image`);
+              if (fallbackImage) {
+                fallbackImage.style.opacity = '0';
+              }
+            })
+            .catch(() => {
+            });
+        }
+      }
+
+      function pauseAllVideos() {
+        const videos = container.querySelectorAll('.slide-video');
+        videos.forEach((video) => {
+          video.pause();
+        });
+      }
+
+      swiper.on('slideChange', () => {
+        pauseAllVideos();
+
+        const activeSlide = swiper.slides[swiper.activeIndex];
+        const activeVideo = activeSlide?.querySelector('.slide-video');
+
+        if (activeVideo) {
+          setTimeout(() => playVideo(activeVideo), 300);
+        }
+
+        updateHtmlSlideAnimation();
+      });
+
+      const initialVideo = swiper.slides[swiper.activeIndex]?.querySelector('.slide-video');
+      if (initialVideo) {
+        playVideo(initialVideo);
+      }
+
+      updateHtmlSlideAnimation();
+
+      const videos = container.querySelectorAll('.slide-video');
+      videos.forEach((video) => {
+        const slideId = video.getAttribute('data-slide-id');
+        const fallbackImage = container.querySelector(`#${slideId} .fallback-image`);
+
+        video.addEventListener('canplay', () => {
+          if (fallbackImage) {
+            fallbackImage.style.opacity = '0';
+          }
+        });
+
+        video.addEventListener('error', () => {
+          if (fallbackImage) {
+            fallbackImage.style.opacity = '1';
+          }
+        });
       });
     });
-  });
+  }
+
+  document.addEventListener('DOMContentLoaded', initializeVideoCarousels);
+  document.addEventListener('astro:page-load', initializeVideoCarousels);
+  document.addEventListener('astro:after-swap', initializeVideoCarousels);
+  document.addEventListener('astro:before-swap', cleanupVideoCarousels);
 </script>

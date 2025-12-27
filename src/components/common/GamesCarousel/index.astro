@@ -1,104 +1,71 @@
 ---
-// Componente de carrusel de productos con Swiper
-interface Product {
+// Componente de carrusel de juegos con Swiper
+interface Game {
   id: string;
-  slug: string;
-  name: string;
+  title: string;
+  description: string;
   image: string;
-  imageMobile?: string;
-  background_image?: string;
-  background_color?: string;
-  text_color?: string;
+  url: string;
 }
 
 export interface Props {
-  products: Product[];
+  games: Game[];
   className?: string;
   autoplay?: boolean;
   speed?: number;
   slidesPerView?: number;
   spaceBetween?: number;
   loop?: boolean;
-  color?: string;
-  cardBackgroundImage?: string;
-  paddingTop?: string;
-  mobilePaddingTop?: string;
 }
 
 const {
-  products = [],
+  games = [],
   className = '',
   autoplay = true,
   speed = 5000,
   slidesPerView = 3,
   spaceBetween = 30,
   loop = true,
-  color = '#F08C00',
-  cardBackgroundImage = '',
-  paddingTop = '120px',
-  mobilePaddingTop = '80px'
 } = Astro.props;
-
-const DEFAULT_CARD_BACKGROUND_IMAGE = 'https://snack.yummiespromociones.com/snacksyummies/cappy-grande2.webp';
 
 const currentLang = Astro.url.pathname.split('/')[1] === 'es' ? 'es' : 'en';
 
-// Textos según idioma
-const texts = {
-  es: {
-    viewMore: 'Ver más'
-  },
-  en: {
-    viewMore: 'View more'
-  }
-};
-
-const currentTexts = texts[currentLang as keyof typeof texts];
-
-// Asegurarse de que products es un array
-const productsItems = Array.isArray(products) ? products : [];
+// Asegurarse de que games es un array
+const gamesItems = Array.isArray(games) ? games : [];
 
 import LazyImage from '../LazyImage.astro';
 ---
 
-<div
-  class={`products-carousel ${className}`}
-  data-autoplay={autoplay}
-  data-speed={speed}
-  style={{
-    '--pc-padding-top': paddingTop,
-    '--pc-padding-top-mobile': mobilePaddingTop,
-  }}
->
+<div class={`games-carousel ${className}`} data-autoplay={autoplay} data-speed={speed}>
   
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      {productsItems.map((product) => (
+      {gamesItems.map((game) => (
         <div class="swiper-slide">
           <a 
-            href={`/${currentLang}/${currentLang === 'es' ? 'productos' : 'products'}/${product.slug}`}
-            class="product-card-cta"
+            href={game.url}
+            class="game-card-cta"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <div class="product-card">
-              <div
-                class="product-background"
-                style={{
-                  backgroundImage: `url(${cardBackgroundImage || product.background_image || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                }}
-              ></div>
-              <div class="product-image-container">
+            <div class="game-card">
+              <div class="game-background"></div>
+              <div class="game-image-container">
                 <LazyImage 
-                  src={product.imageMobile || product.image} 
-                  alt={product.name}
-                  class="product-image"
+                  src={game.image} 
+                  alt={game.title}
+                  class="game-image"
                   width={300}
                   height={400}
                 />
               </div>
             </div>
-            <p class="product-title">
-              {product.name}
-            </p>
+            <div class="game-info">
+              <h3 class="game-title">{game.title}</h3>
+              {game.description && (
+                <p class="game-description">{game.description}</p>
+              )}
+            </div>
           </a>
         </div>
       ))}
@@ -113,24 +80,24 @@ import LazyImage from '../LazyImage.astro';
 </div>
 
 <style>
-  .products-carousel {
+  .games-carousel {
     width: 100%;
     padding: 1rem 0;
     overflow: visible;
-    padding-top: var(--pc-padding-top, 120px);
+    padding-top: 120px;
   }
 
   .swiper-container {
     position: relative;
     width: 100%;
     padding: 0 40px;
-    overflow: visible; /* Cambiar a visible para permitir overflow */
+    overflow: visible;
   }
 
   .swiper-wrapper {
     display: flex;
     align-items: stretch;
-    overflow: visible; /* Asegurar que el wrapper también tenga overflow visible */
+    overflow: visible;
   }
 
   .swiper-slide {
@@ -142,15 +109,20 @@ import LazyImage from '../LazyImage.astro';
     overflow: visible;
   }
 
-  .product-card-cta {
+  .game-card-cta {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.75rem;
     text-decoration: none;
+    transition: transform 0.2s ease;
   }
 
-  .product-card {
+  .game-card-cta:hover {
+    transform: translateY(-4px);
+  }
+
+  .game-card {
     position: relative;
     width: 240px;
     aspect-ratio: 3 / 4;
@@ -159,77 +131,98 @@ import LazyImage from '../LazyImage.astro';
     justify-content: center;
   }
 
-  .product-background {
+  .game-background {
     position: absolute;
     inset: 12%;
     border-radius: 32px;
-    background-color: #f5d000; /* fallback */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: #f5d000;
   }
 
-  .product-image-container {
+  .game-image-container {
     position: relative;
     z-index: 2;
   }
 
-  .product-image-container .product-image {
+  .game-image-container .game-image {
     width: 220px;
     height: auto;
     object-fit: contain;
     display: block;
   }
 
-  .product-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #004AB2; /* azul de Cappy */
-    text-align: left;
+  .game-info {
+    text-align: center;
     width: 100%;
     max-width: 240px;
   }
 
+  .game-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #004AB2;
+    margin-bottom: 0.25rem;
+  }
+
+  .game-description {
+    font-size: 0.85rem;
+    color: #333;
+    line-height: 1.3;
+  }
+
   /* Responsive */
   @media (max-width: 768px) {
-    .products-carousel {
-      padding-top: var(--pc-padding-top-mobile, 100px);
+    .games-carousel {
+      padding-top: 100px;
     }
     
     .swiper-container {
       padding: 0 24px;
     }
 
-    .product-card {
+    .game-card {
       width: 210px;
     }
 
-    .product-title {
+    .game-info {
       max-width: 210px;
-      font-size: 0.9rem;
+    }
+
+    .game-title {
+      font-size: 0.95rem;
+    }
+
+    .game-description {
+      font-size: 0.8rem;
     }
   }
 
   @media (max-width: 480px) {
-    .products-carousel {
-      padding-top: var(--pc-padding-top-mobile, 80px);
+    .games-carousel {
+      padding-top: 80px;
     }
     
     .swiper-container {
       padding: 0 16px;
     }
 
-    .product-card {
+    .game-card {
       width: 190px;
     }
 
-    .product-image-container .product-image {
+    .game-image-container .game-image {
       width: 180px;
     }
 
-    .product-title {
+    .game-info {
       max-width: 190px;
-      font-size: 0.85rem;
+    }
+
+    .game-title {
+      font-size: 0.9rem;
+    }
+
+    .game-description {
+      font-size: 0.75rem;
     }
   }
 </style>
@@ -240,7 +233,7 @@ import LazyImage from '../LazyImage.astro';
   import 'swiper/css';
   import 'swiper/css/navigation';
 
-  interface ProductsCarouselOptions {
+  interface GamesCarouselOptions {
     autoplay?: boolean;
     speed?: number;
     slidesPerView?: number;
@@ -248,12 +241,12 @@ import LazyImage from '../LazyImage.astro';
     loop?: boolean;
   }
 
-  class ProductsCarousel {
+  class GamesCarousel {
     private container: HTMLElement;
     private swiper: Swiper | null = null;
-    private options: ProductsCarouselOptions;
+    private options: GamesCarouselOptions;
 
-    constructor(container: HTMLElement, options: ProductsCarouselOptions = {}) {
+    constructor(container: HTMLElement, options: GamesCarouselOptions = {}) {
       this.container = container;
       this.options = options;
       this.init();
@@ -263,15 +256,6 @@ import LazyImage from '../LazyImage.astro';
       const swiperContainer = this.container.querySelector('.swiper-container') as HTMLElement;
       
       if (!swiperContainer) return;
-
-      // Add event listeners to prevent swiper from handling link clicks
-      const productLinks = swiperContainer.querySelectorAll('a[data-no-swipe]');
-      productLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          // Stop propagation to prevent Swiper from handling the click
-          e.stopPropagation();
-        });
-      });
 
       this.swiper = new Swiper(swiperContainer, {
         modules: [Navigation, Autoplay],
@@ -300,16 +284,6 @@ import LazyImage from '../LazyImage.astro';
             spaceBetween: this.options.spaceBetween || 30,
           },
         },
-        // Prevent swiper from handling clicks on links with data-no-animation
-        preventClicksPropagation: true,
-        preventClicks: false,
-        noSwiping: true,
-        noSwipingClass: 'swiper-no-swiping',
-      });
-
-      // Add swiper-no-swiping class to all links with data-no-swipe attribute
-      productLinks.forEach(link => {
-        link.classList.add('swiper-no-swiping');
       });
     }
 
@@ -322,7 +296,7 @@ import LazyImage from '../LazyImage.astro';
   }
 
   // Variable global para almacenar instancias
-  let carouselInstances: ProductsCarousel[] = [];
+  let carouselInstances: GamesCarousel[] = [];
 
   // Función para limpiar instancias existentes
   function cleanupCarousels() {
@@ -334,10 +308,10 @@ import LazyImage from '../LazyImage.astro';
   function initializeCarousels() {
     cleanupCarousels();
     
-    const carousels = document.querySelectorAll('.products-carousel');
+    const carousels = document.querySelectorAll('.games-carousel');
     carousels.forEach((element: Element) => {
       if (element instanceof HTMLElement) {
-        const instance = new ProductsCarousel(element, {
+        const instance = new GamesCarousel(element, {
           autoplay: element.dataset.autoplay !== 'false',
           speed: parseInt(element.dataset.speed || '5000', 10),
           slidesPerView: 3,
@@ -356,4 +330,4 @@ import LazyImage from '../LazyImage.astro';
   document.addEventListener('astro:after-swap', initializeCarousels);
   // Limpiar antes del swap de Astro
   document.addEventListener('astro:before-swap', cleanupCarousels);
-</script> 
+</script>

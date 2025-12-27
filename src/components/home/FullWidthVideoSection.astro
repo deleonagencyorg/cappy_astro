@@ -1,0 +1,86 @@
+---
+export interface Props {
+  videoUrl?: string;
+  posterUrl?: string;
+}
+
+const { 
+  videoUrl = "https://snack.yummiespromociones.com/SnacksyummiesAssets/videocappy.mp4",
+  posterUrl = "https://snack.yummiespromociones.com/SnacksyummiesAssets/preview-video-cappy.webp"
+} = Astro.props;
+---
+
+<section class="w-full relative overflow-hidden bg-black">
+  <div class="w-full">
+    <video 
+      id="fullwidth-video"
+      class="w-full h-auto object-cover"
+      muted
+      loop
+      playsinline
+      autoplay
+      preload="metadata"
+      poster={posterUrl}
+    >
+      <source src={videoUrl} type="video/mp4">
+      Tu navegador no soporta el elemento de video.
+    </video>
+  </div>
+</section>
+
+<script>
+  // Intersection Observer para autoplay cuando el video entra en viewport
+  function initVideoAutoplay() {
+    const video = document.getElementById('fullwidth-video') as HTMLVideoElement | null;
+    
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Video está visible, reproducir
+            video.play().catch((error: unknown) => {
+              console.log('Autoplay prevented:', error);
+            });
+          } else {
+            // Video no está visible, pausar
+            video.pause();
+          }
+        });
+      },
+      {
+        threshold: 0.5, // Se activa cuando el 50% del video es visible
+      }
+    );
+
+    observer.observe(video);
+  }
+
+  // Inicializar cuando el DOM esté listo
+  if (typeof window !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initVideoAutoplay);
+    } else {
+      initVideoAutoplay();
+    }
+  }
+
+  // Reinicializar en navegación de Astro
+  document.addEventListener('astro:page-load', initVideoAutoplay);
+</script>
+
+<style>
+  video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  @media (max-width: 767px) {
+    video {
+      width: 100%;
+      height: auto;
+    }
+  }
+</style>

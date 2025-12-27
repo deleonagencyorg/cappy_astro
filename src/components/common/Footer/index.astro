@@ -1,11 +1,9 @@
 ---
 // src/components/common/Footer/index.astro
 import { t, type Locale } from '../../../i18n/i18n';
-import { logos } from '../../../config/assets';
 import './styles.css';
 import Skeleton from './Skeleton.astro';
 import LazyImage from '../LazyImage.astro';
-import { span } from 'framer-motion/m';
 
 export interface Props {
   currentLang: Locale;
@@ -14,161 +12,81 @@ export interface Props {
 
 const { currentLang, loading = false } = Astro.props;
 
-// Obtener textos del footer desde los archivos de traducción
-const mainText = t('footer.main_text', { namespace: 'common', locale: currentLang });
-const description = t('footer.description', { namespace: 'common', locale: currentLang });
-const followUs = t('footer.follow_us', { namespace: 'common', locale: currentLang });
-const contactUs = t('footer.contact_us', { namespace: 'common', locale: currentLang });
-const choose = t('footer.choose', { namespace: 'common', locale: currentLang });
-const instagramText = t('footer.instagram_text', { namespace: 'common', locale: currentLang });
-const facebookText = t('footer.facebook_text', { namespace: 'common', locale: currentLang });
-const email = t('footer.email', { namespace: 'common', locale: currentLang });
-const copyrightText = t('footer.copyright', { namespace: 'common', locale: currentLang });
+const menuItems = (t('menu_items', { namespace: 'common', locale: currentLang }) || []) as any[];
+const year = new Date().getFullYear();
 
+const headline = currentLang === 'es'
+  ? 'Si necesitas diversión, es Cappy'
+  : 'If you need fun, it\'s Cappy';
 
-// Social media URLs
-const instagramUrl = t('social_media.instagram.url', { namespace: 'common', locale: currentLang });
-const facebookUrl = t('social_media.facebook.url', { namespace: 'common', locale: currentLang });
-const instagramIconUrl = t('social_media.instagram.iconUrl', { namespace: 'common', locale: currentLang });
-const facebookIconUrl = t('social_media.facebook.iconUrl', { namespace: 'common', locale: currentLang });
+// Imagen del león (mock). Si deseas otra URL, dime y la cambio.
+const lionImageUrl = 'https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy leon41.webp';
 
-// Obtener el logo específico de Zibas desde brands.json
-const zibasLogo = 'https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-logo-3.webp';
+const supportTitle = currentLang === 'es' ? 'Soporte' : 'Support';
+const homeTitle = currentLang === 'es' ? 'Inicio' : 'Home';
+
+const privacyText = currentLang === 'es' ? 'Política de privacidad' : 'Privacy Policy';
+const termsText = currentLang === 'es' ? 'Términos de uso' : 'Terms of Use';
+const cookiesText = currentLang === 'es' ? 'Política de cookies' : 'Cookie Policy';
+
+const privacyUrl = t('footer.privacy_policy_url', { namespace: 'common', locale: currentLang }) || (currentLang === 'es' ? '/es/politica-privacidad' : '/en/privacy-policy');
+const termsUrl = currentLang === 'es' ? '/es/terminos-y-condiciones' : '/en/terms-and-conditions';
+const cookiesUrl = currentLang === 'es' ? '/es/politica-cookies' : '/en/cookie-policy';
 ---
 
 {loading ? (
   <Skeleton />
 ) : (
-  <footer class="bg-secondary text-white relative overflow-hidden z-10">
-    <div class="container mx-auto px-6 py-8 md:py-8 flex md:flex-row flex-col items-center justify-center md:gap-20 lg:gap-80">
-      <div class="w-full md:w-1/3 mb-8 md:mb-0 flex justify-start items-start flex-col">
-        <h3 class="font-title text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-            {mainText}
-          </h3>
-          <p class="font-sans italic text-sm md:text-base leading-relaxed w-100%">
-            {description}
-          </p>
-      </div>
-      <div class="w-full md:w-1/3 flex justify-start items-start flex-col">
-       <div class="md:flex flex-row items-center hidden ">
-        <h3 class="font-title text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight mr-4 ">
-            {choose}
-          </h3>
-        <a href={`/${currentLang}/`} >
-            <LazyImage 
-              src={logos.principal.url} 
-              alt={logos.principal.alt || 'Zibas Logo'} 
-              class="h-16 md:h-20 lg:h-24 w-auto -mt-4"
-            />
-        </a>
-       </div> 
-       <div class="flex justify-start items-start flex-row md:space-x-4 space-x-24">
-        <div class="text-center lg:text-right">
-            <h3 class="font-title text-lg md:text-xl font-bold mb-3">
-              {followUs}
+  <footer class="bg-primary text-black relative overflow-hidden z-10">
+    <div class="container mx-auto px-4 md:px-6 py-10">
+      <div class="rounded-[32px] bg-tertiary px-6 md:px-10 py-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <!-- Content (first on mobile) -->
+          <div class="order-1 md:order-2">
+            <h3 class="font-title text-4xl md:text-6xl font-bold text-[#0b2f87] leading-tight">
+              {headline}
             </h3>
-            <div class="flex flex-col space-y-1">
+
+            <div class="mt-10 grid grid-cols-2 gap-10">
               <div>
-                <a 
-                href={instagramUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                class="font-sans text-sm md:text-base hover:underline transition-all duration-200 hover:opacity-80 flex items-center justify-center lg:justify-end space-x-2"
-              >                
-                <LazyImage 
-                  src={instagramIconUrl} 
-                  alt={instagramText} 
-                    class="h-6 md:h-2 lg:h-8 w-auto"
-                    color="white"
-                />
-                <span>{instagramText}</span>
-              </a>
+                <h4 class="font-title text-2xl font-bold text-[#0b2f87]">{homeTitle}</h4>
+                <div class="mt-4 flex flex-col gap-2">
+                  {menuItems.map((item: any) => (
+                    <a href={item.href} class="font-sans text-base hover:opacity-80">
+                      {item.text}
+                    </a>
+                  ))}
+                </div>
               </div>
-              <div class="flex items-center justify-start space-x-2">
-              <a 
-                href={facebookUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                class="font-sans text-sm md:text-base hover:underline transition-all duration-200 hover:opacity-80 flex items-center justify-center lg:justify-end space-x-2"
-              >
-                <LazyImage 
-                  src={facebookIconUrl} 
-                  alt={facebookText} 
-                  color="white"
-                  class="h-6 md:h-2 lg:h-8 w-auto"
-                />
-                <span>{facebookText}</span>
-              </a>
+              <div>
+                <h4 class="font-title text-2xl font-bold text-[#0b2f87]">{supportTitle}</h4>
+                <div class="mt-4 flex flex-col gap-2">
+                  <a href={privacyUrl} class="font-sans text-base hover:opacity-80">{privacyText}</a>
+                  <a href={termsUrl} class="font-sans text-base hover:opacity-80">{termsText}</a>
+                  <a href={cookiesUrl} class="font-sans text-base hover:opacity-80">{cookiesText}</a>
+                </div>
               </div>
+            </div>
+
+            <div class="mt-10 text-center md:text-left font-sans text-sm text-black/80">
+              © {year} Cappy - {currentLang === 'es' ? 'Todos los derechos reservados' : 'All rights reserved'}
             </div>
           </div>
 
-          <!-- Contáctanos -->
-          <div class="text-start">
-            <h3 class="font-title text-lg md:text-xl font-bold mb-3">
-              {contactUs}
-            </h3>
-            <div class="flex flex-col space-y-1">
-              <a 
-                href={`mailto:${email}`}
-                class="font-sans text-sm md:text-base hover:underline transition-all duration-200 hover:opacity-80"
-              >
-                {email}
-              </a>
-            </div>
-          </div>
-       </div>
-      </div>
-     
-    </div>
-    <div class="w-full text-center container mx-auto px-6 py-4 flex items-center justify-center flex-col">
-        <div class="flex items-center md:space-x-16 lg:space-x-24 flex-col md:flex-row">
-          <div class="hidden md:block"><LazyImage src="https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-derecho 2.webp" alt="Ziba's papas" class="h-16 md:h-20 lg:h-24 w-auto -mt-4 transform rotate-180" /></div>
-          <div class="text-center text-2xl">{currentLang=='es' ? `Copyright ${new Date().getFullYear()} Zibas. Todos los derechos reservados.` : `Copyright ${new Date().getFullYear()} Zibas. All rights reserved.`}</div>
-          <div class="hidden md:block"><LazyImage src="https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-derecho 2.webp" alt="Ziba's papas" class="h-16 md:h-20 lg:h-32 w-auto -mt-4 " /></div>
-        </div>
-      <div class="hidden md:block"><LazyImage src="https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-derecho 2.webp" alt="Ziba's papas" class="h-16 md:h-20 lg:h-24 w-auto -mt-4 transform -rotate-45" /></div>
-    </div>
-    <!-- Chips decorativos (sin línea separadora superior) -->
-    <div class="w-full border-t-0 mt-0 pt-0">
-        <div class="container mx-auto">
-          <div class="text-center mb-4">
-            <h3 class="text-white  font-sans text-xl font-medium">DINANT - Contacto</h3>
-          </div>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 justify-items-center">
-            <!-- Guatemala -->
-            <div class="flex items-center space-x-2">
-              <span class="text-2xl" role="img" aria-label="Guatemala">🇬🇹</span>
-              <span>(+502) 2502-7050</span>
-            </div>
-            <!-- El Salvador -->
-            <div class="flex items-center space-x-2">
-              <span class="text-2xl" role="img" aria-label="El Salvador">🇸🇻</span>
-              <span>(+503) 2510-8300</span>
-            </div>
-            <!-- Costa Rica -->
-            <div class="flex items-center space-x-2">
-              <span class="text-2xl" role="img" aria-label="Costa Rica">🇨🇷</span>
-              <span>(+506) 2234-7259</span>
-            </div>
-            <!-- República Dominicana -->
-            <div class="flex items-center space-x-2">
-              <span class="text-2xl" role="img" aria-label="República Dominicana">🇩🇴</span>
-              <span>01 809-273 1042</span>
-            </div>
-            <!-- Nicaragua -->
-            <div class="flex items-center space-x-2">
-              <span class="text-2xl" role="img" aria-label="Nicaragua">🇳🇮</span>
-              <span>2275-3370</span>
-            </div>
-            <!-- Honduras -->
-            <div class="flex items-center space-x-2">
-              <span class="text-2xl" role="img" aria-label="Honduras">🇭🇳</span>
-              <span>(+505) 2255-7480</span>
-            </div>
+          <!-- Lion image (last on mobile) -->
+          <div class="order-2 md:order-1 flex justify-center md:justify-start">
+            <LazyImage
+              src={lionImageUrl}
+              alt="Cappy"
+              class="w-full  h-auto"
+              width={1040}
+              height={1040}
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
+    </div>
   </footer>
 )}
 

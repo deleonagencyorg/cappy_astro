@@ -1,0 +1,24 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import PromosView from '../../../views/Promos/index.astro';
+import { setLocale, type Locale, t } from '../../../i18n/i18n';
+
+export async function getStaticPaths() {
+  const locales = ['es', 'en'];
+  return locales.map((locale) => ({
+    params: { lang: locale },
+    props: { currentLang: locale as Locale }
+  }));
+}
+
+const { currentLang } = Astro.props as { currentLang: Locale };
+const { lang } = Astro.params as { lang: Locale };
+
+setLocale(lang as Locale);
+
+const promosMeta = t('meta', { namespace: 'promos', locale: currentLang }) || {};
+---
+
+<MainLayout title={promosMeta.title} description={promosMeta.description}>
+  <PromosView currentLang={currentLang} />
+</MainLayout>

@@ -1,55 +1,55 @@
 {
   "meta": {
     "home": {
-      "title": "Ziba's - Enjoy your Ziba's at any moment",
-      "description": "Your favorite potato chip flakes come with naturally authentic flavors for all tastes."
+      "title": "Cappy Snacks | Crispy Corn Extruded Snacks | Yummies",
+      "description": "Discover Cappy, crispy corn extruded snacks with intense flavors. Infladitos, Gorditos, and Tornitos with multiple flavor options. Dare to be different! Available in Central America."
     },
     "contact": {
-      "title": "Contact",
-      "description": "Contact us for more information about our products and promotions."
+      "title": "Contact Cappy | Get in Touch with Us | Yummies Snacks",
+      "description": "Questions about Cappy? Contact us by phone, email, or form. We're available Monday to Friday to help you. We want to hear from you!"
     },
     "recipes": {
       "title": "Recipes",
-      "description": "Discover delicious recipes with Ziba's. From traditional dishes to innovative creations."
+      "description": "Discover creative and delicious recipes with Cappy snacks. From chicken wings to desserts, get inspired with our best culinary combinations."
     },
     "news": {
       "title": "News",
-      "description": "Stay up to date with the latest news and events from Ziba's."
+      "description": "Stay up to date with the latest news and events from Cappy."
     },
     "products": {
-      "title": "Products",
-      "description": "Discover our complete line of Ziba's products. Authentic flavor for the whole family."
+      "title": "Cappy Products | Corn Snacks Infladitos, Gorditos, and Tornitos",
+      "description": "Explore the complete range of Cappy products: Cheese and Butter Infladitos, Intense Cheese Gorditos, Chile Toreado Tornitos and more flavors. Find your favorite."
     },
     "brands": {
       "title": "Our Snack Brands",
-      "description": "Discover Ziba's, Zambos, Ranchitas. Each brand with unique and authentic flavors that conquer Central America."
+      "description": "Discover Cappy, Zambos, Ranchitas. Each brand with unique and authentic flavors that conquer Central America."
     },
     "about_us": {
       "title": "About Us - History and Values",
-      "description": "Learn about the history of Ziba's, a leading snack company in Central America since 1990. Our mission, values and commitment to quality."
+      "description": "Learn about the history of Cappy, a leading snack company in Central America since 1990. Our mission, values and commitment to quality."
     },
     "yummiesone": {
-      "title": "Ziba's One",
-      "description": "Discover Ziba's One, our new exclusive platform for true snack lovers."
+      "title": "Cappy One",
+      "description": "Discover Cappy One, our new exclusive platform for true snack lovers."
     }
   },
   "social_media": {
    "facebook": {
       "name": "Facebook",
       "url": "https://www.facebook.com/zibaslatam",
-      "alt": "Facebook de Ziba's",
+      "alt": "Facebook de Cappy",
       "iconUrl": "https://snack.yummiespromociones.com/snacksyummies/facebook.svg"
     },
     "instagram": {
       "name": "Instagram",
       "url": "https://www.instagram.com/zibaslatam",
-      "alt": "Instagram de Ziba's",
+      "alt": "Instagram de Cappy",
       "iconUrl": "https://snack.yummiespromociones.com/snacksyummies/instagram.svg"
     },
     "tiktok": {
       "name": "TikTok",
       "url": "https://www.tiktok.com/@zibaslatam",
-      "alt": "TikTok de Ziba's",
+      "alt": "TikTok de Cappy",
       "iconUrl": "https://snack.yummiespromociones.com/snacksyummies/tiktok.svg"
     }
   },
@@ -67,24 +67,20 @@
     "slidermaskmobile": "https://snack.yummiespromociones.com/snacksyummies/bg-front-mobile_1_.webp",
     "slider": [
       {
-        "id": "slide2",
-        "desktop": "https://snack.yummiespromociones.com/zibas/banner.webp",
-        "mobile": "https://snack.yummiespromociones.com/zibas/banner-m.webp",
-        "alt": "Ziba's",
-        "title": "",
-        "description": "",
-        "link": "#"
-      },
-      {
         "id": "slide1",
-        "desktop": "https://snack.yummiespromociones.com/zibas/ZIBAS-360_TVC2.mp4",
-        "mobile": "https://snack.yummiespromociones.com/zibas/ZIBAS-360_TVC2.mp4",
-        "alt": "Ziba's",
-        "title": "",
-        "description": "",
-        "link": "#"
+        "type": "html",
+        "html": {
+          "backgroundImage": "https://snack.yummiespromociones.com/zibas/banner.webp",
+          "backgroundImageMobile": "https://snack.yummiespromociones.com/zibas/banner-m.webp",
+          "image": "https://snack.yummiespromociones.com/zibas/banner.webp",
+          "imageMobile": "https://snack.yummiespromociones.com/zibas/banner-m.webp",
+          "title": "live cappy,",
+          "subtitle": "unleash your spark",
+          "description": "Fun, color and a crunch of imagination with every Cappy.",
+          "buttonText": "Explore all products",
+          "buttonUrl": "/en/products"
+        }
       }
-     
     ]
   },
   "menu_labels": {
@@ -92,21 +88,20 @@
     "explore": "Explorar"
   },
   "menu_items": [
- 
+    {
+      "id": "home",
+      "text": "Home",
+      "href": "/en/"
+    },
     {
       "id": "products",
       "text": "Products",
-      "href": "/en/#products"
+      "href": "/en/products"
     },
     {
-      "id": "gallery",
-      "text": "Gallery",
-      "href": "/en/#gallery"
-    },
-    {
-      "id": "recipes",
-      "text": "Recipes",
-      "href": "/en/recipes"
+      "id": "promos",
+      "text": "Promotions",
+      "href": "/en/promos"
     },
     {
       "id": "contact",
@@ -124,8 +119,8 @@
   },
   "home": {
     "meta": {
-      "title": " Ziba's - Disfruta tus Ziba's en todo momento",
-      "description": "Tus hojuelas de papa frita favoritas llegan con sabores naturalmente auténticos para todos los gustos."
+      "title": " Cappy - Disfruta tus Cappy en todo momento",
+      "description": "Discover Cappy, crispy corn extruded snacks with intense flavors. Infladitos, Gorditos, and Tornitos with multiple flavor options. Dare to be different! Available in Central America."
     },
     "newsletter":{
       "placeholder":"email@email.com",
@@ -134,7 +129,7 @@
     "socialmedia":{
       "title":"Follow us",
       "tagtitle":"on social media",
-      "description":"Follow us on our social media - Snacks Yummies",
+      "description":"Follow us on our social media - Cappy",
       "newsletter":"Stay up to date with all our news and promotions",
       "instagramLinks":[
         {
@@ -154,27 +149,22 @@
   },
   "footer": {
     "main_text": "Unfiltered vibes.",
-    "description": "Live your life to the fullest, express what you feel, explore the world and see the best in you. Because today Ziba's going to be you! Enjoy your Ziba's at all times.",
+    "description": "Live your life to the fullest, express what you feel, explore the world and see the best in you. Because today Cappy going to be you! Enjoy your Cappy at all times.",
     "choose": "Choose",
     "follow_us": "Follow us",
     "contact_us": "Contact us",
     "instagram_text": "Instagram",
     "facebook_text": "Facebook",
     "email": "ayudacliente@zibas.com",
-    "copyright": "Copyright 2025. Ziba's. All rights reserved.",
+    "copyright": "Copyright 2025. Cappy. All rights reserved.",
     "privacy_policy_text": "Privacy Policy",
     "privacy_policy_url": "/es/politica-privacidad"
   },
   "messagetop":[
     {
       "id":"1",
-      "title":"😎 Welcome to Ziba's! If you're craving a snack, you're in the right place 🎉",
+      "title":"😎 Welcome to Cappy! If you're craving a snack, you're in the right place 🎉",
       "link":""
-    },
-    {
-      "id":"2",
-      "title":"🎨 Ziba's Creators: Join with your creativity and win prizes!",
-      "link":"/en/zibas-creators"
     }
   ],
   "form_validation": {
@@ -185,5 +175,14 @@
   },
   "subscribe": {
     "success": "Thank you for subscribing!"
-  }
+  },
+ "games": [
+    {
+      "id": "game-1",
+      "title": "Cappy Adventure",
+      "description": "Acompaña a Cappy en una aventura llena de diversión y snacks",
+      "image": "https://snack.yummiespromociones.com/games/cappy-adventure.webp",
+      "url": "https://yummiespromociones.com/cappy-game/"
+    }
+  ]
 }

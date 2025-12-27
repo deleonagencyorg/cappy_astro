@@ -17,28 +17,28 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#FD6600',
-        secondary: '#0167F7',
-        tertiary: '#FDE820',
+        primary: '#FFED00',
+        secondary: '#0036A0',
+        tertiary: '#FFDE00',
         cuaternary: '#FF4DFF',
         quinary: '#0167F7',
-        red: '#FC4238',
+        red: '#FF2727',
         white: '#FFFFFF',
         brown: '#5B3F2E',
-        blue: '#0167F7',
+        blue: '#0036A0',
         green: '#10b981',
         orange: '#FD6600',
-        yellow: '#FDE820',
+        yellow: '#FFED00',
         pink: '#FF4DFF',
         lemon: '#BEDE89',
         
     
       },
       fontFamily: {
-        sans: ['Rockeby regular', 'sans-serif'],
-        title: ['Rockeby black', 'serif'],
-        heading: ['Rockeby regular', 'sans-serif'],
-        text: ['Rockeby regular', 'sans-serif']
+        sans: ['TroisMille',, 'sans-serif'],
+        title: ['TroisMille Bold', 'TroisMille', 'serif'],
+        heading: ['TroisMille', 'sans-serif'],
+        text: ['TroisMille', 'sans-serif']
       },
       animation: {
         'spin-slow': 'spin 5s linear infinite',

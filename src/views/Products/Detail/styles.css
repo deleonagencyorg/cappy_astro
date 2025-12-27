@@ -6,7 +6,27 @@
     position: relative;
     z-index: 1;
   }
-  
+
+  .pd-anim {
+    animation: pd-fade-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: var(--pd-delay, 0ms);
+    will-change: transform, opacity;
+  }
+
+  .pd-anim-left {
+    animation-name: pd-fade-left;
+  }
+
+  .pd-anim-right {
+    animation-name: pd-fade-right;
+  }
+
+  .pd-delay-1 { --pd-delay: 80ms; }
+  .pd-delay-2 { --pd-delay: 160ms; }
+  .pd-delay-3 { --pd-delay: 240ms; }
+  .pd-delay-4 { --pd-delay: 320ms; }
+  .pd-delay-5 { --pd-delay: 400ms; }
+
   .product-gallery {
     margin-bottom: 2rem;
   }
@@ -37,5 +57,47 @@
   .stockists-section {
     margin-bottom: 2rem;
     clear: both;
+  }
+}
+
+@keyframes pd-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes pd-fade-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-18px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes pd-fade-right {
+  from {
+    opacity: 0;
+    transform: translate3d(18px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pd-anim,
+  .pd-anim-left,
+  .pd-anim-right {
+    animation: none !important;
+    transform: none !important;
   }
 }

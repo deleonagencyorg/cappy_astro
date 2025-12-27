@@ -1,6 +1,6 @@
 ---
-import { t, type Locale } from '../../i18n/i18n';
-import config from '../../i18n/config';
+import { t, type Locale } from '../i18n/i18n';
+import config from '../i18n/config';
 
 export interface Props {
   currentLang: Locale;
@@ -19,13 +19,15 @@ const socialMedia = t('social_media', { namespace: 'common', locale: currentLang
 // Default values
 const pageTitle = title || meta.home.title;
 const pageDescription = description || meta.home.description;
-const pageImage = imageUrl || 'https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-logo-3.webp';
-const pageUrl = canonicalUrl || `https://zibaspapas.com/${currentLang}`;
+const pageImage = imageUrl || 'https://www.cappysnacks.com/logo.png';
+const pageUrl = canonicalUrl || `https://www.cappysnacks.com/${currentLang}/`;
 
 // Social media URLs
 const facebookUrl = socialMedia?.facebook?.url || '';
 const instagramUrl = socialMedia?.instagram?.url || '';
 const twitterUrl = socialMedia?.twitter?.url || '';
+
+---
 
 <!-- Primary Meta Tags -->
 <meta charset="UTF-8" />
@@ -42,14 +44,14 @@ const twitterUrl = socialMedia?.twitter?.url || '';
 <meta property="og:description" content={pageDescription} />
 <meta property="og:image" content={pageImage} />
 <meta property="og:locale" content={currentLang} />
-{config.supportedLocales.map(lang => (
+{config.supportedLocales.map((lang: string) => (
   <meta property="og:locale:alternate" content={lang} />
 ))}
 
 <!-- Image Optimization -->
 <meta name="og:image:width" content="1200" />
 <meta name="og:image:height" content="630" />
-<meta name="og:image:alt" content="Snacks Yummies - ${title || 'Delicious snacks from Central America'}" />
+<meta name="og:image:alt" content="'Cappy' - ${title || 'Delicious snacks from Central America'}" />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -67,9 +69,10 @@ const twitterUrl = socialMedia?.twitter?.url || '';
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Ziba's",
-  "url": "https://zibaspapas.com",
-  "logo": "https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-logo-3.webp",
+  "name": "Cappy Snacks",
+  "alternateName": "Cappy Yummies",
+  "url": currentLang === 'es' ? "https://www.cappysnacks.com/es/" : "https://www.cappysnacks.com/en/",
+  "logo": "https://www.cappysnacks.com/logo.png",
   "sameAs": [
     socialMedia.facebook?.url,
     socialMedia.instagram?.url,
@@ -86,7 +89,7 @@ const twitterUrl = socialMedia?.twitter?.url || '';
       "@type": "ListItem",
       "position": 1,
       "name": currentLang === 'es' ? 'Inicio' : 'Home',
-      "item": `https://zibaspapas.com/${currentLang}`
+      "item": `https://www.cappysnacks.com/${currentLang}/`
     }
   ]
 })}></script>

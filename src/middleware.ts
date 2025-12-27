@@ -10,6 +10,9 @@ const routeMappings = {
   'yummiesone': { es: 'yummiesone', en: 'yummiesone' }
 };
 
+// Secciones que existen como rutas file-based (src/pages/...) pero no viven en routesConfig
+const staticSections = new Set(['promos']);
+
 export const onRequest = defineMiddleware(async ({ request, redirect }, next) => {
   const url = new URL(request.url);
   const pathSegments = url.pathname.split('/').filter(Boolean);
@@ -33,7 +36,7 @@ export const onRequest = defineMiddleware(async ({ request, redirect }, next) =>
   }
 
   // Verificar si la ruta existe en la configuración
-  const routeExists = findRouteBySlug(lang, section);
+  const routeExists = findRouteBySlug(lang, section) || staticSections.has(section);
   
   // Si la ruta no existe, redirigir al home
   if (!routeExists) {

@@ -1,0 +1,215 @@
+---
+import GamesCarousel from '../common/GamesCarousel/index.astro';
+import LazyImage from '../common/LazyImage.astro';
+
+export interface Props {
+  games?: any[];
+  title?: string;
+  subtitle?: string;
+  howToPlay?: {
+    title: string;
+    steps: string[];
+  };
+  ctaText?: string;
+  ctaUrl?: string;
+}
+
+const {
+  games = [],
+  title = "Diviertete con cappy",
+  subtitle = "¿Cómo participar?",
+  howToPlay = {
+    title: "¿Cómo participar?",
+    steps: [
+      "Juega",
+      "Toma captura de tu puntaje.",
+      "Comparte y comenta en nuestras redes tu experiencia"
+    ]
+  },
+  ctaText = "Jugar ahora mismo",
+  ctaUrl = "https://yummiespromociones.com/cappy-game/"
+} = Astro.props;
+
+const currentLang = Astro.url.pathname.split('/')[1] === 'es' ? 'es' : 'en';
+---
+
+<section class="w-full bg-yellow py-12 md:py-16">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-[50%_50%] gap-8 md:gap-12 items-center">
+      
+      <!-- Columna izquierda: Imagen del gameboy con carousel -->
+       <div class="relative flex justify-center">
+        <div class="gameboy-container gameboy-floating">
+          <!-- Imagen del gameboy -->
+          <LazyImage 
+            src="https://snack.yummiespromociones.com/SnacksyummiesAssets/game.webp" 
+            alt="Gameboy Cappy"
+            class="gameboy-image"
+          />
+          
+        </div>
+      </div>
+
+<style>
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .gameboy-floating {
+    animation: float 3s ease-in-out infinite;
+    margin: 0 auto;
+  }
+</style>
+
+      <!-- Columna derecha: Textos e información -->
+      <div class="space-y-6">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-blue uppercase">
+          {title}
+        </h2>
+        
+        <div class="space-y-4">
+          <h3 class="text-xl md:text-2xl font-bold text-blue">
+            {howToPlay.title}
+          </h3>
+          
+          <ul class="space-y-2">
+            {howToPlay.steps.map((step) => (
+              <li class="flex items-start gap-2 text-sm md:text-base text-blue">
+                <span class="text-blue font-bold">•</span>
+                <span>{step}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        
+        <div class="pt-4">
+          <a
+            id="game-cta-button"
+            href={games[0]?.url || ctaUrl}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-blue text-white font-semibold text-sm md:text-base shadow-md hover:shadow-lg transition-all duration-200"
+            data-games={JSON.stringify(games.map(g => ({ url: g.url, title: g.title })))}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            {ctaText}
+          </a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<style>
+  .gameboy-container {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+  }
+
+  .gameboy-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .gameboy-screen-overlay {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 62%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .gameboy-container {
+      max-width: 350px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .gameboy-container {
+      max-width: 300px;
+    }
+  }
+
+  /* Ocultar controles del carousel dentro del gameboy */
+  :global(.gameboy-carousel .carousel-controls) {
+    display: none !important;
+  }
+
+  :global(.gameboy-carousel .games-carousel) {
+    padding-top: 0 !important;
+  }
+</style>
+
+<script>
+  function syncGameButton() {
+    const ctaButton = document.getElementById('game-cta-button');
+    if (!ctaButton) return;
+
+    const gamesData = ctaButton.dataset.games;
+    if (!gamesData) return;
+
+    let games: { url: string; title: string }[] = [];
+    try {
+      games = JSON.parse(gamesData);
+    } catch (e) {
+      console.error('Error parsing games data:', e);
+      return;
+    }
+
+    // Buscar el swiper del carousel de juegos
+    const gameCarousel = document.querySelector('.gameboy-carousel .swiper-container');
+    if (!gameCarousel) return;
+
+    // Esperar a que Swiper esté inicializado
+    const checkSwiper = setInterval(() => {
+      const swiperInstance = (gameCarousel as any).swiper;
+      if (swiperInstance) {
+        clearInterval(checkSwiper);
+        
+        // Actualizar URL del botón cuando cambia el slide
+        swiperInstance.on('slideChange', () => {
+          const activeIndex = swiperInstance.realIndex;
+          const activeGame = games[activeIndex];
+          if (activeGame) {
+            ctaButton.setAttribute('href', activeGame.url);
+          }
+        });
+
+        // Establecer URL inicial
+        const initialIndex = swiperInstance.realIndex || 0;
+        const initialGame = games[initialIndex];
+        if (initialGame) {
+          ctaButton.setAttribute('href', initialGame.url);
+        }
+      }
+    }, 100);
+
+    // Timeout de seguridad para limpiar el intervalo
+    setTimeout(() => clearInterval(checkSwiper), 5000);
+  }
+
+  // Inicializar cuando el DOM esté listo
+  if (typeof window !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', syncGameButton);
+    } else {
+      syncGameButton();
+    }
+  }
+
+  // Reinicializar en navegación de Astro
+  document.addEventListener('astro:page-load', syncGameButton);
+</script>

@@ -1,0 +1,394 @@
+---
+import LazyImage from './LazyImage.astro';
+
+interface Props {
+  backgroundImage: string;
+  backgroundImageMobile?: string;
+  image: string;
+  imageMobile?: string;
+  title: string;
+  subtitle?: string;
+  description?: string;
+  buttonText?: string;
+  buttonUrl?: string;
+}
+
+const {
+  backgroundImage,
+  backgroundImageMobile,
+  image,
+  imageMobile,
+  title,
+  subtitle,
+  description,
+  buttonText,
+  buttonUrl
+} = Astro.props;
+---
+
+<div class="hero-banner-container">
+  <div class="hero-banner-bg">
+    <LazyImage 
+      src={backgroundImage} 
+      alt="Background" 
+      class="hero-bg-desktop"
+      loading="eager"
+    />
+    <LazyImage 
+      src={backgroundImageMobile || backgroundImage} 
+      alt="Background" 
+      class="hero-bg-mobile"
+      loading="eager"
+    />
+  </div>
+  
+  <div class="hero-banner-content">
+    <div class="hero-text-section">
+      <h1 class="hero-title">{title}</h1>
+      {subtitle && <h2 class="hero-subtitle">{subtitle}</h2>}
+      {description && <p class="hero-description">{description}</p>}
+      {buttonText && buttonUrl && (
+        <a href={buttonUrl} class="hero-button">
+          {buttonText}
+        </a>
+      )}
+    </div>
+    
+    <div class="hero-image-section">
+      <LazyImage 
+        src={image} 
+        alt={title}
+        class="hero-character hero-character-desktop"
+        loading="eager"
+      />
+      <LazyImage 
+        src={imageMobile || image} 
+        alt={title}
+        class="hero-character hero-character-mobile"
+        loading="eager"
+      />
+    </div>
+  </div>
+</div>
+
+<style>
+  .hero-banner-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .hero-banner-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  
+  .hero-banner-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .hero-bg-desktop {
+    display: none;
+  }
+  
+  .hero-bg-mobile {
+    display: block;
+  }
+  
+  .hero-banner-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3.5rem 1.5rem 2.5rem;
+    gap: 1rem;
+  }
+  
+  .hero-text-section {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    z-index: 3;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: white;
+    text-transform: lowercase;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .hero-subtitle {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: white;
+    text-transform: lowercase;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+    font-weight: 400;
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  .hero-button {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background-color: white;
+    color: #0066cc;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .hero-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .hero-image-section {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 2;
+  }
+  
+  .hero-character {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: bottom center;
+    max-height: 600px;
+  }
+  
+  .hero-character-desktop {
+    display: none;
+  }
+  
+  .hero-character-mobile {
+    display: block;
+  }
+  
+  @media (min-width: 768px) {
+    .hero-bg-desktop {
+      display: block;
+    }
+    
+    .hero-bg-mobile {
+      display: none;
+    }
+    
+    .hero-banner-content {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 4rem;
+      gap: 0.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .hero-text-section {
+      flex: 1;
+      max-width: 600px;
+      text-align: left;
+    }
+    
+    .hero-title {
+      font-size: 3.5rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .hero-description {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+    }
+    
+    .hero-button {
+      padding: 1rem 2.5rem;
+      font-size: 1rem;
+    }
+    
+    .hero-image-section {
+      flex: 1;
+      max-width: 900px;
+      height: 100%;
+      align-items: center;
+    }
+    
+    .hero-character {
+      max-height: 900px;
+    }
+    
+    .hero-character-desktop {
+      display: block;
+      margin-top: 230px;
+    }
+    
+    .hero-character-mobile {
+      display: none;
+    }
+  }
+  
+  .html-slide-active .hero-banner-container {
+    height: 100%;
+  }
+
+  .html-slide-active .hero-banner-container .hero-banner-content {
+    height: 100%;
+  }
+
+  .html-slide-active .hero-banner-container .hero-banner-bg img {
+    animation: heroBgIn 700ms ease both;
+    animation-delay: 0ms;
+  }
+
+  .html-slide-active .hero-banner-container .hero-image-section {
+    height: 100%;
+    align-items: flex-end;
+  }
+
+  .html-slide-active .hero-banner-container .hero-character {
+    height: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .html-slide-active .hero-banner-container .hero-title {
+    animation: heroBounceIn 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0ms;
+  }
+
+  .html-slide-active .hero-banner-container .hero-subtitle {
+    animation: heroBounceIn 620ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 40ms;
+  }
+
+  .html-slide-active .hero-banner-container .hero-description {
+    animation: heroBounceIn 640ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 80ms;
+  }
+
+  .html-slide-active .hero-banner-container .hero-button {
+    animation: heroBounceIn 660ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 120ms;
+  }
+
+  .html-slide-active .hero-banner-container .hero-image-section {
+    animation: heroImageBounceIn 680ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 160ms;
+  }
+
+  @media (max-width: 767px) {
+    .html-slide-active .hero-banner-container .hero-text-section {
+      transform: translateY(18px);
+    }
+
+    .html-slide-active .hero-banner-container .hero-image-section {
+      animation: none;
+      transform: translateY(140px);
+    }
+
+    .html-slide-active .hero-banner-container .hero-character-mobile {
+      transform: translateX(-24px);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .html-slide-active .hero-banner-container .hero-banner-content {
+      justify-content: center;
+      gap: 0.25rem;
+    }
+
+    .html-slide-active .hero-banner-container .hero-text-section,
+    .html-slide-active .hero-banner-container .hero-image-section {
+      flex: 0 0 auto;
+    }
+
+    .html-slide-active .hero-banner-container .hero-text-section {
+      max-width: 520px;
+    }
+
+    .html-slide-active .hero-banner-container .hero-image-section {
+      max-width: 520px;
+      margin-left: -120px;
+    }
+
+    .html-slide-active .hero-banner-container .hero-character-desktop {
+      transform: translateX(-120px);
+    }
+  }
+
+  @keyframes heroBounceIn {
+    0% {
+      opacity: 0;
+      transform: translateY(14px) scale(0.98);
+    }
+    55% {
+      opacity: 1;
+      transform: translateY(-5px) scale(1.01);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes heroBgIn {
+    0% {
+      opacity: 0;
+      transform: scale(1.02);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes heroImageBounceIn {
+    0% {
+      opacity: 0;
+      transform: translateY(14px) scale(0.98);
+    }
+    55% {
+      opacity: 1;
+      transform: translateY(-5px) scale(1.01);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(160px) scale(1);
+    }
+  }
+</style>

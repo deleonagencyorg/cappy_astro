@@ -1,12 +1,12 @@
 {
   "meta": {
-    "title": "Productos - Taqueritos",
-    "description": "Descubre nuestra línea completa de productos Taqueritos. Sabor auténtico para toda la familia."
+    "title": "Cappy Products",
+    "description": "Explore the complete range of Cappy products: Infladitos, Gorditos, and Tornitos with multiple flavor options. Find your favorite."
   },
   "home": {
-    "title": "Descubre la variedad de nuestros",
-    "subtitle": "Productos",
-    "textButton": "Conoce más"
+    "title": "Discover the variety of our",
+    "subtitle": "Products",
+    "textButton": "Learn more"
 },
   "stockist":[
     {
@@ -22,24 +22,77 @@
       "icon": "https://snack.yummiespromociones.com/SnacksyummiesAssets/latorreapp.webp"
     }
   ],
+  "categories": {
+    "all": "All",
+    "infladitos": "Infladitos",
+    "palitos_de_papa": "Potato sticks",
+    "gorditos": "Gorditos",
+    "tornitos": "Tornitos"
+  },
+  "carousel": [
+    {
+      "type": "html",
+      "html": {
+        "backgroundImage": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
+        "backgroundImageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
+        "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp",
+        "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp",
+        "title": "Explore our",
+        "subtitle": "products!",
+        "description": "Join our exclusive promotions and win amazing prizes. Guaranteed fun with every Cappy snack."
+      }
+    }
+  ],
+  "detailPage": {
+    "carouselCardBackgroundImage": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
+    "presentationsTitle": "Enjoy our presentations",
+    "presentationsNote": "Presentation size varies by country.",
+    "nutrition": {
+      "title": "Nutrition details",
+      "serving": "Serving",
+      "rows": [
+        { "label": "Energy (kcal)", "value": "120" },
+        { "label": "Total fat (g)", "value": "6" },
+        { "label": "Saturated fat (g)", "value": "2" },
+        { "label": "Carbohydrates (g)", "value": "14" },
+        { "label": "Sugars (g)", "value": "1" },
+        { "label": "Protein (g)", "value": "2" },
+        { "label": "Sodium (mg)", "value": "180" }
+      ],
+      "disclaimer": "Reference nutritional values."
+    },
+    "crunch": {
+      "title": "Where crunch has shape",
+      "description": "We have snacks with a different shape and a unique flavor so you can enjoy every moment.",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-palitos-de-papa-2.webp"
+    },
+    "flavorsTitle": "Discover our flavors",
+    "doubts": {
+      "title": "Got a question?",
+      "description": "Our team is ready to help. Contact us and we'll get back to you as soon as possible.",
+      "buttonText": "Contact us",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp"
+    }
+  },
   "items": [
     {
-      "id": "zibas-clasicas",
-      "name": "Ziba's Clásicas",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-clasicas-2.webp",
+      "id": "cappy-queso-intenso",
+      "slug": "cappy-queso-intenso",
+      "name": "Cappy Intense Cheese",
+      "category": "gorditos",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-gorditos-queso-intenso-2.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-gorditos-queso-intenso-2.webp",
       "background_color": "#FDE820",
-      "header_color": "#FDE820",
-      "header_background": "#FDE820",
-      "text_color":"#FDE820",
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
-      "description": "Hojuelas de Papa Fritas con sabor a Queso.",
+      "text_color": "#FDE820",
+      "description": "Crispy corn extruded snack with intense cheese flavor.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/snacksyummies/zibas-grande2.webp",
+      "background_image": "https://snack.yummiespromociones.com/snacksyummies/cappy-grande2.webp",
       "sizes": [
         {
           "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-clasicas-2.webp"
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-gorditos-queso-intenso-2.webp"
         }
       ],
       "weight": [
@@ -51,22 +104,23 @@
       ]
     },
     {
-      "id": "zibas-chile-toreado",
-      "name": "Ziba's Chile Toreado",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-chile-toreado-2.webp",
-      "background_color": "#147a2f",  
-      "header_color": "#FFFFFF",
-      "text_color":"#147a2f",
-      "header_background": "#147a2f",
-      "header_color": "#FFFFFF",
+      "id": "cappy-infladitos-picositos",
+      "slug": "cappy-infladitos-picositos",
+      "name": "Cappy Spicy Infladitos",
+      "category": "infladitos",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-picositos-2.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-picositos-2.webp",
+      "background_color": "#147a2f",
+      "header_text_color": "#FFFFFF",
       "color_button": "#147a2f",
-      "description": "Hojuelas de Papa Fritas con sabor a Queso.",
+      "text_color": "#147a2f",
+      "description": "Inflated corn snack with a spicy kick for those who dare.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/snacksyummies/zibas-grande2.webp",
+      "background_image": "https://snack.yummiespromociones.com/snacksyummies/cappy-grande2.webp",
       "sizes": [
         {
           "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-clasicas-2.webp"
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-picositos-2.webp"
         }
       ],
       "weight": [
@@ -78,22 +132,23 @@
       ]
     },
     {
-      "id": "zibas-queso",
-      "name": "Ziba's Queso",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-queso-2.webp",
+      "id": "cappy-queso-y-mantequilla",
+      "slug": "cappy-queso-y-mantequilla",
+      "name": "Cappy Cheese and Butter",
+      "category": "infladitos",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-queso-y-mantequilla-2.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-queso-y-mantequilla-2.webp",
       "background_color": "#FE5A00",
-      "header_color": "#FFFFFF",
-      "text_color":"#FE5A00",
-      "header_background": "#FE5A00",
       "header_text_color": "#FFFFFF",
       "color_button": "#FE5A00",
-      "description": "Hojuelas de Papa Fritas con sabor a Queso.",
+      "text_color": "#FE5A00",
+      "description": "Inflated corn snack with cheese and butter flavor.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/snacksyummies/zibas-grande2.webp",
+      "background_image": "https://snack.yummiespromociones.com/snacksyummies/cappy-grande2.webp",
       "sizes": [
         {
           "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-clasicas-2.webp"
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-queso-y-mantequilla-2.webp"
         }
       ],
       "weight": [
@@ -105,22 +160,23 @@
       ]
     },
     {
-      "id": "zibas-crema-y-especias",
-      "name": "Ziba's Crema y Especias",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-crema-y-especias-2.webp",
+      "id": "cappy-palitos-de-papa",
+      "slug": "cappy-palitos-de-papa",
+      "name": "Cappy Potato Sticks",
+      "category": "palitos_de_papa",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-palitos-de-papa-2.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-palitos-de-papa-2.webp",
       "background_color": "#BEDE89",
-      "header_color": "#1C1C1C",
-      "text_color":"#BEDE89",
-      "header_background": "#BEDE89",
       "header_text_color": "#1C1C1C",
       "color_button": "#BEDE89",
-      "description": "Hojuelas de Papa Fritas con sabor a Queso.",
+      "text_color": "#BEDE89",
+      "description": "Crunchy potato sticks to enjoy any time.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/snacksyummies/zibas-grande2.webp",
+      "background_image": "https://snack.yummiespromociones.com/snacksyummies/cappy-grande2.webp",
       "sizes": [
         {
           "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-clasicas-2.webp"
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-palitos-de-papa-2.webp"
         }
       ],
       "weight": [
@@ -132,22 +188,51 @@
       ]
     },
     {
-      "id": "zibas-miel-mostaza",
-      "name": "Ziba's Miel Mostaza",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-miel-mostasa-2.webp",
+      "id": "cappy-tornitos-chile-toreado",
+      "slug": "cappy-tornitos-chile-toreado",
+      "name": "Cappy Tornitos Chile Toreado",
+      "category": "tornitos",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-chile-toreado-2.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-chile-toreado-2.webp",
       "background_color": "#0167F7",
-      "header_color": "#FFFFFF",
-      "text_color":"#FFFFFF",
-      "header_background": "#0167F7",
       "header_text_color": "#FFFFFF",
       "color_button": "#0167F7",
-      "description": "Hojuelas de Papa Fritas con sabor a Queso.",
+      "text_color": "#FFFFFF",
+      "description": "Screw-shaped corn snack with chile toreado flavor.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/snacksyummies/zibas-grande2.webp",
+      "background_image": "https://snack.yummiespromociones.com/snacksyummies/cappy-grande2.webp",
       "sizes": [
         {
           "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-clasicas-2.webp"
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-chile-toreado-2.webp"
+        }
+      ],
+      "weight": [
+        "23g",
+        "26g",
+        "40g",
+        "80g",
+        "190g"
+      ]
+    },
+    {
+      "id": "cappy-tornitos-queso-y-mantequilla",
+      "slug": "cappy-tornitos-queso-y-mantequilla",
+      "name": "Cappy Tornitos Cheese and Butter",
+      "category": "tornitos",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-queso-y-mantequilla-2.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-queso-y-mantequilla-2.webp",
+      "background_color": "#004AB2",
+      "header_text_color": "#FFFFFF",
+      "color_button": "#004AB2",
+      "text_color": "#FFFFFF",
+      "description": "Screw-shaped corn snack with cheese and butter flavor.",
+      "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
+      "background_image": "https://snack.yummiespromociones.com/snacksyummies/cappy-grande2.webp",
+      "sizes": [
+        {
+          "value": "150",
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-queso-y-mantequilla-2.webp"
         }
       ],
       "weight": [

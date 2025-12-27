@@ -3,7 +3,6 @@
 import { t } from '../../../i18n/i18n';
 import type { Locale } from '../../../i18n/i18n';
 import './styles.css';
-import { initProductDetail } from './scripts.js';
 import ProductsCarousel from '../../../components/common/ProductsCarousel/index.astro';
 import LazyImage from '../../../components/common/LazyImage.astro';
 
@@ -49,10 +48,11 @@ const productsAssets = t('home', { namespace: 'products', locale: currentLang })
 const products = t('items', { namespace: 'products', locale: currentLang as Locale }) || [];
 const stockists = t('stockist', { namespace: 'products', locale: currentLang as Locale }) || [];
 const product = products.find((item: Product) => item.id === productId);
+const detailPage = t('detailPage', { namespace: 'products', locale: currentLang as Locale }) || {};
 const brandsAssets = t('', { namespace: 'brands', locale: currentLang }) || {};
 const newsAssets =  t('', { namespace: 'news', locale: currentLang }) || {};
 const brandsList = brandsAssets.brands || [];
-const zibasBrand = brandsList.find((brand: any) => brand.id === 'zibas');
+const zibasBrand = brandsList.find((brand: any) => brand.id === 'cappy');
 const zibasProducts = (zibasBrand?.products || []).filter((product: any) => product.id !== productId);
 
 // Si el producto no existe, lanzar error
@@ -65,7 +65,7 @@ const safeProduct: Product = {
   id: product.id || '',
   name: product.name || '',
   image: product.image || '',
-  background_image: product.background_color || '',
+  background_image: product.background_image || '',
   background_color: product.background_color || '',
   header_text_color: product.header_text_color || '#000000',
   color_button: product.color_button || '#000000',
@@ -95,129 +95,159 @@ if (allProductsArray.length > 1) {
 {safeProduct.background_color && (
   <article
     id="product-detail"
-    class="product-detail pt-12 md:pt-29 pb-32 bg-cover bg-center relative"
-    style={{ backgroundColor: safeProduct.background_color }}
+    class="product-detail bg-yellow pt-8 pb-10 md:pt-12 md:pb-14"
     transition:animate="slide"
   >
-    <div class="md:mt-[0] container mx-auto px-6 py-5 flex flex-col lg:flex-row gap-5">
-      {/* Contenedor de la imagen del lado izquierdo */}
-      <div class="relative flex justify-center items-center w-full lg:w-[605px] p-4 lg:px-28 lg:py-8 rounded-[85px] gap-2 cursor-pointer overflow-hidden group" style={{ backgroundColor: safeProduct.color_button }}>
-        {/* Overlay para el efecto de oscurecimiento */}
-        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 rounded-[85px]"></div>
-        <img id="product-image" class="relative z-10 max-w-full h-auto transition-transform duration-300 group-hover:scale-110" src={safeProduct.image} alt={safeProduct.name} transition:name={`product-image-${safeProduct.id}`} />
-      </div>
-      
-      {/* Contenido del lado derecho */}
-      <div class="w-full lg:w-1/2  h-auto">
-        <div class="flex justify-between items-center mb-6">
-          <h1 class="lg:text-6xl text-6xl font-bold uppercase italic" style={{ color: safeProduct.header_text_color }}>{safeProduct.name}</h1>
-      
-        </div>
-        <h1 
-          class="uppercase italic font-title lg:text-4xl text-xl  font-medium text-[${safeProduct.header_text_color}] py-4"
-          style={{ color: safeProduct.header_text_color }}>
-         {currentLang === 'es' ? 'DESCRIPCIÓN' : 'DESCRIPTION'}
-        </h1>
-        <h2 
-          class=" lg:text-3xl text-2xl italic font-text font-medium gap-30 py-5"
-          style={{ color: safeProduct.header_text_color }}
-        >
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+        <div class="w-full">
+          <h1 class="pd-anim pd-anim-left pd-delay-1 text-blue font-title italic font-extrabold leading-[0.95] text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
+            {safeProduct.name}
+          </h1>
+
+          <p class="pd-anim pd-anim-left pd-delay-2 mt-4 sm:mt-6 text-blue font-text italic font-medium text-base sm:text-lg md:text-xl max-w-xl">
             {safeProduct.description}
-        </h2>
+          </p>
 
-        <h1 
-          class="uppercase italic font-title lg:text-4xl text-xl  font-medium text-[${safeProduct.header_text_color}] py-4"
-          style={{ color: safeProduct.header_text_color }}>
-          {currentLang === 'es' ? 'PRESENTACIONES' : 'PRESENTATIONS'}
-        </h1>
-        <h2 
-          class=" lg:text-3xl text-2xl italic font-text font-medium py-5"
-          style={{ color: safeProduct.header_text_color }}
-        >
-            {currentLang === 'es' ? 'Tamaño por presentación varía de acuerdo al país.​' : 'The size of the presentation varies according to the country.'}
-        </h2>
+          <div class="mt-8 sm:mt-10">
+            <h2 class="pd-anim pd-anim-left pd-delay-3 text-blue font-title italic font-extrabold text-xl sm:text-2xl md:text-3xl">
+              {detailPage?.presentationsTitle}
+            </h2>
+            <p class="pd-anim pd-anim-left pd-delay-4 mt-2 sm:mt-3 text-blue font-text italic font-medium text-sm sm:text-base md:text-lg">
+              {detailPage?.presentationsNote}
+            </p>
 
-        {safeProduct.weight && safeProduct.weight.length > 0 && (
-          <div class="my-4 max-w-full">
-            <div class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-              {safeProduct.weight.map((weight) => (
-                <div class="w-full min-w-0">
-                  <span class="block w-full h-[60px] md:h-[70px] px-4 lg:px-5 py-3 md:py-4 text-center rounded-[15px] border text-base md:text-xl font-bold"
-                        style={{ color: safeProduct.header_text_color, borderColor: safeProduct.header_text_color, backgroundColor: safeProduct.color_button }}>
+            {safeProduct.weight && safeProduct.weight.length > 0 && (
+              <div class="pd-anim pd-anim-left pd-delay-5 mt-4 sm:mt-5 flex flex-wrap gap-2 sm:gap-3">
+                {safeProduct.weight.map((weight) => (
+                  <span class="px-4 py-2 sm:px-5 sm:py-3 rounded-[14px] border-2 border-blue text-blue font-title italic font-extrabold text-sm sm:text-base md:text-lg bg-yellow">
                     {weight}
                   </span>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
-        )}
 
-        {/* Sección de Stockists */}
-        {stockists && stockists.length > 0 && (
-          <div class="stockists-section mt-8 mb-4">
-            <h1 
-              class="uppercase italic font-title lg:text-4xl text-xl font-medium py-2"
-              style={{ color: safeProduct.header_text_color }}>
-              {currentLang === 'es' ? productsAssets.product_available || 'DISPONIBLE EN' : 'AVAILABLE AT'}
-            </h1>
-            <div class="flex flex-wrap gap-4 my-4 mb-8">
-              {stockists.map((stockist: Stockist) => (
-                <div 
-                  class="flex items-center justify-center h-[100px] w-[100px] p-2 rounded-[15px] border hover:scale-105 transition-transform"
-                  style={{ borderColor: safeProduct.header_text_color, backgroundColor: safeProduct.color_button }}
-                >
-                  <a href={stockist.link} target="_blank" rel="noopener noreferrer">  
-                  <LazyImage
-                    src={stockist.icon} 
-                    alt={stockist.name}
-                    color={['#FDE820', '#BEDE89'].includes(safeProduct.background_color) ? 'black' : 'white'}
-                    class="w-full h-full object-contain"
-                    title={stockist.name}
-                  />
-                  </a>
-                </div>
-              ))}
+          <details class="pd-anim pd-anim-left mt-8 sm:mt-10 rounded-2xl bg-yellow/40 border-2 border-blue/20">
+            <summary class="cursor-pointer select-none px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-blue font-title italic font-extrabold text-lg sm:text-xl md:text-2xl">
+              <span>{detailPage?.nutrition?.title}</span>
+              <span class="text-blue font-title italic font-extrabold">+</span>
+            </summary>
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6">
+              <div class="text-blue font-text italic font-medium text-sm sm:text-base mb-3">
+                {detailPage?.nutrition?.serving}
+              </div>
+              <div class="w-full overflow-hidden rounded-xl border border-blue/20 bg-white/40">
+                <table class="w-full text-left">
+                  <tbody>
+                    {Array.isArray(detailPage?.nutrition?.rows) && detailPage.nutrition.rows.map((row: any) => (
+                      <tr class="border-b border-blue/10 last:border-b-0">
+                        <td class="px-4 py-3 text-blue font-text italic font-medium text-sm sm:text-base">{row.label}</td>
+                        <td class="px-4 py-3 text-blue font-title italic font-extrabold text-sm sm:text-base">{row.value}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {detailPage?.nutrition?.disclaimer && (
+                <div class="mt-3 text-blue/80 font-text italic text-sm">{detailPage.nutrition.disclaimer}</div>
+              )}
             </div>
+          </details>
+        </div>
+
+        <div class="w-full flex justify-center lg:justify-end">
+          <div class="pd-anim pd-anim-right pd-delay-2 w-full max-w-[520px] rounded-[28px] bg-orange overflow-hidden p-7 sm:p-9 md:p-12">
+            <img
+              id="product-image"
+              class="w-full h-auto object-contain"
+              src={safeProduct.image}
+              alt={safeProduct.name}
+              transition:name={`product-image-${safeProduct.id}`}
+            />
           </div>
-        )}
-     
+        </div>
       </div>
     </div>
   </article>
 )}
-<!-- Sección de Productos Zibas -->
-    {products.length > 0 && (
-      <section class="w-full py-16 bg-blue">
-        <div class="container mx-auto px-4">
-          {brandsAssets.home?.title && (
-          <div class="text-center mb-8 relative z-20" >
-            <h2 class="text-3xl md:text-4xl italic font-bold mb-4" style={`color: white`}>
-              {brandsAssets.home?.title}
-            </h2>
-            {brandsAssets.home?.subtitle && (
-              <h1 class="text-6xl md:text-9xl italic font-bold mb-4" style={`color: white`}>
-                {brandsAssets.home?.subtitle}
-              </h1>
-            )}
-          </div>
-        )}
-          <ProductsCarousel 
-            products={products}
-            color={'white'}
-            autoplay={true}
-            speed={4000}
-            slidesPerView={3}
-            spaceBetween={30}
-            loop={true}
-            className="max-w-7xl mx-auto"
+
+{detailPage?.crunch && (
+  <section class="w-full bg-yellow py-10 md:py-14">
+    <div class="container mx-auto px-4">
+      <div class="pd-anim rounded-[28px] bg-orange p-6 sm:p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h2 class="text-white font-title italic font-extrabold text-3xl sm:text-4xl md:text-5xl leading-[0.95]">
+            {detailPage.crunch.title}
+          </h2>
+          <p class="mt-3 sm:mt-4 text-white/95 font-text italic font-medium text-sm sm:text-base md:text-lg max-w-xl">
+            {detailPage.crunch.description}
+          </p>
+        </div>
+        <div class="flex justify-center md:justify-end">
+          <img
+            src={detailPage.crunch.image}
+            alt={detailPage.crunch.title}
+            class="w-full max-w-[360px] h-auto object-contain"
+            loading="lazy"
           />
         </div>
-      </section>
-    )}
-<script>
-  // Este script se ejecuta solo en el navegador
-  import { initProductDetail } from './scripts.js';
-  document.addEventListener('DOMContentLoaded', () => {
-    initProductDetail();
-  });
-</script>
+      </div>
+    </div>
+  </section>
+)}
+
+{products.length > 0 && (
+  <section class="w-full bg-yellow pb-10 md:pb-14">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between mb-6 md:mb-8">
+        <h2 class="pd-anim text-blue font-title italic font-extrabold text-3xl sm:text-4xl md:text-5xl leading-[0.95]">
+          {detailPage?.flavorsTitle}
+        </h2>
+      </div>
+      <ProductsCarousel
+        products={relatedProducts}
+        autoplay={true}
+        speed={4000}
+        slidesPerView={3}
+        spaceBetween={30}
+        loop={true}
+        cardBackgroundImage={detailPage?.carouselCardBackgroundImage}
+        paddingTop="24px"
+        mobilePaddingTop="16px"
+        className="max-w-7xl mx-auto"
+      />
+    </div>
+  </section>
+)}
+
+{detailPage?.doubts && (
+  <section class="w-full bg-yellow pb-16 md:pb-20">
+    <div class="container mx-auto px-4">
+      <div class="pd-anim rounded-[28px] bg-red p-6 sm:p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center overflow-hidden">
+        <div>
+          <h2 class="text-white font-title italic font-extrabold text-3xl sm:text-4xl md:text-5xl leading-[0.95]">
+            {detailPage.doubts.title}
+          </h2>
+          <p class="mt-3 sm:mt-4 text-white/95 font-text italic font-medium text-sm sm:text-base md:text-lg max-w-xl">
+            {detailPage.doubts.description}
+          </p>
+          <a
+            href={`/${currentLang}/${currentLang === 'es' ? 'contacto' : 'contact'}`}
+            class="inline-flex mt-6 items-center justify-center rounded-full bg-white text-red font-title italic font-extrabold px-7 py-3"
+          >
+            {detailPage.doubts.buttonText}
+          </a>
+        </div>
+        <div class="flex justify-center md:justify-end">
+          <img
+            src={detailPage.doubts.image}
+            alt={detailPage.doubts.title}
+            class="w-full max-w-[360px] sm:max-w-[420px] h-auto object-contain"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+)}

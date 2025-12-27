@@ -94,6 +94,12 @@ let pageTitle = '';
 let pageDescription = '';
 let ContentComponent;
 
+// SEO helpers
+const baseDomain = 'https://www.cappysnacks.com';
+const defaultOgImage = `${baseDomain}/logo.png`;
+let canonicalUrl = '';
+let jsonLdSchema: any = null;
+
 if (!isRecipeDetail) {
   // Obtener la ruta actual para páginas normales
   const currentRoute = findRouteBySlug(lang, pageSlug);
@@ -139,6 +145,46 @@ if (!isRecipeDetail) {
 
   pageTitle = currentRoute.metaTitleKey ? t(currentRoute.metaTitleKey) : 'Page';
   pageDescription = currentRoute.metaDescriptionKey ? t(currentRoute.metaDescriptionKey) : '';
+
+  // Canonical URL (normalized with trailing slash)
+  canonicalUrl = `${baseDomain}/${lang}/${pageSlug}/`;
+
+  // JSON-LD schemas per CAPPY_METADATOS_SEO.md
+  if (currentRoute.id === 'products') {
+    jsonLdSchema = {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": lang === 'es' ? "Productos Cappy" : "Cappy Products",
+      "description": lang === 'es'
+        ? "Catálogo completo de productos Cappy con todas las variedades de snacks extruidos de maíz"
+        : "Complete catalog of Cappy products with all varieties of corn extruded snacks",
+      "url": lang === 'es' ? `${baseDomain}/es/productos/` : `${baseDomain}/en/products/`
+    };
+  }
+
+  if (currentRoute.id === 'recipes') {
+    jsonLdSchema = {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": lang === 'es' ? "Recetas con Cappy" : "Cappy Recipes",
+      "description": lang === 'es'
+        ? "Colección de recetas creativas utilizando productos Cappy"
+        : "Collection of creative recipes using Cappy products",
+      "url": lang === 'es' ? `${baseDomain}/es/recetas/` : `${baseDomain}/en/recipes/`
+    };
+  }
+
+  if (currentRoute.id === 'contact') {
+    jsonLdSchema = {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": lang === 'es' ? "Contacto Cappy" : "Contact Cappy",
+      "description": lang === 'es'
+        ? "Página de contacto de Cappy Snacks para consultas y sugerencias"
+        : "Contact page for Cappy Snacks for inquiries and suggestions",
+      "url": lang === 'es' ? `${baseDomain}/es/contacto/` : `${baseDomain}/en/contact/`
+    };
+  }
 }
 ---
 
@@ -150,6 +196,26 @@ if (!isRecipeDetail) {
 
 {!isRecipeDetail && (
   <MainLayout title={pageTitle} description={pageDescription}>
+    <Fragment slot="head">
+      {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+      {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={pageTitle} />
+      <meta property="og:description" content={pageDescription} />
+      <meta property="og:image" content={defaultOgImage} />
+      <meta property="og:site_name" content="Cappy" />
+      <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      {canonicalUrl && <meta name="twitter:url" content={canonicalUrl} />}
+      <meta name="twitter:title" content={pageTitle} />
+      <meta name="twitter:description" content={pageDescription} />
+      <meta name="twitter:image" content={defaultOgImage} />
+
+      {jsonLdSchema && (
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLdSchema)}></script>
+      )}
+    </Fragment>
     <ContentComponent />
   </MainLayout>
 )}
