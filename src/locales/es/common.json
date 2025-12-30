@@ -74,7 +74,7 @@
           "backgroundImageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
           "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp",
           "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp",
-          "title": "Vive cappy,",
+          "title": "Vive Cappy,",
           "subtitle": "libera tu chispa",
           "description": "Diversión, color y un crunch de imaginación con cada Cappy.",
           "buttonText": "Explorar todos los productos",
@@ -110,6 +110,16 @@
     }
    
   ],
+  "cappy_modal": {
+    "openLabel": "Abrir información de Cappy",
+    "closeLabel": "Cerrar",
+    "imageAlt": "Cappy",
+    "title": "¿Quién es Cappy?",
+    "paragraphs": [
+      "Un león latino de mente inquieta, ingenioso, inesperado y recursivo... que claramente no necesita manual ni permiso para crear.",
+      "Cada vez que aparezca el aburrimiento, Cappy nos ayudará a salir de ese estado con diversión..."
+    ]
+  },
   "about_us": {
     "title": "Conoce Nuestra",
     "subtitle": "Historia",
@@ -121,6 +131,27 @@
     "meta": {
       "title": " Cappy - Disfruta tus Cappy en todo momento",
       "description": "Descubre Cappy, los snacks extruidos de maíz con sabor intenso. Infladitos, Gorditos y Tornitos con múltiples sabores. ¡Atrévete a ser diferente! Disponible en Centroamérica."
+    },
+    "back_to_school": {
+      "title": "¡Back to School\ncon Cappy!",
+      "description": "Vive el regreso a clases con la energía de Cappy. ¡Regístrate y participa!",
+      "stepsTitle": "Pasos para participar",
+      "steps": [
+        {
+          "title": "Regístrate",
+          "description": "Crea tu cuenta en un clic y entra al mundo Cappy. ¡Es rapidísimo!"
+        },
+        {
+          "title": "Carga tu factura",
+          "description": "Sube tu factura/foto y deja que la magia haga lo suyo. ¡Así validas tu participación!"
+        },
+        {
+          "title": "¡Estás listo para ganar!",
+          "description": "Cruza los dedos, comparte la emoción y prepárate para celebrar."
+        }
+      ],
+      "buttonText": "Registrarme",
+      "buttonUrl": "https://backtoschool.yummiespromociones.com"
     },
     "newsletter":{
       "placeholder":"tucorreo@email.com",

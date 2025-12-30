@@ -2,26 +2,28 @@
 // src/components/pages/ProductsPage.astro
 import { t } from '../../i18n/i18n';
 import type { Locale } from '../../i18n/i18n';
-import { getLocale } from '../../i18n/i18n';
 import VideoCarousel from '../../components/common/VideoCarousel/index.astro';
 import ProductsFilterGrid from '../../components/common/ProductsFilterGrid.jsx';
 
-const currentLang = getLocale();
+const langFromUrl = (Astro.url.pathname.split('/')[1] || 'es') as Locale;
+const currentLang: Locale = langFromUrl === 'en' ? 'en' : 'es';
+
 const products = t('items', { namespace: 'products', locale: currentLang });
 const categories = t('categories', { namespace: 'products', locale: currentLang }) || {};
 const slides = t('carousel', { namespace: 'products', locale: currentLang }) || [];
 ---
 
-<div class="w-full bg-yellow py-6 md:py-10">
-  <div class="container mx-auto px-4">
-    <div class="relative w-full overflow-hidden">
+  <main class="bg-primary w-full flex flex-col items-center justify-center mt-0">
+  <div class="w-full bg-yellow py-6 md:py-10">
+  <div class="relative w-full overflow-hidden">
+    <div class="w-[90%] mx-auto h-[500px] overflow-hidden shadow-xl rounded-none md:rounded-[24px]">
       <VideoCarousel 
         slides={slides}
         height="500px"
         mobileHeight="500px"
         showOverlay={false}
         width="100%"
-        borderRadius="24px"
+        borderRadius="0"
       />
     </div>
   </div>
@@ -35,4 +37,4 @@ const slides = t('carousel', { namespace: 'products', locale: currentLang }) || 
     />
   </div>
 </div>
-
+</main>

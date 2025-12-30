@@ -7,6 +7,18 @@ export default function ProductsFilterGrid({
 }) {
   const [activeCategory, setActiveCategory] = useState('all');
 
+  const normalizedProducts = useMemo(() => {
+    const list = Array.isArray(products) ? products : [];
+    const map = new Map();
+    for (const p of list) {
+      if (!p) continue;
+      const key = String(p.slug || p.id || '');
+      if (!key) continue;
+      if (!map.has(key)) map.set(key, p);
+    }
+    return Array.from(map.values());
+  }, [products]);
+
   const categoryKeys = useMemo(() => {
     const keys = Object.keys(categories || {});
     if (!keys.includes('all')) return ['all', ...keys];
@@ -14,10 +26,9 @@ export default function ProductsFilterGrid({
   }, [categories]);
 
   const filteredProducts = useMemo(() => {
-    if (!Array.isArray(products)) return [];
-    if (activeCategory === 'all') return products;
-    return products.filter((p) => p?.category === activeCategory);
-  }, [products, activeCategory]);
+    if (activeCategory === 'all') return normalizedProducts;
+    return normalizedProducts.filter((p) => p?.category === activeCategory);
+  }, [normalizedProducts, activeCategory]);
 
   const productBasePath = currentLang === 'es' ? 'productos' : 'products';
 
@@ -48,11 +59,11 @@ export default function ProductsFilterGrid({
       </div>
 
       <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-        {filteredProducts.map((product) => {
+        {filteredProducts.map((product, index) => {
           const href = `/${currentLang}/${productBasePath}/${product.id}`;
           return (
             <a
-              key={product.id}
+              key={`${product.slug || product.id || 'product'}-${index}`}
               href={href}
               className="group block"
             >

@@ -107,9 +107,9 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
 
 ---
 
-  <main class="w-full flex flex-col items-center justify-center mt-0">
+  <main class="bg-primary w-full flex flex-col items-center justify-center mt-0" data-page="home">
     <!-- Slider Section con VideoCarousel -->
-    <div class="relative w-full overflow-hidden py-4 bg-yellow">
+    <div class="relative w-full overflow-hidden py-4 bg-yellow" data-animate="bounce" data-animate-delay="0">
       <div class="w-[90%] mx-auto h-[500px] overflow-hidden shadow-xl rounded-none md:rounded-[24px]">
         <VideoCarousel 
           slides={slides} 
@@ -123,11 +123,13 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
     </div>
     
     <!-- Sección Back To School -->
-    <BackToSchoolSection />
+    <div data-animate="bounce" data-animate-delay="80">
+      <BackToSchoolSection />
+    </div>
     
     <!-- Sección de Productos Cappy -->
     {cappyProducts.length > 0 && (
-      <section id="products" class="w-full bg-yellow py-12 md:py-16">
+      <section id="products" class="w-full bg-yellow py-12 md:py-16" data-animate="bounce" data-animate-delay="140">
         <div class="container mx-auto px-4">
           <div class="grid grid-cols-1 md:grid-cols-[35%_65%] gap-8 md:gap-12 items-center">
             {/* Columna de textos */}
@@ -171,26 +173,28 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
     )}
 
     <!-- Sección de Juegos -->
-    <GamesSection 
-      games={games}
-      title={currentLang === 'es' ? 'Diviertete con cappy' : 'Have fun with cappy'}
-      howToPlay={{
-        title: currentLang === 'es' ? '¿Cómo participar?' : 'How to participate?',
-        steps: currentLang === 'es' 
-          ? [
-              'Juega',
-              'Toma captura de tu puntaje.',
-              'Comparte y comenta en nuestras redes tu experiencia'
-            ]
-          : [
-              'Play',
-              'Take a screenshot of your score.',
-              'Share and comment on our social media about your experience'
-            ]
-      }}
-      ctaText={currentLang === 'es' ? 'Jugar ahora mismo' : 'Play now'}
-      ctaUrl={`/${currentLang}/${currentLang === 'es' ? 'juegos' : 'games'}`}
-    />
+    <div data-animate="bounce" data-animate-delay="220">
+      <GamesSection 
+        games={games}
+        title={currentLang === 'es' ? 'Diviertete con cappy' : 'Have fun with cappy'}
+        howToPlay={{
+          title: currentLang === 'es' ? '¿Cómo participar?' : 'How to participate?',
+          steps: currentLang === 'es' 
+            ? [
+                'Juega',
+                'Toma captura de tu puntaje.',
+                'Comparte y comenta en nuestras redes tu experiencia'
+              ]
+            : [
+                'Play',
+                'Take a screenshot of your score.',
+                'Share and comment on our social media about your experience'
+              ]
+        }}
+        ctaText={currentLang === 'es' ? 'Jugar ahora mismo' : 'Play now'}
+        ctaUrl={`/${currentLang}/${currentLang === 'es' ? 'juegos' : 'games'}`}
+      />
+    </div>
 
     <!-- Sección de recetas con carrusel -->
     <!-- <section id="recipes" class="w-full py-12" transition:animate="slide">
@@ -255,6 +259,8 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
 </section> -->
 
     <!-- Sección de Video a Pantalla Completa -->
-    <FullWidthVideoSection />
+    <div data-animate="bounce" data-animate-delay="300">
+      <FullWidthVideoSection />
+    </div>
 
   </main>

@@ -38,18 +38,18 @@ const cookiesUrl = currentLang === 'es' ? '/es/politica-cookies' : '/en/cookie-p
   <Skeleton />
 ) : (
   <footer class="bg-primary text-black relative overflow-hidden z-10">
-    <div class="container mx-auto px-4 md:px-6 py-10">
+    <div class="w-[90%] max-w-[1400px] mx-auto py-10">
       <div class="rounded-[32px] bg-tertiary px-6 md:px-10 py-10">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <!-- Content (first on mobile) -->
           <div class="order-1 md:order-2">
-            <h3 class="font-title text-4xl md:text-6xl font-bold text-[#0b2f87] leading-tight">
+            <h3 class="font-title text-4xl md:text-6xl font-bold text-blue leading-tight">
               {headline}
             </h3>
 
             <div class="mt-10 grid grid-cols-2 gap-10">
               <div>
-                <h4 class="font-title text-2xl font-bold text-[#0b2f87]">{homeTitle}</h4>
+                <h4 class="font-title text-2xl font-bold text-blue">{homeTitle}</h4>
                 <div class="mt-4 flex flex-col gap-2">
                   {menuItems.map((item: any) => (
                     <a href={item.href} class="font-sans text-base hover:opacity-80">
@@ -59,7 +59,7 @@ const cookiesUrl = currentLang === 'es' ? '/es/politica-cookies' : '/en/cookie-p
                 </div>
               </div>
               <div>
-                <h4 class="font-title text-2xl font-bold text-[#0b2f87]">{supportTitle}</h4>
+                <h4 class="font-title text-2xl font-bold text-blue">{supportTitle}</h4>
                 <div class="mt-4 flex flex-col gap-2">
                   <a href={privacyUrl} class="font-sans text-base hover:opacity-80">{privacyText}</a>
                   <a href={termsUrl} class="font-sans text-base hover:opacity-80">{termsText}</a>

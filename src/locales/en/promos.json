@@ -39,23 +39,23 @@
   },
   "items": [
     {
-      "id": "promo-navidad-2025",
-      "slug": "navidad-2025",
-      "imagen": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-promo-1.webp",
-      "descripcion": "Buy Cappy and join for special seasonal prizes.",
+      "id": "back-to-school-2025",
+      "slug": "back-to-school-2025",
+      "imagen": "https://snack.yummiespromociones.com/SnacksyummiesAssets/kv-bts.webp",
+      "descripcion": "Going back to school is more fun with Cappy; you can win one of 8 school kits.",
       "url": [
-        "https://www.cappysnacks.com/en/promos/navidad-2025"
+        "https://backtoschool.yummiespromociones.com"
       ],
-      "terminos_y_condiciones_url": "https://www.cappysnacks.com/en/terms-and-conditions/navidad-2025.pdf",
-      "fecha_inicio": "2025-12-01",
-      "fecha_fin": "2026-01-15",
+      "terminos_y_condiciones_url": "https://snack.yummiespromociones.com/SnacksyummiesAssets/back-to-school-2025.pdf",
+      "fecha_inicio": "2025-12-20",
+      "fecha_fin": "2026-02-28",
       "detail": {
         "hero": {
           "title": "Back to school",
-          "subtitle": "with Cappy",
-          "description": "Buy Cappy, register your codes and join for a chance to win awesome prizes.",
-          "buttonText": "Sign up now",
-          "buttonUrl": "/en/",
+          "subtitle": "With Cappy",
+          "description": "Going back to school is more fun with Cappy; you can win one of 8 school kits.",
+          "buttonText": "Register now",
+          "buttonUrl": "https://backtoschool.yummiespromociones.com",
           "backgroundImage": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
           "backgroundImageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
           "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp",
@@ -64,28 +64,24 @@
         "about": {
           "title": "What is it about?",
           "content": [
-            "The most exciting promotion to get you ready for school.",
+            "The most exciting promotion to get ready to go back to school.",
             "Buy participating Cappy snacks, register your codes and win amazing prizes."
           ]
         },
         "steps": {
-          "title": "How to participate",
+          "title": "Steps to participate",
           "items": [
             {
-              "title": "Buy Cappy snacks",
-              "description": "Find participating products and keep the package with the code."
+              "title": "1) Sign up",
+              "description": "Create your account in a moment and join. Fast and easy!"
             },
             {
-              "title": "Find your unique code",
-              "description": "Locate the code on your package and get it ready to register."
+              "title": "2) Upload your invoice",
+              "description": "Upload your invoice/photo and let the magic do its work. This is how we validate your participation!"
             },
             {
-              "title": "Register on the website",
-              "description": "Create your account or sign in to enter your codes."
-            },
-            {
-              "title": "Ready to win",
-              "description": "The more codes you register, the more chances you get."
+              "title": "3) You’re ready to win!",
+              "description": "Cross your fingers, share the excitement and get ready to celebrate."
             }
           ]
         },
@@ -93,140 +89,27 @@
           "title": "Prizes",
           "items": [
             {
-              "title": "2 video game consoles",
-              "description": "Join for consoles and accessories to maximize the fun.",
-              "image": "https://snack.yummiespromociones.com/snacksyummies/corona.webp"
+              "title": "Laptop computer"
             },
             {
-              "title": "5 video game bundles",
-              "description": "Win bundles with games and accessories to share.",
-              "image": "https://snack.yummiespromociones.com/snacksyummies/corona.webp"
+              "title": "Printer"
             },
             {
-              "title": "7 gaming gift kits",
-              "description": "Kits with merch and items for gamers.",
-              "image": "https://snack.yummiespromociones.com/snacksyummies/corona.webp"
+              "title": "Backpack with school supplies"
             }
           ],
-          "buttonText": "Sign up now",
-          "buttonUrl": "/en/"
+          "buttonText": "Register now",
+          "buttonUrl": "https://backtoschool.yummiespromociones.com"
         },
         "terms": {
-          "title": "Terms & Conditions",
-          "content": [
-            "Restrictions apply. Promotion valid during the dates shown.",
-            "Keep your packages and codes to validate participation.",
-            "See the full terms in the official document."
-          ],
-          "buttonText": "View terms & conditions"
+          "title": "Terms and conditions",
+          "description": "Check the full terms and conditions in the official document.",
+          "buttonText": "View terms and conditions",
+          "url": "https://example.com/terminos-y-condiciones"
         },
         "faqs": {
-          "title": "Questions? We’ve got answers",
+          "title": "Have questions? We’ve got answers",
           "items": [
-            {
-              "q": "Can I participate if I live outside the country?",
-              "a": "Participation depends on each country’s rules. Check the terms & conditions to confirm eligibility."
-            },
-            {
-              "q": "How many codes do I need to participate?",
-              "a": "You can participate with your first code. The more you register, the more chances you get."
-            },
-            {
-              "q": "What if my code doesn’t work?",
-              "a": "Make sure you entered it correctly. If the issue persists, contact us from the Contact section."
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "promo-verano-2026",
-      "slug": "verano-2026",
-      "imagen": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-promo-2.webp",
-      "descripcion": "Summer promo: discover flavors and win experiences.",
-      "url": [
-        "https://www.cappysnacks.com/en/promos/verano-2026",
-        "https://sompopo.app.link/yummies"
-      ],
-      "terminos_y_condiciones_url": "https://www.cappysnacks.com/en/terms-and-conditions/verano-2026.pdf",
-      "fecha_inicio": "2026-06-01",
-      "fecha_fin": "2026-08-31",
-      "detail": {
-        "hero": {
-          "title": "Summer",
-          "subtitle": "with Cappy",
-          "description": "Discover flavors, register your codes and enjoy a summer full of prizes.",
-          "buttonText": "Join now",
-          "buttonUrl": "/en/",
-          "backgroundImage": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
-          "backgroundImageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp",
-          "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp"
-        },
-        "about": {
-          "title": "What is it about?",
-          "content": [
-            "A promo to enjoy summer with Cappy.",
-            "Buy participating products, register your codes and win experiences and prizes."
-          ]
-        },
-        "steps": {
-          "title": "How to participate",
-          "items": [
-            {
-              "title": "Buy participating products",
-              "description": "Look for the package with a code and keep it."
-            },
-            {
-              "title": "Register your code",
-              "description": "Sign in and register your unique code."
-            },
-            {
-              "title": "Confirm your entries",
-              "description": "Review your history and make sure everything looks right."
-            },
-            {
-              "title": "Win prizes",
-              "description": "Each code adds more chances to win."
-            }
-          ]
-        },
-        "prizes": {
-          "title": "Prizes",
-          "items": [
-            {
-              "title": "Summer experiences",
-              "description": "Win experiences to share with friends.",
-              "image": "https://snack.yummiespromociones.com/snacksyummies/corona.webp"
-            },
-            {
-              "title": "Cappy kits",
-              "description": "Prizes and official Cappy merch.",
-              "image": "https://snack.yummiespromociones.com/snacksyummies/corona.webp"
-            }
-          ],
-          "buttonText": "Join now",
-          "buttonUrl": "/en/"
-        },
-        "terms": {
-          "title": "Terms & Conditions",
-          "content": [
-            "Restrictions apply. Promotion valid during the dates shown.",
-            "See the full terms in the official document."
-          ],
-          "buttonText": "View terms & conditions"
-        },
-        "faqs": {
-          "title": "Questions? We’ve got answers",
-          "items": [
-            {
-              "q": "Where can I find my code?",
-              "a": "The code is printed on the package of participating products."
-            },
-            {
-              "q": "Can I register multiple codes?",
-              "a": "Yes. You can register as many codes as you have from participating products."
-            }
           ]
         }
       }

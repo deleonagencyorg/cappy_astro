@@ -70,11 +70,11 @@
         "id": "slide1",
         "type": "html",
         "html": {
-          "backgroundImage": "https://snack.yummiespromociones.com/zibas/banner.webp",
-          "backgroundImageMobile": "https://snack.yummiespromociones.com/zibas/banner-m.webp",
-          "image": "https://snack.yummiespromociones.com/zibas/banner.webp",
-          "imageMobile": "https://snack.yummiespromociones.com/zibas/banner-m.webp",
-          "title": "live cappy,",
+          "backgroundImage": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
+          "backgroundImageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp",
+          "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp",
+          "title": "Live Cappy,",
           "subtitle": "unleash your spark",
           "description": "Fun, color and a crunch of imagination with every Cappy.",
           "buttonText": "Explore all products",
@@ -110,6 +110,16 @@
     }
    
   ],
+  "cappy_modal": {
+    "openLabel": "Open Cappy information",
+    "closeLabel": "Close",
+    "imageAlt": "Cappy",
+    "title": "Who is Cappy?",
+    "paragraphs": [
+      "A Latin lion with a restless mind—clever, unexpected, and resourceful... who clearly doesn't need a manual or permission to create.",
+      "Whenever boredom shows up, Cappy will help us break out of it with fun..."
+    ]
+  },
   "about_us": {
     "title": "Conoce Nuestra",
     "subtitle": "Historia",
@@ -121,6 +131,27 @@
     "meta": {
       "title": " Cappy - Disfruta tus Cappy en todo momento",
       "description": "Discover Cappy, crispy corn extruded snacks with intense flavors. Infladitos, Gorditos, and Tornitos with multiple flavor options. Dare to be different! Available in Central America."
+    },
+    "back_to_school": {
+      "title": "Back to School\nwith Cappy!",
+      "description": "Get back to school with Cappy energy. Sign up and join the fun!",
+      "stepsTitle": "How to participate",
+      "steps": [
+        {
+          "title": "Sign up",
+          "description": "Create your account in a snap and join the Cappy world. Fast and easy!"
+        },
+        {
+          "title": "Upload your receipt",
+          "description": "Upload your receipt/photo and let the magic happen. That’s how we validate your entry!"
+        },
+        {
+          "title": "You’re ready to win!",
+          "description": "Fingers crossed—share the hype and get ready to celebrate."
+        }
+      ],
+      "buttonText": "Sign up",
+      "buttonUrl": "https://backtoschool.yummiespromociones.com"
     },
     "newsletter":{
       "placeholder":"email@email.com",

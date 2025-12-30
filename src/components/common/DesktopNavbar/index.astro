@@ -18,6 +18,7 @@ const currentPath = pathname;
 
 // Obtener los datos de social media y menú desde las traducciones
 const menuItems = t('menu_items', { namespace: 'common', locale: currentLang }) as any[];
+const cappyModal = t('cappy_modal', { namespace: 'common', locale: currentLang }) as any;
 
 const leftMenuItems = Array.isArray(menuItems) ? menuItems.slice(0, 2) : [];
 const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
@@ -84,15 +85,17 @@ const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
         </div>
       ))}
     </div>
-    <LazyImage src="https://snack.yummiespromociones.com/SnacksyummiesAssets/Gemini_Generated.webp" alt={logos.principal.alt} class="h-20 w-auto" />
+    <button
+      id="cappyInfoModalOpen"
+      type="button"
+      class="cappy-modal-trigger p-0 bg-transparent border-0 cursor-pointer hover:opacity-80 transition-opacity"
+      aria-haspopup="dialog"
+      aria-controls="cappyInfoModal"
+      aria-label={cappyModal?.openLabel || 'Open Cappy info'}
+    >
+      <LazyImage src="https://snack.yummiespromociones.com/SnacksyummiesAssets/Gemini_Generated.webp" alt={logos.principal.alt} class="h-10 w-auto" />
+    </button>
     <!-- Language Switcher -->
     <LanguageSwitcher activeLocale={currentLang} headerColorConfig={headerColorConfig} />
-
-    
-    
-    <!-- Yummies One -->
-    <!-- <a href="/yummies-one" class="flex items-center text-white hover:text-gray-300 uppercase text-sm font-medium">
-      <span>Yummies One</span>
-    </a> -->
   </div>
 </nav>

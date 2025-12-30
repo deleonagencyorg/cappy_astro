@@ -7,12 +7,12 @@ import { type Locale } from '../i18n/i18n'; // t is not used, Locale type might 
 import Header from '../components/common/Header/index.astro';
 import Footer from '../components/common/Footer/index.astro';
 import MobileMenu from '../components/common/MobileMenu/index.astro';
+import CappyInfoModal from '../components/common/CappyInfoModal.astro';
 import I18nProvider from '../components/i18n/I18nProvider.astro';
-import { routesConfig } from '../config/routes';
 import { getHeaderColors } from '../config/headerColors';
 import { ViewTransitions } from 'astro:transitions';
 import "../styles/global.css";
-import { head } from 'framer-motion/m';
+import animationsScriptUrl from '../scripts/animations.js?url';
 
 export interface Props {
   title?: string;
@@ -63,15 +63,24 @@ if (headerColors) {
     {/* <GoogleTagManagerNoScript /> */}
     <I18nProvider>
       <slot name="header">
-        <Header currentLang={currentLang} headerColors={headerColors} />
+        <div transition:animate="fade">
+          <Header currentLang={currentLang} headerColors={headerColors} />
+        </div>
       </slot>
-      <main transition:animate="slide" class="flex-1 flex flex-col overflow-hidden">
+      <main transition:animate="slide" class="bg-primaryflex-1 flex flex-col overflow-hidden">
         <slot />
       </main>
-      <Footer currentLang={currentLang} />
+      <div transition:animate="fade">
+        <Footer currentLang={currentLang} />
+      </div>
     </I18nProvider>
     
     <!-- Menú móvil al final del body para máximo z-index -->
     <MobileMenu currentLang={currentLang} headerColorConfig={customHeaderConfig} />
+
+    <!-- Modal de Cappy Info - Renderizado al nivel más alto con z-index máximo -->
+    <CappyInfoModal currentLang={currentLang} />
+
+    <script type="module" src={animationsScriptUrl}></script>
   </body>
 </html>

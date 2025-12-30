@@ -24,96 +24,96 @@ export const defaultHeaderColors: HeaderColorConfig = {
 export const headerColors: HeaderColors = {
   // Configuración por defecto (se aplica a todas las páginas)
   default: {
-    textColor: 'text-blue',
+    textColor: 'text-black',
     backgroundColor: 'bg-yellow',
-    hoverTextColor: 'hover:text-gray-300',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-blue-800',
     showMessageCarousel: false,
   },
   yummiesone: {
-    textColor: 'text-blue',
+      textColor: 'text-black',
     backgroundColor: 'bg-yellow',
-    hoverTextColor: 'hover:text-secondary',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-primary',
     showMessageCarousel: false,
   },
   // Configuración para la página de nosotros
   nosotros: {
-    textColor: 'text-blue',
+    textColor: 'text-black',
     backgroundColor: 'bg-yellow',
-    hoverTextColor: 'hover:text-white',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-primary',
     showMessageCarousel: false,
   },
   
   // Configuración para la página de brands
   brands: {
-    textColor: 'text-blue',
+       textColor: 'text-black',
     backgroundColor: 'bg-yellow',
-    hoverTextColor: 'hover:text-primary',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-blue-800',
     showMessageCarousel: false,
   },
   
   // Configuración para la página de blog
   blog: {
-    textColor: 'text-blue',
-    backgroundColor:'bg-yellow',
-    hoverTextColor: 'hover:text-white',
+    textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-orange',
     showMessageCarousel: false,
   },
   
   // Configuración para la página de productos
   products: {
-    textColor: 'text-blue',
+    textColor: 'text-black',
     backgroundColor: 'bg-yellow',
-    hoverTextColor: 'hover:text-white',
-    hoverBackgroundColor: 'hover:bg-black',
+    hoverTextColor: 'hover:text-blue',
+    hoverBackgroundColor: 'hover:bg-blue-800',
     showMessageCarousel: false,
   },
   
   // Configuración para la página de recetas
   recipes: {
-    textColor: 'text-blue',
+    textColor: 'text-black',
     backgroundColor: 'bg-yellow',
-    hoverTextColor: 'hover:text-white',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-blue',
     showMessageCarousel: false,
   },
   
   // Configuración para la página de contacto
   contact: {
-    textColor: 'text-blue',
-    backgroundColor: 'bg-primary',
-    hoverTextColor: 'hover:text-gray-300',
+    textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-blue-800',
     showMessageCarousel: false,
   },
   
   // Configuración para la página de noticias
   news: {
-    textColor: 'text-blue',
-    backgroundColor: 'bg-orange',
-    hoverTextColor: 'hover:text-white',
+    textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-blue',
     showMessageCarousel: false,
   },
   
   // Configuración para la página de inicio
   home: {
-    textColor: 'text-blue',
-    backgroundColor: 'bg-primary',
-    hoverTextColor: 'hover:text-gray-300',
+    textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-blue-800',
     showMessageCarousel: false,
   },
 
   // Configuración para la página de nosotros
   about: {
-    textColor: 'text-blue',
+    textColor: 'text-black',
     backgroundColor: 'bg-yellow',
-    hoverTextColor: 'hover:text-white',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-secondary',
     showMessageCarousel: false
   },

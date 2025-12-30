@@ -75,7 +75,7 @@
     }
   },
   "items": [
-    {
+    { 
       "id": "cappy-queso-intenso",
       "slug": "cappy-queso-intenso",
       "name": "Cappy Queso Intenso",
@@ -88,19 +88,39 @@
       "text_color": "#FDE820",
       "description": "Snack extruido de maíz crujiente con sabor a queso intenso.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/snacksyummies/cappy-grande2.webp",
+      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-yellow.webp",
       "sizes": [
         {
           "value": "150",
           "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-gorditos-queso-intenso-2.webp"
         }
       ],
+     "weight": [
+        "16g"
+      ]
+    },
+     {
+      "id": "cappy-infladitos-queso-mantequilla",
+      "slug": "cappy-infladitos-queso-mantequilla",
+      "name": "Cappy Infladitos Queso y Mantequilla",
+      "category": "infladitos",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Infladito.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Infladito.webp",
+      "background_color": "#FDE820",
+      "header_text_color": "#5B3F2E",
+      "color_button": "#FDE820",
+      "text_color": "#FDE820",
+      "description": "Snack extruido de maíz crujiente con sabor a queso intenso.",
+      "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
+      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-blue.webp",
+      "sizes": [
+        {
+          "value": "150",
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Infladito.webp"
+        }
+      ],
       "weight": [
-        "23g",
-        "26g",
-        "40g",
-        "80g",
-        "190g"
+        "16g"
       ]
     },
   
@@ -117,7 +137,7 @@
       "text_color": "#FE5A00",
       "description": "Infladitos de maíz con sabor a queso y mantequilla.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/snacksyummies/cappy-grande2.webp",
+      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-red2.webp",
       "sizes": [
         {
           "value": "150",
@@ -125,11 +145,7 @@
         }
       ],
       "weight": [
-        "23g",
-        "26g",
-        "40g",
-        "80g",
-        "190g"
+        "16g"
       ]
     },
     {
@@ -145,19 +161,15 @@
       "text_color": "#BEDE89",
       "description": "Palitos crujientes con el sabor que acompaña cualquier momento.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/snacksyummies/cappy-grande2.webp",
+      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-red.webp",
       "sizes": [
         {
           "value": "150",
           "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-palitos-de-papa-2.webp"
         }
       ],
-      "weight": [
-        "23g",
-        "26g",
-        "40g",
-        "80g",
-        "190g"
+     "weight": [
+        "16g"
       ]
     },
     {
@@ -173,19 +185,15 @@
       "text_color": "#FFFFFF",
       "description": "Tornitos de maíz con sabor a queso y mantequilla.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/snacksyummies/cappy-grande2.webp",
+      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-orange.webp",
       "sizes": [
         {
           "value": "150",
           "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-queso-y-mantequilla-2.webp"
         }
       ],
-      "weight": [
-        "23g",
-        "26g",
-        "40g",
-        "80g",
-        "190g"
+     "weight": [
+        "16g"
       ]
     }
   ]

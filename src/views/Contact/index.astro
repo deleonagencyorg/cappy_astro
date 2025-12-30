@@ -1,12 +1,11 @@
 ---
 // src/views/Contact/index.astro
-import { t, getLocale } from '../../i18n/i18n';
+import { t } from '../../i18n/i18n';
 import type { Locale } from '../../i18n/i18n';
 import MainLayout from '../../layouts/MainLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb/Breadcrumb.astro';
-import LazyImage from '../../components/common/LazyImage.astro';
 import FormContact from '../../components/contact/FormContact.astro';
-import { fade } from 'astro:transitions';
+import OfficesTabs from '../../components/contact/OfficesTabs.jsx';
 
 // Import locale files statically
 import contactEs from '../../locales/es/contact.json';
@@ -20,13 +19,13 @@ interface Props {
   class?: string;
   description?: string;
   currentLang: Locale;
-  headerColorConfig?: any;
 }
 
-const { currentLang, headerColorConfig } = Astro.props;
+const { currentLang } = Astro.props;
 
 // Get current locale if not provided
-const locale = currentLang || getLocale();
+const langFromUrl = (Astro.url.pathname.split('/')[1] || 'es') as Locale;
+const locale: Locale = currentLang || (langFromUrl === 'en' ? 'en' : 'es');
 
 // Get contact data from locale
 const contact = locale === 'es' ? contactEs : contactEn;
@@ -34,277 +33,35 @@ const contact = locale === 'es' ? contactEs : contactEn;
 // Meta information
 const title = contact.title;
 const metaDescription = contact.description;
-console.log('headerColorConfig in Contact:', headerColorConfig);
-const headerColors = {
-  backgroundColor: '#FE5A00',
-  textColor: '#FFFFFF'
-};
 ---
 
-<MainLayout title={title} class="bg-white" description={metaDescription} headerColorConfig={headerColors}>
-  <div class=" w-[100%] mx-auto ">
+<MainLayout title={title} class="bg-primary" description={metaDescription}>
+  <div class="bg-yellow w-full mx-auto">
     
 
-    <!-- Main Contact Section -->
-    <div class="flex flex-col justify-center px-4 items-start lg:flex-row gap-12 py-12" style="background-image: url('https://snack.yummiespromociones.com/SnacksyummiesAssets/bgcontactzibas.webp'); background-size: cover; background-position: center;">
-      
-      <!-- Left Column - Contact Info -->
-    <div class="w-[100%] lg:w-[40%] pl-8 lg:pl-16 flex flex-col justify-center h-[100%] lg:h-[600px]">
-        <h1 class="text-white font-title text-7xl uppercase md:text-6xl lg:text-7xl font-bold mb-6">
-          {contact.title}
-        </h1>
+    <div class="w-full bg-yellow py-12 md:py-16">
+      <div class="container mx-auto px-4">
         
-        <p class="text-white font-bold text-2xl lg:text-2xl mb-8 leading-relaxed ">
-          {contact.description}
-        </p>
-     
-      </div>
-      
-      <!-- Right Column - Contact Form -->
-      <div class="w-[100%] lg:w-[40%]">
-        <FormContact currentLang={locale} />
-      </div>
-    </div>
-    
-    <!-- Offices Section -->
-    <div class="mx-auto bg-blue p-8">
-      <h3 class="text-white md:text-4xl text-4xl italic font-title uppercase font-bold mb-4 flex items-center justify-center gap-1">
-        <span class="font-title">{contact.offices.title.split(' ')[0]} {contact.offices.title.split(' ')[1]}</span>
-      </h3>
-      <h1 class="text-white md:text-9xl text-12xl italic font-title uppercase font-bold mb-4 flex items-center justify-center gap-1">
-        <span class="font-title">{contact.offices.title.split(' ').slice(2).join(' ')}</span>
-      </h1>
-      
-      <!-- Tabs and Office Info -->
-      <div class="flex flex-col mb-4">
-        <!-- Office Details -->
-        <div class="order-2 w-[80%] mx-auto">
-          <div id="officeInfo" class="bg-blue rounded-2xl p-8 ">
-            <div class="flex flex-col lg:flex-row justify-between items-center">
-              <div class="space-y-4">
-                <h3 id="officeName" class="text-white font-sans text-9xl md:text-7xl uppercase font-extrabold  mb-4">
-                  {contact.offices.locations["+504"].name}
-                </h3>
-                
-                <div class="flex items-start space-x-3">
-                  <p id="officeAddress" class="text-white leading-relaxed font-semibold ">  {`+ ${contact.offices.locations["+504"].address}`}</p>
-                </div>
-                
-                <div class="flex items-center space-x-3">
-                  <div id="officePhones" class="flex flex-col text-white">
-                    {contact.offices.locations["+504"].phones.map((phone: string) => (
-                     <div> <a href={`tel:${phone}`} class="text-white hover:text-primary transition-colors">
-                        {phone}
-                      </a></div>
-                    ))}
-                  </div>
-                </div>
-                
-                <!-- <div class="flex items-center space-x-3">
-                  <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                  </svg>
-                  <a id="officeEmail" href={`mailto:${contact.offices.locations["+504"].email}`} class="text-primary hover:text-secondary transition-colors">
-                    {contact.offices.locations["+504"].email}
-                  </a>
-                </div> -->
-              </div>
-              <div class="mt-6 lg:mt-0">
-                <LazyImage 
-                  src="https://snack.yummiespromociones.com/SnacksyummiesAssets/oficinas.webp"
-                  alt="Yummies Honduras"
-                  class="w-full h-48 object-cover rounded-xl"
-                />
-              </div>
-            </div>
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          <div class="lg:col-span-6">
+            <h1 class="text-blue font-title font-extrabold italic leading-[0.95] text-5xl sm:text-6xl md:text-7xl whitespace-pre-line">
+              {contact.title}
+            </h1>
+
+            <p class="mt-6 text-black font-text font-semibold text-base sm:text-lg max-w-xl">
+              {contact.description}
+            </p>
           </div>
-        </div>
-        
-        <!-- Map and Tabs -->
-        <div class="order-1 mt-4">
-          <!-- Country Tabs -->
-          <div class="mb-6 flex flex-wrap justify-center gap-2">
-          {Object.entries(contact.offices.locations).map(([countryCode, location]: [string, any], index: number) => (
-            <button 
-              data-country-code={countryCode}
-              class={`country-tab px-10 py-4 text-white uppercase text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2.5
-                ${index === 0 
-                  ? 'h-[54px] bg-[#005ADA] opacity-100 border border-white' 
-                  : 'h-[54px] bg-[#005ADA] opacity-75 hover:opacity-100'
-                } rounded-[47px]`}
-            >
-              {location.tab}
-            </button>
-          ))}
-        </div>
-          
-          <!-- Map -->
-          <div class="bg-gradient-to-br w-[80%] mx-auto bg-white rounded-2xl p-6 shadow-lg mb-4">
-            <div class="w-full  overflow-hidden rounded-xl" style="height: 500px;">
-              <!-- Container for all map iframes -->
-              <div id="maps-container" style="width: 100%; height: 100%;">
-                {Object.entries(contact.offices.locations).map(([countryCode, location]: [string, any], index: number) => (
-                  <div 
-                    data-map-country={countryCode}
-                    style={`width: 100%; height: 100%; ${index === 0 ? 'display: block;' : 'display: none;'}`}
-                  >
-                    <iframe
-                      src={location.mapEmbed}
-                      width="100%"
-                      height="100%"
-                      frameborder="0"
-                      allowfullscreen="allowfullscreen"
-                      aria-hidden="false"
-                      style="width: 100%; height: 100%; border: 0;"
-                      title={`${location.name} Map`}
-                    ></iframe>
-                  </div>
-                ))}
-              </div>
-            </div>
+
+          <div class="lg:col-span-6">
+            <FormContact currentLang={locale} />
           </div>
         </div>
       </div>
     </div>
-
-    <script define:vars={{ contactLocations: contact.offices.locations }}>
-      // Función que se ejecutará cuando el DOM esté listo o cuando se llame manualmente
-      function initializeCountryTabs() {
-        // Get references to all elements that need to be updated
-        const tabs = document.querySelectorAll('.country-tab');
-        const officeName = document.getElementById('officeName');
-        const officeAddress = document.getElementById('officeAddress');
-        const officePhones = document.getElementById('officePhones');
-        const officeEmail = document.getElementById('officeEmail');
-        const officeImage = document.getElementById('officeImage');
-        
-        // Get all map containers
-        const mapContainers = document.querySelectorAll('[data-map-country]');
-        
-        // Contact data is directly available from Astro's define:vars
-        const contactData = contactLocations;
-        
-        // For debugging
-        console.log('Contact locations:', contactData);
-        console.log('Tabs found:', tabs.length);
-        console.log('Map containers found:', mapContainers.length);
-        
-        // Function to update office information
-        function updateOfficeInfo(countryCode) {
-          console.log('Updating office for:', countryCode);
-          const office = contactData[countryCode];
-          
-          if (!office) {
-            console.error('No office data found for', countryCode);
-            return;
-          }
-          
-          console.log('Office data:', office);
-          
-          // Update text content and attributes
-          if (officeName) officeName.textContent = office.name;
-          if (officeAddress) officeAddress.textContent = `+ ${office.address}`;
-          
-          // Update phone numbers
-          if (officePhones) {
-            officePhones.innerHTML = '';
-            
-            // Luego añadir los teléfonos
-            office.phones.forEach(phone => {
-              const phoneContainer = document.createElement('div');
-              const phoneLink = document.createElement('a');
-              phoneLink.href = `tel:${phone}`;
-              phoneLink.textContent = `+${phone}`;
-              phoneLink.className = 'text-white hover:text-primary font-medium font-semibold transition-colors';
-              phoneContainer.appendChild(phoneLink);
-              officePhones.appendChild(phoneContainer);
-            });
-          }
-          
-          // Update email
-          if (officeEmail) {
-            officeEmail.href = `mailto:${office.email}`;
-            officeEmail.textContent = office.email;
-          }
-          
-          // Update image
-          if (officeImage instanceof HTMLImageElement) {
-            officeImage.src = office.image;
-            officeImage.alt = office.name;
-          }
-          
-          // Update map iframe visibility
-          console.log('Updating map visibility for country:', countryCode);
-          
-          // First hide all maps
-          mapContainers.forEach(container => {
-            container.style.display = 'none';
-          });
-          
-          // Then show the selected one
-          const selectedMap = document.querySelector(`[data-map-country="${countryCode}"]`);
-          if (selectedMap) {
-            selectedMap.style.display = 'block';
-            console.log('Showing map container:', countryCode);
-          } else {
-            console.error('No map container found for country code:', countryCode);
-          }
-        }
-        
-        // Function to handle tab selection
-        function handleTabSelection(tab) {
-          // Remove active class and border from all tabs
-          tabs.forEach(t => {
-            t.classList.remove('border', 'border-white');
-            t.style.opacity = '0.75';
-          });
-          
-          // Add active class and border to clicked tab
-          tab.classList.add('border', 'border-white');
-          tab.style.opacity = '1';
-          
-          // Update office info based on country code
-          const countryCode = tab.getAttribute('data-country-code');
-          if (countryCode) {
-            updateOfficeInfo(countryCode);
-          }
-        }
-        
-        // Add click and touch event listeners to tabs for better mobile compatibility
-        tabs.forEach(tab => {
-          // Función para manejar ambos tipos de eventos
-          const handleEvent = (e) => {
-            e.preventDefault();
-            console.log('Tab interaction:', tab.getAttribute('data-country-code'));
-            handleTabSelection(tab);
-          };
-          
-          // Agregar múltiples listeners para mayor compatibilidad
-          tab.addEventListener('click', handleEvent);
-          tab.addEventListener('touchend', handleEvent);
-        });
-        
-        // Initialize with first country
-        if (tabs.length > 0) {
-          const firstTabCountry = tabs[0].getAttribute('data-country-code');
-          if (firstTabCountry) {
-            updateOfficeInfo(firstTabCountry);
-          }
-        }
-      }
-      
-      // Intentar inicializar inmediatamente
-      if (document.readyState === 'loading') {
-        // Si el documento aún se está cargando, esperar al evento DOMContentLoaded
-        document.addEventListener('DOMContentLoaded', initializeCountryTabs);
-      } else {
-        // Si el documento ya está cargado, ejecutar inmediatamente
-        initializeCountryTabs();
-      }
-      
-      // Como respaldo, intentar inicializar después de un breve retraso
-      // para asegurarnos de que todo esté correctamente cargado
-      setTimeout(initializeCountryTabs, 500);
-    </script>
+    
+    <div data-no-animate>
+      <OfficesTabs client:load title={contact.offices.title} locations={contact.offices.locations} />
+    </div>
   </div>
 </MainLayout>

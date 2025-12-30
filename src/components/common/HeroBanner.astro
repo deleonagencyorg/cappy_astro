@@ -55,18 +55,22 @@ const {
     </div>
     
     <div class="hero-image-section">
-      <LazyImage 
-        src={image} 
-        alt={title}
-        class="hero-character hero-character-desktop"
-        loading="eager"
-      />
-      <LazyImage 
-        src={imageMobile || image} 
-        alt={title}
-        class="hero-character hero-character-mobile"
-        loading="eager"
-      />
+      <div class="hero-character-float">
+        <div class="hero-character-scale">
+          <LazyImage 
+            src={image} 
+            alt={title}
+            class="hero-character hero-character-desktop"
+            loading="eager"
+          />
+          <LazyImage 
+            src={imageMobile || image} 
+            alt={title}
+            class="hero-character hero-character-mobile"
+            loading="eager"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -78,7 +82,7 @@ const {
     height: 100%;
     overflow: hidden;
   }
-  
+
   .hero-banner-bg {
     position: absolute;
     top: 0;
@@ -92,6 +96,8 @@ const {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    animation: heroKenBurns 24s ease-in-out infinite alternate;
+    will-change: transform;
   }
   
   .hero-bg-desktop {
@@ -127,7 +133,6 @@ const {
     font-weight: 900;
     line-height: 1;
     color: white;
-    text-transform: lowercase;
     margin-bottom: 0.5rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   }
@@ -137,7 +142,6 @@ const {
     font-weight: 900;
     line-height: 1;
     color: white;
-    text-transform: lowercase;
     margin-bottom: 1rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   }
@@ -179,6 +183,25 @@ const {
     align-items: flex-end;
     z-index: 2;
   }
+
+  .hero-character-float {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transform-origin: 50% 80%;
+    animation: cappyFloat 2.8s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .hero-character-scale {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transform: scale(1);
+    transform-origin: 50% 70%;
+  }
   
   .hero-character {
     width: 100%;
@@ -186,6 +209,25 @@ const {
     object-fit: contain;
     object-position: bottom center;
     max-height: 600px;
+  }
+
+  @keyframes cappyFloat {
+    0% {
+      transform: translateY(0) rotate(-0.6deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(0.6deg);
+    }
+    100% {
+      transform: translateY(0) rotate(-0.6deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-character-float {
+      animation: none;
+      transform: none;
+    }
   }
   
   .hero-character-desktop {
@@ -271,8 +313,8 @@ const {
   }
 
   .html-slide-active .hero-banner-container .hero-banner-bg img {
-    animation: heroBgIn 700ms ease both;
-    animation-delay: 0ms;
+    animation: heroBgIn 700ms ease both, heroKenBurns 24s ease-in-out infinite alternate;
+    animation-delay: 0ms, 700ms;
   }
 
   .html-slide-active .hero-banner-container .hero-image-section {
@@ -377,6 +419,15 @@ const {
     }
   }
 
+  @keyframes heroKenBurns {
+    0% {
+      transform: scale(1) translate3d(0, 0, 0);
+    }
+    100% {
+      transform: scale(1.08) translate3d(-1.5%, -1%, 0);
+    }
+  }
+
   @keyframes heroImageBounceIn {
     0% {
       opacity: 0;
@@ -389,6 +440,88 @@ const {
     100% {
       opacity: 1;
       transform: translateY(160px) scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-banner-bg img {
+      animation: none;
+      transform: none;
+    }
+    .html-slide-active .hero-banner-container .hero-banner-bg img {
+      animation: none;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .hero-banner-content {
+      justify-content: center;
+      gap: 1.25rem;
+    }
+
+    .hero-text-section {
+      text-align: center;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .hero-image-section {
+      align-items: center;
+      justify-content: center;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .hero-character-scale {
+      transform: scale(1.22);
+    }
+
+    .hero-character-desktop {
+      margin-top: 0;
+    }
+
+    .html-slide-active .hero-banner-container .hero-banner-content {
+      justify-content: center;
+      gap: 1.25rem;
+    }
+
+    .html-slide-active .hero-banner-container .hero-image-section {
+      margin-left: 0;
+      max-width: 520px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .html-slide-active .hero-banner-container .hero-character-desktop {
+      transform: none;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-banner-content {
+      justify-content: flex-start;
+      padding-top: 5.5rem;
+      padding-bottom: 2rem;
+    }
+
+    .hero-text-section {
+      margin-top: 0.5rem;
+    }
+
+    .hero-image-section {
+      margin-top: 0.5rem;
+    }
+
+    .html-slide-active .hero-banner-container .hero-text-section {
+      transform: none;
+    }
+
+    .html-slide-active .hero-banner-container .hero-image-section {
+      transform: none;
+    }
+
+    .html-slide-active .hero-banner-container .hero-character-mobile {
+      transform: none;
     }
   }
 </style>

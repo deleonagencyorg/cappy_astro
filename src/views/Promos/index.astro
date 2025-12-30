@@ -43,6 +43,28 @@ const toDate = (value: string) => {
   return Number.isNaN(d.getTime()) ? null : d;
 };
 
+const isDateOnly = (value: string) => /^\d{4}-\d{2}-\d{2}$/.test(value);
+
+const toStartOfDayDate = (value: string) => {
+  if (!value) return null;
+  if (isDateOnly(value)) {
+    const [y, m, d] = value.split('-').map(Number);
+    const date = new Date(y, m - 1, d, 0, 0, 0, 0);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+  return toDate(value);
+};
+
+const toEndOfDayDate = (value: string) => {
+  if (!value) return null;
+  if (isDateOnly(value)) {
+    const [y, m, d] = value.split('-').map(Number);
+    const date = new Date(y, m - 1, d, 23, 59, 59, 999);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+  return toDate(value);
+};
+
 const formatDate = (value: string) => {
   const d = toDate(value);
   if (!d) return value;
@@ -51,18 +73,25 @@ const formatDate = (value: string) => {
 };
 
 const now = new Date();
+const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+
+// Promos nuevas = activas hoy: fecha_inicio <= ahora <= fecha_fin
 const activePromos = promos.filter((p) => {
-  const end = toDate(p.fecha_fin);
-  return !end || end.getTime() >= now.getTime();
+  const start = toStartOfDayDate(p.fecha_inicio);
+  const end = toEndOfDayDate(p.fecha_fin);
+  if (!start || !end) return false;
+  return start.getTime() <= now.getTime() && end.getTime() >= now.getTime();
 });
 
+// Promos viejas = terminaron ayer o antes (end < inicio de hoy)
 const endedPromos = promos.filter((p) => {
-  const end = toDate(p.fecha_fin);
-  return !!end && end.getTime() < now.getTime();
+  const end = toEndOfDayDate(p.fecha_fin);
+  if (!end) return false;
+  return end.getTime() < startOfToday.getTime();
 });
 
-activePromos.sort((a, b) => (toDate(a.fecha_fin)?.getTime() || 0) - (toDate(b.fecha_fin)?.getTime() || 0));
-endedPromos.sort((a, b) => (toDate(b.fecha_fin)?.getTime() || 0) - (toDate(a.fecha_fin)?.getTime() || 0));
+activePromos.sort((a, b) => (toEndOfDayDate(a.fecha_fin)?.getTime() || 0) - (toEndOfDayDate(b.fecha_fin)?.getTime() || 0));
+endedPromos.sort((a, b) => (toEndOfDayDate(b.fecha_fin)?.getTime() || 0) - (toEndOfDayDate(a.fecha_fin)?.getTime() || 0));
 ---
 
 <Fragment slot="head">
@@ -94,10 +123,9 @@ endedPromos.sort((a, b) => (toDate(b.fecha_fin)?.getTime() || 0) - (toDate(a.fec
 </Fragment>
 
 <div class="bg-primary -mt-px -mb-px overflow-hidden">
-  <div class="container mx-auto px-4 pt-4 pb-16">
-    <Breadcrumb bgColor="bg-transparent" textColor="text-black" hoverColor="hover:text-black" />
+  <div class="bg-primary  container mx-auto px-4 pt-4 pb-16">
 
-    <div class="mt-6 h-[500px] overflow-hidden shadow-xl rounded-none md:rounded-[24px]">
+    <div class="mt-6 h-[500px] overflow-hidden shadow-xl rounded-[24px]" data-animate="bounce" data-animate-delay="0">
       <HeroBanner
         backgroundImage={hero.backgroundImage}
         backgroundImageMobile={hero.backgroundImageMobile}
@@ -111,63 +139,58 @@ endedPromos.sort((a, b) => (toDate(b.fecha_fin)?.getTime() || 0) - (toDate(a.fec
       />
     </div>
 
-    <section class="mt-10 md:mt-14">
-      <div class="flex items-start justify-between gap-6">
-        <h2 class="font-title text-[#0b2f87] text-3xl md:text-5xl lg:text-6xl font-black leading-tight whitespace-pre-line">
-          {sections.activeTitle}
-        </h2>
+    {activePromos.length > 0 && (
+      <section class="mt-10 md:mt-14">
+        <div class="flex items-start justify-between gap-6">
+          <h2 class="font-title text-blue text-3xl md:text-5xl lg:text-6xl font-black leading-tight whitespace-pre-line">
+            {sections.activeTitle}
+          </h2>
 
-        <div class="flex gap-2 md:gap-3">
-          <button
-            type="button"
-            class="md:hidden w-9 h-9 rounded-full border border-black/20 bg-primary/60 hover:bg-primary/80 transition flex items-center justify-center"
-            aria-label="Previous"
-            data-scroll-left="active"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            class="md:hidden w-9 h-9 rounded-full border border-black/20 bg-primary/60 hover:bg-primary/80 transition flex items-center justify-center"
-            aria-label="Next"
-            data-scroll-right="active"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+          <div class="flex gap-2 md:gap-3">
+            <button
+              type="button"
+              class="md:hidden w-9 h-9 rounded-full border border-black/20 bg-primary/60 hover:bg-primary/80 transition flex items-center justify-center"
+              aria-label="Previous"
+              data-scroll-left="active"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="md:hidden w-9 h-9 rounded-full border border-black/20 bg-primary/60 hover:bg-primary/80 transition flex items-center justify-center"
+              aria-label="Next"
+              data-scroll-right="active"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
 
-      {activePromos.length === 0 ? (
-        <div class="mt-6 rounded-[28px] bg-white/70 border border-black/10 p-8">
-          <p class="font-title text-2xl text-[#0b2f87] font-bold">{emptyState.title}</p>
-          <p class="mt-2 text-black/70">{emptyState.description}</p>
-        </div>
-      ) : (
         <>
           <div class="mt-6 md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2" data-carousel="active">
             {activePromos.map((promo) => (
-              <article class="snap-start shrink-0 w-[280px] rounded-[28px] bg-blue text-white shadow-lg overflow-hidden flex flex-col">
-                <div class="p-5">
-                  <div class="flex items-start justify-between gap-3">
-                    <div class="w-14 h-14 rounded-full bg-white/10 overflow-hidden">
-                      <LazyImage
-                        src={promo.imagen}
-                        alt={promo.descripcion}
-                        class="w-full h-full object-cover"
-                        width={200}
-                        height={200}
-                      />
-                    </div>
-                    <span class="px-3 py-1 rounded-full bg-white text-blue text-xs font-bold">
-                      {labels.activeBadge}
-                    </span>
+              <article class="group snap-start shrink-0 w-[280px] rounded-[28px] bg-blue text-white shadow-lg overflow-hidden flex flex-col">
+                <div class="relative">
+                  <span class="absolute top-4 right-4 z-10 px-3 py-1 rounded-full bg-white text-blue text-xs font-bold">
+                    {labels.activeBadge}
+                  </span>
+                  <div class="h-[170px] bg-white/10 overflow-hidden">
+                    <LazyImage
+                      src={promo.imagen}
+                      alt={promo.descripcion}
+                      class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      width={520}
+                      height={340}
+                    />
                   </div>
+                </div>
 
-                  <h3 class="mt-4 font-title text-xl font-black leading-tight">
+                <div class="p-5">
+                  <h3 class="font-title text-xl font-black leading-tight min-h-[56px]">
                     {promo.descripcion}
                   </h3>
                   <p class="mt-2 text-white/85 text-sm">
@@ -189,24 +212,24 @@ endedPromos.sort((a, b) => (toDate(b.fecha_fin)?.getTime() || 0) - (toDate(a.fec
 
           <div class="hidden md:grid mt-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {activePromos.map((promo) => (
-              <article class="rounded-[28px] bg-blue text-white shadow-lg overflow-hidden flex flex-col">
-                <div class="p-6">
-                  <div class="flex items-start justify-between gap-3">
-                    <div class="w-16 h-16 rounded-full bg-white/10 overflow-hidden">
-                      <LazyImage
-                        src={promo.imagen}
-                        alt={promo.descripcion}
-                        class="w-full h-full object-cover"
-                        width={220}
-                        height={220}
-                      />
-                    </div>
-                    <span class="px-3 py-1 rounded-full bg-white text-blue text-xs font-bold">
-                      {labels.activeBadge}
-                    </span>
+              <article class="group rounded-[28px] bg-blue text-white shadow-lg overflow-hidden flex flex-col">
+                <div class="relative">
+                  <span class="absolute top-5 right-5 z-10 px-3 py-1 rounded-full bg-white text-blue text-xs font-bold">
+                    {labels.activeBadge}
+                  </span>
+                  <div class="h-[210px] bg-white/10 overflow-hidden">
+                    <LazyImage
+                      src={promo.imagen}
+                      alt={promo.descripcion}
+                      class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      width={720}
+                      height={420}
+                    />
                   </div>
+                </div>
 
-                  <h3 class="mt-5 font-title text-2xl font-black leading-tight">
+                <div class="p-6">
+                  <h3 class="font-title text-2xl font-black leading-tight min-h-[72px]">
                     {promo.descripcion}
                   </h3>
                   <p class="mt-2 text-white/85">
@@ -226,66 +249,61 @@ endedPromos.sort((a, b) => (toDate(b.fecha_fin)?.getTime() || 0) - (toDate(a.fec
             ))}
           </div>
         </>
-      )}
-    </section>
+      </section>
+    )}
 
-    <section class="mt-14 md:mt-20">
-      <div class="flex items-start justify-between gap-6">
-        <h2 class="font-title text-[#0b2f87] text-3xl md:text-5xl lg:text-6xl font-black leading-tight whitespace-pre-line">
-          {sections.endedTitle}
-        </h2>
+    {endedPromos.length > 0 && (
+      <section class="mt-14 md:mt-20">
+        <div class="flex items-start justify-between gap-6">
+          <h2 class="font-title text-blue text-3xl md:text-5xl lg:text-6xl font-black leading-tight whitespace-pre-line">
+            {sections.endedTitle}
+          </h2>
 
-        <div class="flex gap-2 md:gap-3">
-          <button
-            type="button"
-            class="md:hidden w-9 h-9 rounded-full border border-black/20 bg-primary/60 hover:bg-primary/80 transition flex items-center justify-center"
-            aria-label="Previous"
-            data-scroll-left="ended"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            class="md:hidden w-9 h-9 rounded-full border border-black/20 bg-primary/60 hover:bg-primary/80 transition flex items-center justify-center"
-            aria-label="Next"
-            data-scroll-right="ended"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+          <div class="flex gap-2 md:gap-3">
+            <button
+              type="button"
+              class="md:hidden w-9 h-9 rounded-full border border-black/20 bg-primary/60 hover:bg-primary/80 transition flex items-center justify-center"
+              aria-label="Previous"
+              data-scroll-left="ended"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="md:hidden w-9 h-9 rounded-full border border-black/20 bg-primary/60 hover:bg-primary/80 transition flex items-center justify-center"
+              aria-label="Next"
+              data-scroll-right="ended"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
 
-      {endedPromos.length === 0 ? (
-        <div class="mt-6 rounded-[28px] bg-white/70 border border-black/10 p-8">
-          <p class="font-title text-2xl text-[#0b2f87] font-bold">{emptyState.title}</p>
-          <p class="mt-2 text-black/70">{emptyState.description}</p>
-        </div>
-      ) : (
         <>
           <div class="mt-6 md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2" data-carousel="ended">
             {endedPromos.map((promo) => (
-              <article class="snap-start shrink-0 w-[280px] rounded-[28px] bg-blue text-white shadow-lg overflow-hidden flex flex-col">
-                <div class="p-5">
-                  <div class="flex items-start justify-between gap-3">
-                    <div class="w-14 h-14 rounded-full bg-white/10 overflow-hidden">
-                      <LazyImage
-                        src={promo.imagen}
-                        alt={promo.descripcion}
-                        class="w-full h-full object-cover"
-                        width={200}
-                        height={200}
-                      />
-                    </div>
-                    <span class="px-3 py-1 rounded-full bg-white text-blue text-xs font-bold">
-                      {labels.endedBadge}
-                    </span>
+              <article class="group snap-start shrink-0 w-[280px] rounded-[28px] bg-blue text-white shadow-lg overflow-hidden flex flex-col">
+                <div class="relative">
+                  <span class="absolute top-4 right-4 z-10 px-3 py-1 rounded-full bg-white text-blue text-xs font-bold">
+                    {labels.endedBadge}
+                  </span>
+                  <div class="h-[170px] bg-white/10 overflow-hidden">
+                    <LazyImage
+                      src={promo.imagen}
+                      alt={promo.descripcion}
+                      class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      width={520}
+                      height={340}
+                    />
                   </div>
+                </div>
 
-                  <h3 class="mt-4 font-title text-xl font-black leading-tight">
+                <div class="p-5">
+                  <h3 class="font-title text-xl font-black leading-tight min-h-[56px]">
                     {promo.descripcion}
                   </h3>
                   <p class="mt-2 text-white/85 text-sm">
@@ -307,24 +325,24 @@ endedPromos.sort((a, b) => (toDate(b.fecha_fin)?.getTime() || 0) - (toDate(a.fec
 
           <div class="hidden md:grid mt-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {endedPromos.map((promo) => (
-              <article class="rounded-[28px] bg-blue text-white shadow-lg overflow-hidden flex flex-col">
-                <div class="p-6">
-                  <div class="flex items-start justify-between gap-3">
-                    <div class="w-16 h-16 rounded-full bg-white/10 overflow-hidden">
-                      <LazyImage
-                        src={promo.imagen}
-                        alt={promo.descripcion}
-                        class="w-full h-full object-cover"
-                        width={220}
-                        height={220}
-                      />
-                    </div>
-                    <span class="px-3 py-1 rounded-full bg-white text-blue text-xs font-bold">
-                      {labels.endedBadge}
-                    </span>
+              <article class="group rounded-[28px] bg-blue text-white shadow-lg overflow-hidden flex flex-col">
+                <div class="relative">
+                  <span class="absolute top-5 right-5 z-10 px-3 py-1 rounded-full bg-white text-blue text-xs font-bold">
+                    {labels.endedBadge}
+                  </span>
+                  <div class="h-[210px] bg-white/10 overflow-hidden">
+                    <LazyImage
+                      src={promo.imagen}
+                      alt={promo.descripcion}
+                      class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      width={720}
+                      height={420}
+                    />
                   </div>
+                </div>
 
-                  <h3 class="mt-5 font-title text-2xl font-black leading-tight">
+                <div class="p-6">
+                  <h3 class="font-title text-2xl font-black leading-tight min-h-[72px]">
                     {promo.descripcion}
                   </h3>
                   <p class="mt-2 text-white/85">
@@ -344,8 +362,8 @@ endedPromos.sort((a, b) => (toDate(b.fecha_fin)?.getTime() || 0) - (toDate(a.fec
             ))}
           </div>
         </>
-      )}
-    </section>
+      </section>
+    )}
 
     <section class="mt-14 md:mt-20">
       <div class="rounded-[32px] bg-red text-white overflow-hidden shadow-xl">

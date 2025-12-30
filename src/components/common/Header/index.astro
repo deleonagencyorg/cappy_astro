@@ -80,11 +80,16 @@ const mobileHeaderColorConfig = (customStyles.backgroundColor || '').toLowerCase
 
     <!-- Navegación Móvil -->
     <nav 
-      class={`mobile-nav lg:hidden w-full py-2 px-4 flex justify-between items-center ${mobileTextColorClass}`}
+      class={`mobile-nav lg:hidden w-full py-2 px-4 grid grid-cols-3 items-center ${mobileTextColorClass}`}
       style={customStyles.backgroundColor ? `background-color: ${customStyles.backgroundColor}` : ''}
     >
-      <!-- Logo para Móvil -->
-      <div class="logo-container">
+      <!-- Mobile Menu Button (Sandwich) -->
+      <div class="menu-button-container flex items-center justify-start">
+        <MobileMenuButton currentLang={currentLang} headerColorConfig={mobileHeaderColorConfig} />
+      </div>
+
+      <!-- Logo para Móvil (Centro) -->
+      <div class="logo-container flex items-center justify-center">
         <a href={`/${currentLang}/`} class="flex-shrink-0">
           <LocalizedImage
             src={logosData.principal.url}
@@ -97,10 +102,26 @@ const mobileHeaderColorConfig = (customStyles.backgroundColor || '').toLowerCase
           />
         </a>
       </div>
-      
-      <!-- Mobile Menu Button -->
-      <div class="menu-button-container">
-        <MobileMenuButton currentLang={currentLang} headerColorConfig={mobileHeaderColorConfig} />
+
+      <!-- Cappy Modal Trigger (Mobile) -->
+      <div class="flex items-center justify-end">
+        <button
+          id="cappyInfoModalOpen-mobile"
+          type="button"
+          class="cappy-modal-trigger p-0 bg-transparent border-0 cursor-pointer hover:opacity-80 transition-opacity"
+          aria-haspopup="dialog"
+          aria-controls="cappyInfoModal"
+          aria-label={t('cappy_modal.openLabel', { namespace: 'common', locale: currentLang }) || 'Open Cappy info'}
+        >
+          <LocalizedImage
+            src="https://snack.yummiespromociones.com/SnacksyummiesAssets/Gemini_Generated.webp"
+            alt={t('cappy_modal.imageAlt', { namespace: 'common', locale: currentLang }) || 'Cappy'}
+            class="h-10 w-auto"
+            loading="eager"
+            width="40"
+            height="40"
+          />
+        </button>
       </div>
     </nav>
   </div>
