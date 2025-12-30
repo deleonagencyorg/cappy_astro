@@ -6,10 +6,10 @@
   "ui": {
     "hero": {
       "title": "Únete para",
-      "subtitle": "recibir ofertas",
+      "subtitle": "participar en nuestras promos",
       "description": "Suscríbete y entérate de nuestras promos y novedades.",
       "buttonText": "Suscribirme",
-      "buttonUrl": "/es/yummiesone",
+      "buttonUrl": "https://www.snacksyummies.com/es/yummiesone",
       "backgroundImage": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
       "backgroundImageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp",
