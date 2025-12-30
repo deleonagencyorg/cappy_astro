@@ -1,0 +1,324 @@
+---
+import { t } from '../../../i18n/i18n';
+import type { Locale } from '../../../i18n/i18n';
+import Breadcrumb from '../../../components/common/Breadcrumb/Breadcrumb.astro';
+import LazyImage from '../../../components/common/LazyImage.astro';
+import HeroBanner from '../../../components/common/HeroBanner.astro';
+import ProductsCarousel from '../../../components/common/ProductsCarousel/index.astro';
+
+interface PromoItem {
+  id: string;
+  slug: string;
+  imagen: string;
+  descripcion: string;
+  url: string[];
+  terminos_y_condiciones_url: string;
+  fecha_inicio: string;
+  fecha_fin: string;
+  detail?: {
+    hero?: {
+      title?: string;
+      subtitle?: string;
+      description?: string;
+      buttonText?: string;
+      buttonUrl?: string;
+      backgroundImage?: string;
+      backgroundImageMobile?: string;
+      image?: string;
+      imageMobile?: string;
+    };
+    about?: { title?: string; content?: string[] };
+    steps?: { title?: string; items?: Array<{ title?: string; description?: string }> };
+    prizes?: {
+      title?: string;
+      items?: Array<{ title?: string; description?: string; image?: string }>;
+      buttonText?: string;
+      buttonUrl?: string;
+    };
+    terms?: { title?: string; content?: string[] | string; description?: string; buttonText?: string; url?: string };
+    faqs?: { title?: string; items?: Array<{ q?: string; a?: string }> };
+  };
+}
+
+const { currentLang, slug } = Astro.props as { currentLang: Locale; slug: string };
+
+const promosMeta = t('meta', { namespace: 'promos', locale: currentLang }) || {};
+const promos = (t('items', { namespace: 'promos', locale: currentLang }) || []) as PromoItem[];
+const promo = promos.find((p) => p.slug === slug);
+
+if (!promo) {
+  throw new Error(`Promo with slug ${slug} not found`);
+}
+
+const baseDomain = 'https://www.cappysnacks.com';
+const canonicalUrl = `${baseDomain}/${currentLang}/promos/${promo.slug}`;
+const pageTitle = `${promosMeta.title || 'Promociones Cappy'} - ${promo.descripcion}`;
+const pageDescription = promo.descripcion;
+const defaultOgImage = promo.imagen || `${baseDomain}/logo.png`;
+
+const detail = promo.detail || {};
+const hero = detail.hero || {};
+const about = detail.about || {};
+const steps = detail.steps || {};
+const prizes = detail.prizes || {};
+const terms = detail.terms || {};
+const faqs = detail.faqs || {};
+
+const toDate = (value: string) => {
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? null : d;
+};
+
+const formatDate = (value: string) => {
+  const d = toDate(value);
+  if (!d) return value;
+  const locale = currentLang === 'es' ? 'es-ES' : 'en-US';
+  return new Intl.DateTimeFormat(locale, { year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
+};
+
+const validityLabel = currentLang === 'es' ? 'Vigencia' : 'Validity';
+const linksTitle = currentLang === 'es' ? 'Links' : 'Links';
+const backText = currentLang === 'es' ? 'Volver a Promos' : 'Back to promos';
+
+const aboutTitle = about.title || (currentLang === 'es' ? '¿De qué se trata?' : 'What is it about?');
+const stepsTitle = steps.title || (currentLang === 'es' ? 'Pasos para participar' : 'How to participate');
+const prizesTitle = prizes.title || (currentLang === 'es' ? 'Premios' : 'Prizes');
+const termsTitle = terms.title || (currentLang === 'es' ? 'Términos y Condiciones' : 'Terms & Conditions');
+const termsButtonText = terms.buttonText || (currentLang === 'es' ? 'Ver términos y condiciones' : 'View terms & conditions');
+const termsDescription = terms.description;
+const termsUrl = terms.url || promo.terminos_y_condiciones_url;
+const termsContent = terms.content;
+const faqsTitle = faqs.title || (currentLang === 'es' ? '¿Tienes dudas? te las respondemos' : 'Questions? We’ve got answers');
+
+const hasFaqs = Array.isArray(faqs.items) && faqs.items.length > 0;
+
+const products = (t('items', { namespace: 'products', locale: currentLang }) || []) as any[];
+const productsDetailPage = t('detailPage', { namespace: 'products', locale: currentLang }) || {};
+const uniqueProducts = Array.isArray(products)
+  ? Array.from(
+      new Map(products.map((p: any) => [String(p?.slug || p?.id || ''), p])).values()
+    ).filter((p: any) => p && (p.slug || p.id))
+  : [];
+const carouselProducts = uniqueProducts.slice(0, 8);
+const carouselTitle = currentLang === 'es' ? 'Descubre nuestros productos' : 'Discover our products';
+---
+
+<Fragment slot="head">
+  <link rel="canonical" href={canonicalUrl} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
+  <meta property="og:image" content={defaultOgImage} />
+  <meta property="og:site_name" content="Cappy" />
+  <meta property="og:locale" content={currentLang === 'es' ? 'es_ES' : 'en_US'} />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={canonicalUrl} />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={pageDescription} />
+  <meta name="twitter:image" content={defaultOgImage} />
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'PromotionCard',
+      name: promo.descripcion,
+      description: promo.descripcion,
+      url: canonicalUrl,
+      image: [promo.imagen],
+      validFrom: promo.fecha_inicio,
+      validThrough: promo.fecha_fin
+    })}
+  ></script>
+</Fragment>
+
+<div class="bg-primary -mt-px -mb-px overflow-hidden">
+  <div class="container mx-auto px-4 pt-4 pb-16">
+    <div class="mt-6 h-[500px] overflow-hidden shadow-xl rounded-none md:rounded-[24px]" data-animate="bounce" data-animate-delay="0">
+      <HeroBanner
+        backgroundImage={hero.backgroundImage || promo.imagen}
+        backgroundImageMobile={hero.backgroundImageMobile || hero.backgroundImage || promo.imagen}
+        image={hero.image || promo.imagen}
+        imageMobile={hero.imageMobile || hero.image || promo.imagen}
+        title={hero.title || promo.descripcion}
+        subtitle={hero.subtitle}
+        description={hero.description}
+        buttonText={hero.buttonText}
+        buttonUrl={hero.buttonUrl}
+      />
+    </div>
+
+    <div class="mt-10 md:mt-14 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+      <div class="lg:col-span-7 space-y-8">
+        <section>
+          <h2 class="font-title text-blue text-3xl md:text-5xl font-black leading-tight">{aboutTitle}</h2>
+          <div class="mt-4 rounded-[28px] bg-blue text-white border border-blue-200 p-6 md:p-8">
+            <!-- <p class="text-black/70">
+              <span class="font-bold">{validityLabel}:</span> {formatDate(promo.fecha_inicio)} - {formatDate(promo.fecha_fin)}
+            </p> -->
+            <div class="mt-4 space-y-3">
+              {(about.content || []).map((p) => (
+                <p class="text-white/90 leading-relaxed">{p}</p>
+              ))}
+            </div>
+
+           
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-title text-blue text-3xl md:text-5xl font-black leading-tight">{stepsTitle}</h2>
+
+          <div class="mt-4 space-y-4">
+            {(steps.items || []).map((item, idx) => (
+              <div class="rounded-[22px] bg-white/70 border border-black/10 p-5 md:p-6">
+                <div class="flex items-start gap-4">
+                  <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue text-white flex items-center justify-center font-bold">
+                    {idx + 1}
+                  </div>
+                  <div>
+                    <p class="font-title text-xl font-black text-blue leading-tight">
+                      {item.title}
+                    </p>
+                    <p class="mt-1 text-black/80 leading-relaxed">{item.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <aside class="lg:col-span-5">
+        <div class="rounded-[28px] bg-blue text-white shadow-xl overflow-hidden">
+          <div class="p-6 md:p-8">
+            <h2 class="font-title text-3xl md:text-4xl font-black leading-tight">
+              {prizesTitle}
+            </h2>
+
+            <div class="mt-6 space-y-4">
+              {(prizes.items || []).map((item) => (
+                <div class="rounded-[18px] bg-white border border-black/10 p-4">
+                  <div class="flex items-start gap-4">
+                    {item.image && (
+                      <div class="w-14 h-14 rounded-[14px] bg-white overflow-hidden flex items-center justify-center border border-black/10">
+                        <LazyImage src={item.image} alt={item.title || 'Prize'} class="w-full h-full object-cover" width={140} height={140} />
+                      </div>
+                    )}
+                    <div class="min-w-0">
+                      <div class="flex items-center gap-2">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-blue flex-shrink-0">
+                          <path d="M5 3a1 1 0 0 0-1 1v2a5 5 0 0 0 4 4.9A6.99 6.99 0 0 0 11 13.93V17H8a1 1 0 0 0-1 1v2h10v-2a1 1 0 0 0-1-1h-3v-3.07a6.99 6.99 0 0 0 3-3.03A5 5 0 0 0 20 6V4a1 1 0 0 0-1-1H5zm1 2h12v1a3 3 0 0 1-2.24 2.9A7.02 7.02 0 0 0 15 7H9c-.24.65-.5 1.28-.76 1.9A3 3 0 0 1 6 6V5z" />
+                        </svg>
+                        <p class="font-title text-lg font-black leading-tight text-blue">{item.title}</p>
+                      </div>
+                      {item.description && (
+                        <p class="mt-1 text-blue text-sm leading-relaxed">{item.description}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {(prizes.buttonText && prizes.buttonUrl) && (
+            <div class="p-6 md:p-8 pt-0">
+              <a
+                href={prizes.buttonUrl}
+                class="block w-full text-center px-6 py-3 rounded-full bg-white text-blue font-bold transition hover:opacity-90"
+              >
+                {prizes.buttonText}
+              </a>
+            </div>
+          )}
+        </div>
+      </aside>
+    </div>
+
+    <section class="mt-10 md:mt-14">
+      <div class="rounded-[32px] bg-red text-white overflow-hidden shadow-xl">
+        <div class="p-6 md:p-10">
+          <h2 class="font-title text-3xl md:text-5xl font-black leading-tight">
+            {termsTitle}
+          </h2>
+
+          <div class="mt-5 space-y-3">
+            {termsDescription ? (
+              <p class="text-white/90 leading-relaxed">{termsDescription}</p>
+            ) : Array.isArray(termsContent) ? (
+              termsContent.map((p) => <p class="text-white/90 leading-relaxed">{p}</p>)
+            ) : termsContent ? (
+              <p class="text-white/90 leading-relaxed">{termsContent}</p>
+            ) : null}
+          </div>
+
+          <div class="mt-6">
+            <a
+              class="inline-block px-8 py-3 rounded-full bg-white text-red font-bold shadow-md hover:shadow-lg transition"
+              href={termsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {termsButtonText}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {carouselProducts.length > 0 && (
+      <section class="mt-12 md:mt-16">
+        <h2 class="font-title text-blue text-3xl md:text-5xl font-black leading-tight">
+          {carouselTitle}
+        </h2>
+        <div class="mt-6">
+          <ProductsCarousel
+            products={carouselProducts}
+            autoplay={true}
+            speed={4000}
+            slidesPerView={3}
+            spaceBetween={30}
+            loop={true}
+            cardBackgroundImage={productsDetailPage?.carouselCardBackgroundImage}
+            paddingTop="24px"
+            mobilePaddingTop="16px"
+            className="max-w-7xl mx-auto"
+          />
+        </div>
+      </section>
+    )}
+
+    {hasFaqs && (
+      <section class="mt-10 md:mt-14">
+        <h2 class="font-title text-blue text-3xl md:text-5xl font-black leading-tight whitespace-pre-line">
+          {faqsTitle}
+        </h2>
+
+        <div class="mt-6 space-y-3">
+          {(faqs.items || []).map((item) => (
+            <details class="rounded-[18px] bg-blue text-white shadow-lg overflow-hidden">
+              <summary class="cursor-pointer list-none px-5 py-4 flex items-center justify-between gap-4">
+                <span class="font-title text-base md:text-lg font-black">{item.q}</span>
+                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+              </summary>
+              <div class="px-5 pb-5 text-white/90 leading-relaxed">
+                {item.a}
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <div class="mt-10">
+      <a href={`/${currentLang}/promos`} class="inline-block text-blue underline font-bold">{backText}</a>
+    </div>
+  </div>
+</div>

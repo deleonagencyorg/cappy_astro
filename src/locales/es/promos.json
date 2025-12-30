@@ -1,0 +1,119 @@
+{
+  "meta": {
+    "title": "Promociones Cappy",
+    "description": "Descubre las promociones activas de Cappy y participa para ganar increíbles premios."
+  },
+  "ui": {
+    "hero": {
+      "title": "Únete para",
+      "subtitle": "recibir ofertas",
+      "description": "Suscríbete y entérate de nuestras promos y novedades.",
+      "buttonText": "Suscribirme",
+      "buttonUrl": "/es/yummiesone",
+      "backgroundImage": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
+      "backgroundImageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp"
+    },
+    "sections": {
+      "activeTitle": "Descubre nuestras\npromos activas",
+      "endedTitle": "Descubre nuestras\npromos terminadas"
+    },
+    "labels": {
+      "activeBadge": "Activa",
+      "endedBadge": "Finalizada",
+      "validity": "Vigencia",
+      "viewPromo": "Ir a la promo"
+    },
+    "emptyState": {
+      "title": "Por ahora no hay promociones",
+      "description": "Vuelve pronto para descubrir nuevas promos."
+    },
+    "cta": {
+      "title": "¿Tienes alguna\nduda?",
+      "description": "Si necesitas ayuda o tienes preguntas, contáctanos. Estamos listos para escucharte.",
+      "buttonText": "Contáctanos",
+      "buttonUrl": "/es/contacto",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy leon41.webp"
+    }
+  },
+  "items": [
+       {
+      "id": "back-to-school-2025",
+      "slug": "back-to-school-2025",
+      "imagen": "https://snack.yummiespromociones.com/SnacksyummiesAssets/kv-bts.webp",
+      "descripcion": "Volver a clases es más divertido con Cappy, podrás ganar uno de los 8 kits escolares",
+      "url": [
+        "https://backtoschool.yummiespromociones.com"
+      ],
+      "terminos_y_condiciones_url": "https://snack.yummiespromociones.com/SnacksyummiesAssets/back-to-school-2025.pdf",
+      "fecha_inicio": "2025-12-20",
+      "fecha_fin": "2026-02-28",
+      "detail": {
+        "hero": {
+          "title": "Back to school",
+          "subtitle": "Con Cappy",
+          "description": "Volver a clases es más divertido con Cappy, podrás ganar uno de los 8 kits escolares",
+          "buttonText": "Registrarme ahora",
+          "buttonUrl": "https://backtoschool.yummiespromociones.com",
+          "backgroundImage": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
+          "backgroundImageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp",
+          "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp"
+        },
+        "about": {
+          "title": "¿De qué se trata?",
+          "content": [
+            "La promoción más emocionante para prepararte para el regreso a clases.",
+            "Compra snacks Cappy participantes, registra tus códigos y gana increíbles premios."
+          ]
+        },
+        "steps": {
+          "title": "Pasos para participar",
+          "items": [
+            {
+              "title": "1) Regístrate",
+              "description": "Crea tu cuenta en un momento y únete. ¡Rápido y fácil!"
+            },
+            {
+              "title": "2) Carga tu factura",
+              "description": "Sube tu factura/foto y deja que la magia haga lo suyo. ¡Así validamos tu participación!"
+            },
+            {
+              "title": "3) ¡Ya estás listo para ganar!",
+              "description": "Cruza los dedos, comparte la emoción y prepárate para celebrar."
+            }
+          ]
+        },
+        "prizes": {
+          "title": "Premios",
+          "items": [
+            {
+              "title": "Computadora portátil"
+            },
+             {
+              "title": "Impresora"
+            },
+             {
+              "title": "Mochila con útiles escolares"
+            }
+          ],
+          "buttonText": "Registrarme ahora",
+          "buttonUrl": "https://backtoschool.yummiespromociones.com"
+        },
+        "terms": {
+          "title": "Términos y condiciones",
+          "description": "Consulta los términos y condiciones completos en el documento oficial.",
+          "buttonText": "Ver términos y condiciones",
+          "url": "https://example.com/terminos-y-condiciones"
+        },
+        "faqs": {
+          "title": "¿Tienes dudas? te las respondemos",
+          "items": [
+           
+          ]
+        }
+      }
+    }
+  ]
+}

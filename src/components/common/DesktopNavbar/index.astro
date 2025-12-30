@@ -3,7 +3,7 @@ import LanguageSwitcher from '../../i18n/LanguageSwitcher.astro';
 import { t, type Locale } from '../../../i18n/i18n';
 import { logos } from '../../../config/assets';
 import type { HeaderColorConfig } from '../../../config/headerColors';
-import SocialMediaIcons from '../SocialMediaIcons/index.astro';
+import LazyImage from '../LazyImage.astro';
 
 export interface Props {
   currentLang: Locale;
@@ -17,33 +17,44 @@ const { pathname } = Astro.url;
 const currentPath = pathname;
 
 // Obtener los datos de social media y menú desde las traducciones
-const socialMedia = t('social_media', { namespace: 'common', locale: currentLang }) as any;
 const menuItems = t('menu_items', { namespace: 'common', locale: currentLang }) as any[];
+const cappyModal = t('cappy_modal', { namespace: 'common', locale: currentLang }) as any;
+
+const leftMenuItems = Array.isArray(menuItems) ? menuItems.slice(0, 2) : [];
+const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
 ---
 
 <!-- Desktop Navigation -->
-<nav class={`hidden md:flex items-center justify-between w-full py-3 px-6 bg-[#fcb800]`} data-current-lang={currentLang}>
-  <!-- Logo -->
-  <div class="flex-shrink-0">
+<nav class={`hidden md:grid grid-cols-3 items-center w-full py-3 px-6 ${headerColorConfig.backgroundColor}`} data-current-lang={currentLang}>
+  <!-- Left menu -->
+  <div class="flex items-center justify-start gap-8" id="desktop-menu-left">
+    {leftMenuItems.map((item: any) => (
+      <div class="relative group">
+        <a
+          href={item.href}
+          class={`font-title text-xl uppercase font-medium transition-colors py-2 px-1 rounded-md flex items-center ${headerColorConfig.textColor} ${headerColorConfig.hoverTextColor} ${!item.href.startsWith('#') && currentPath === item.href ? 'opacity-80' : ''}`}
+        >
+          {item.text}
+        </a>
+      </div>
+    ))}
+  </div>
+
+  <!-- Center logo -->
+  <div class="flex items-center justify-center">
     <a href={`/${currentLang}/`} class="block">
       <img src={logos.principal.url} alt={logos.principal.alt} class="h-20 w-auto" />
     </a>
   </div>
 
-  <!-- Navigation Items - Center -->
-  <div class="flex items-center justify-center flex-1 px-4 mx-auto">
-   
-  </div>
-
-  <!-- Right Side - Language Switcher and Yummies One -->
-  <div class="flex items-center space-x-5">
-    <div class="flex space-x-10" id="desktop-menu-items">
-      {menuItems && menuItems.map((item: any) => (
+  <!-- Right menu + controls -->
+  <div class="flex items-center justify-end gap-6">
+    <div class="flex items-center gap-8" id="desktop-menu-right">
+      {rightMenuItems.map((item: any) => (
         <div class="relative group">
           <a 
             href={item.href} 
-            class={`${headerColorConfig.textColor} font-title text-xl uppercase font-medium transition-colors py-2 px-3 rounded-md flex items-center hover:bg-quinary ${!item.href.startsWith('#') && currentPath === item.href ? 'bg-quinary' : ''}`}
-            style={`color: ${headerColorConfig.textColor};`}
+            class={`font-title text-xl uppercase font-medium transition-colors py-2 px-1 rounded-md flex items-center ${headerColorConfig.textColor} ${headerColorConfig.hoverTextColor} ${!item.href.startsWith('#') && currentPath === item.href ? 'opacity-80' : ''}`}
           >
             {item.text}
             {item.submenu && (
@@ -54,7 +65,7 @@ const menuItems = t('menu_items', { namespace: 'common', locale: currentLang }) 
             <div class="absolute left-0 mt-0 w-48 bg-white text-gray-800 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out invisible group-hover:visible z-50 py-1">
               {item.submenu.map((subItem: any) => (
                 <div class="relative group/submenu">
-                  <a href={subItem.href} class="block px-4 py-2 text-sm font-sans hover:bg-quinary flex justify-between items-center transition-colors duration-200 ${!subItem.href.startsWith('#') && currentPath === subItem.href ? 'bg-quinary' : ''}">
+                  <a href={subItem.href} class="px-4 py-2 text-sm font-sans hover:bg-quinary flex justify-between items-center transition-colors duration-200 ${!subItem.href.startsWith('#') && currentPath === subItem.href ? 'bg-quinary' : ''}">
                     {subItem.text}
                     {subItem.submenu && (
                       <svg class="w-3 h-3 ml-1 fill-current" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 01-1.414 0z" /></svg>
@@ -74,20 +85,17 @@ const menuItems = t('menu_items', { namespace: 'common', locale: currentLang }) 
         </div>
       ))}
     </div>
+    <button
+      id="cappyInfoModalOpen"
+      type="button"
+      class="cappy-modal-trigger p-0 bg-transparent border-0 cursor-pointer hover:opacity-80 transition-opacity"
+      aria-haspopup="dialog"
+      aria-controls="cappyInfoModal"
+      aria-label={cappyModal?.openLabel || 'Open Cappy info'}
+    >
+      <LazyImage src="https://snack.yummiespromociones.com/SnacksyummiesAssets/Gemini_Generated.webp" alt={logos.principal.alt} class="h-10 w-auto" />
+    </button>
     <!-- Language Switcher -->
     <LanguageSwitcher activeLocale={currentLang} headerColorConfig={headerColorConfig} />
-
-    <div class="hidden md:flex">
-      <SocialMediaIcons 
-        currentLang={currentLang} 
-        iconColor={headerColorConfig.isSpecialBackground ? 'black' : headerColorConfig.textColor.replace('text-', '')}
-        centered={false} 
-      />
-    </div>
-    
-    <!-- Yummies One -->
-    <!-- <a href="/yummies-one" class="flex items-center text-white hover:text-gray-300 uppercase text-sm font-medium">
-      <span>Yummies One</span>
-    </a> -->
   </div>
 </nav>

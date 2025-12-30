@@ -14,52 +14,52 @@ export interface HeaderColors {
 // Configuración por defecto
 export const defaultHeaderColors: HeaderColorConfig = {
   textColor: 'text-white',
-  backgroundColor: 'bg-blue',
+  backgroundColor: 'bg-yellow',
   hoverTextColor: 'hover:text-gray-300',
   hoverBackgroundColor: 'hover:bg-blue-800',
-  showMessageCarousel: true,
+  showMessageCarousel: false,
 };
 
 // Configuración específica por sección
 export const headerColors: HeaderColors = {
   // Configuración por defecto (se aplica a todas las páginas)
   default: {
-    textColor: 'text-white',
-    backgroundColor: 'bg-primary',
-    hoverTextColor: 'hover:text-gray-300',
+    textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-blue-800',
-    showMessageCarousel: true,
+    showMessageCarousel: false,
   },
   yummiesone: {
-    textColor: 'text-primary',
-    backgroundColor: 'bg-brown',
-    hoverTextColor: 'hover:text-secondary',
+      textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-primary',
     showMessageCarousel: false,
   },
   // Configuración para la página de nosotros
   nosotros: {
-    textColor: 'text-primary',
-    backgroundColor: 'bg-white',
-    hoverTextColor: 'hover:text-white',
+    textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-primary',
-    showMessageCarousel: true,
+    showMessageCarousel: false,
   },
   
   // Configuración para la página de brands
   brands: {
-    textColor: 'text-primary',
-    backgroundColor: 'bg-transparent',
-    hoverTextColor: 'hover:text-primary',
+       textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-blue-800',
     showMessageCarousel: false,
   },
   
   // Configuración para la página de blog
   blog: {
-    textColor: 'text-white',
-    backgroundColor: 'bg-orange',
-    hoverTextColor: 'hover:text-white',
+    textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-orange',
     showMessageCarousel: false,
   },
@@ -67,71 +67,53 @@ export const headerColors: HeaderColors = {
   // Configuración para la página de productos
   products: {
     textColor: 'text-black',
-    backgroundColor: 'bg-lemon',
-    hoverTextColor: 'hover:text-white',
-    hoverBackgroundColor: 'hover:bg-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
+    hoverBackgroundColor: 'hover:bg-blue-800',
     showMessageCarousel: false,
   },
   
   // Configuración para la página de recetas
   recipes: {
-    textColor: 'text-white',
-    backgroundColor: 'bg-orange',
-    hoverTextColor: 'hover:text-white',
+    textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-blue',
     showMessageCarousel: false,
   },
   
   // Configuración para la página de contacto
   contact: {
-    textColor: 'text-white',
-    backgroundColor: 'bg-primary',
-    hoverTextColor: 'hover:text-gray-300',
+    textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-blue-800',
     showMessageCarousel: false,
   },
   
-  // Configuración para la página de jurados
-  jurados: {
-    textColor: 'text-white',
-    backgroundColor: 'bg-primary',
-    hoverTextColor: 'hover:text-gray-300',
-    hoverBackgroundColor: 'hover:bg-blue-800',
-    showMessageCarousel: true,
-  },
-  
   // Configuración para la página de noticias
   news: {
-    textColor: 'text-white',
-    backgroundColor: 'bg-orange',
-    hoverTextColor: 'hover:text-white',
+    textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-blue',
     showMessageCarousel: false,
   },
   
   // Configuración para la página de inicio
   home: {
-    textColor: 'text-white',
-    backgroundColor: 'bg-primary',
-    hoverTextColor: 'hover:text-gray-300',
+    textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-blue-800',
-    showMessageCarousel: true,
-  },
-
-  // Configuración para Ziba's Creators
-  zibas_creators: {
-    textColor: 'text-white',
-    backgroundColor: 'bg-orange-500',
-    hoverTextColor: 'hover:text-orange-200',
-    hoverBackgroundColor: 'hover:bg-orange-600',
     showMessageCarousel: false,
   },
 
   // Configuración para la página de nosotros
   about: {
-    textColor: 'text-primary',
-    backgroundColor: 'bg-brown',
-    hoverTextColor: 'hover:text-white',
+    textColor: 'text-black',
+    backgroundColor: 'bg-yellow',
+    hoverTextColor: 'hover:text-blue',
     hoverBackgroundColor: 'hover:bg-secondary',
     showMessageCarousel: false
   },
@@ -172,14 +154,6 @@ export function getHeaderColors(pathname: string): HeaderColorConfig {
    
   if (path.includes('/about') || path.includes('/nosotros')) {
     return headerColors.about;
-  }
-  
-  if (path.includes('/zibas-creators')) {
-    return headerColors.zibas_creators;
-  }
-  
-  if (path.includes('/jurados')) {
-    return headerColors.jurados;
   }
   
   // Para la página de inicio (ruta raíz)

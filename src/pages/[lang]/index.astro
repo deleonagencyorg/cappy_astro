@@ -31,90 +31,69 @@ const ContentComponent = HomePageContent; // Asignación directa para la página
 
 // SEO Keywords based on language
 const seoKeywords = lang === 'es' 
-  ? 'snacks centroamérica, taqueritos, zambos, ranchitas, snacks honduras, snacks guatemala, marca líder snacks, snacks yummies'
-  : 'central america snacks, food, honduras snacks, guatemala snacks, leading snack brand, snacks yummies, taqueritos, zambos, ranchitas';
+  ? 'snacks centroamérica, taqueritos, zambos, ranchitas, snacks honduras, snacks guatemala, marca líder snacks, Cappy'
+  : 'central america snacks, food, honduras snacks, guatemala snacks, leading snack brand, Cappy, taqueritos, zambos, ranchitas';
 ---
 <MainLayout title={pageTitle} description={pageDescription}>
   <Fragment slot="head">
     <!-- SEO Meta Tags -->
     <meta name="keywords" content={seoKeywords}>
-    <meta name="author" content="Snacks Yummies">
+    <meta name="author" content="Cappy">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href={`https://zibaspapas.com/${lang}`}>
+    <link rel="canonical" href={`https://www.cappysnacks.com/${lang}/`}>
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content={`Snacks Yummies - ${pageTitle}`}>
+    <meta property="og:title" content={`Cappy - ${pageTitle}`}>
     <meta property="og:description" content={pageDescription}>
-    <meta property="og:image" content="https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-logo-3.webp">
-    <meta property="og:url" content={`https://zibaspapas.com/${lang}`}>
+    <meta property="og:image" content="https://www.cappysnacks.com/logo.png">
+    <meta property="og:url" content={`https://www.cappysnacks.com/${lang}/`}>
     <meta property="og:type" content="website"> 
-    <meta property="og:site_name" content="Ziba's">
+    <meta property="og:site_name" content="Cappy">
     <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'}>
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content={`Snacks Yummies - ${pageTitle}`}>
+    <meta name="twitter:title" content={`Cappy - ${pageTitle}`}>
     <meta name="twitter:description" content={pageDescription}>
-    <meta name="twitter:image" content="https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-logo-3.webp">
-    <meta name="twitter:site" content="@zibas">
+    <meta name="twitter:image" content="https://www.cappysnacks.com/logo.png">
     
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "Ziba's",
-      "alternateName": "Ziba's",
-      "url": "https://zibaspapas.com",
-      "logo": "https://snack.yummiespromociones.com/SnacksyummiesAssets/zibas-logo-3.webp",
-      "description": lang === 'es' ? "Marca líder de snacks en Centroamérica. Taqueritos, Zambos, Ranchitas. Calidad y sabor inigualable." : "Leading snack brand in Central America. Taqueritos, Zambos, Ranchitas. Unmatched quality and flavor.",
-      "foundingDate": "1990",
-      "areaServed": [
-        "Honduras",
-        "Guatemala", 
-        "El Salvador",
-        "Nicaragua",
-        "Costa Rica",
-        "República Dominicana"
-      ],
-      "brand": [
-        {
-          "@type": "Brand",
-          "name": "Ziba's",
-          "url": "https://zibaspapas.com"
-        }
-      ],
+      "name": "Cappy Snacks",
+      "alternateName": "Cappy Yummies",
+      "url": lang === 'es' ? "https://www.cappysnacks.com/es/" : "https://www.cappysnacks.com/en/",
+      "logo": "https://www.cappysnacks.com/logo.png",
+      "description": lang === 'es' ? "Cappy es la marca líder de snacks extruidos de maíz en Centroamérica, ofreciendo productos crujientes con sabores intensos y variados." : "Cappy is the leading brand of corn extruded snacks in Central America, offering crispy products with intense and varied flavors.",
       "sameAs": [
-        "https://www.facebook.com/zibaslatam",
-        "https://www.instagram.com/zibaslatam",
-        "https://www.tiktok.com/@zibaslatam", 
+        "https://www.facebook.com/SnacksYummies",
+        "https://www.instagram.com/snacksyummies",
+        "https://www.tiktok.com/@snacksyummies"
       ],
       "contactPoint": {
         "@type": "ContactPoint",
+        "contactType": "Customer Service",
         "telephone": "+504-2275-3370",
-        "contactType": "customer service",
-        "availableLanguage": ["Spanish", "English"],
-        "hoursAvailable": "Mo-Fr 08:00-17:00"
+        "areaServed": ["HN", "GT", "SV", "CR", "NI", "DO"]
       },
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Barrio Morazán, Frente a Plantas Tropicales, Bulevar Suyapa",
         "addressLocality": "Tegucigalpa",
-        "addressCountry": "Honduras"
+        "addressRegion": "Francisco Morazán",
+        "postalCode": "Honduras",
+        "addressCountry": "HN"
       }
     })}></script>
     
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "Ziba's",
-      "url": "https://zibaspapas.com",
-      "description": lang === 'es' ? "Sitio web oficial de Ziba's, la marca líder de snacks en Centroamérica" : "Official website of Ziba's, the leading snack brand in Central America",
-      "inLanguage": lang === 'es' ? "es-ES" : "en-US",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": `https://zibaspapas.com/${lang}/search?q={search_term_string}`,
-        "query-input": "required name=search_term_string"
-      }
+      "name": "Cappy Snacks",
+      "url": lang === 'es' ? "https://www.cappysnacks.com/es/" : "https://www.cappysnacks.com/en/",
+      "description": lang === 'es' ? "Cappy es la marca líder de snacks extruidos de maíz en Centroamérica, ofreciendo productos crujientes con sabores intensos y variados." : "Cappy is the leading brand of corn extruded snacks in Central America, offering crispy products with intense and varied flavors.",
+      "inLanguage": lang === 'es' ? "es-ES" : "en-US"
     })}></script>
     
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -125,7 +104,7 @@ const seoKeywords = lang === 'es'
           "@type": "ListItem",
           "position": 1,
           "name": lang === 'es' ? "Inicio" : "Home",
-          "item": `https://zibaspapas.com/${lang}`
+          "item": `https://www.cappysnacks.com/${lang}/`
         }
       ]
     })}></script>

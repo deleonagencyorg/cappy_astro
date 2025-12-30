@@ -3,6 +3,9 @@
 import LazyImage from '../../components/common/LazyImage.astro';
 // Component Imports
 import VideoCarousel from '../../components/common/VideoCarousel/index.astro';
+import BackToSchoolSection from '../../components/home/BackToSchoolSection.astro';
+import FullWidthVideoSection from '../../components/home/FullWidthVideoSection.astro';
+import GamesSection from '../../components/home/GamesSection.astro';
 import RecipesCarousel from "../../components/recipes/RecipesCarousel.astro";
 import ProductsCarousel from '../../components/common/ProductsCarousel/index.astro';
 import MasonryGallery from '../../components/gallery/MasonryGallery.astro';
@@ -35,21 +38,42 @@ const brandsAssets = t('', { namespace: 'brands', locale: currentLang }) || {};
 const newsAssets =  t('', { namespace: 'news', locale: currentLang }) || {};
 const products = t('items', { namespace: 'products', locale: currentLang }) || [];
 const brandsList = brandsAssets.brands || [];
-const zibasBrand = brandsList.find((brand: any) => brand.id === 'zibas');
-const zibasProducts = zibasBrand?.products || [];
+const cappyBrand = brandsList.find((brand: any) => brand.id === 'cappy');
+const cappyProducts = cappyBrand?.products || [];
+const games = t('games', { namespace: 'common', locale: currentLang }) || [];
 
 const commonAssets = t('assets.slider', { namespace: 'common', locale: currentLang }) || [];
 const slides = Array.isArray(commonAssets)
   ? commonAssets
-    .filter(asset => asset && typeof asset === 'object' && asset.desktop && asset.mobile)
-    .map(asset => ({
-      desktop: asset.desktop,
-      mobile: asset.mobile,
-      alt: asset.alt || "Ziba's",
-      title: asset.title || '',
-      subtitle: asset.description || '',
-      link: asset.url || asset.link || ''
-    }))
+    .filter(asset => asset && typeof asset === 'object')
+    .map(asset => {
+      if (asset.type === 'html' && asset.html) {
+        return {
+          type: 'html' as const,
+          html: asset.html
+        };
+      } else if (asset.type === 'video') {
+        return {
+          type: 'video' as const,
+          desktop: asset.desktop,
+          mobile: asset.mobile,
+          alt: asset.alt || "Cappy",
+          title: asset.title || '',
+          subtitle: asset.description || '',
+          link: asset.url || asset.link || ''
+        };
+      } else {
+        return {
+          type: 'image' as const,
+          desktop: asset.desktop,
+          mobile: asset.mobile,
+          alt: asset.alt || "Cappy",
+          title: asset.title || '',
+          subtitle: asset.description || '',
+          link: asset.url || asset.link || ''
+        };
+      }
+    })
   : [];
 
 // Load latest blog posts by current language from markdown
@@ -83,48 +107,97 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
 
 ---
 
-  <main class="w-full flex flex-col items-center justify-center mt-0">
+  <main class="bg-primary w-full flex flex-col items-center justify-center mt-0" data-page="home">
     <!-- Slider Section con VideoCarousel -->
-    <div class="relative w-full overflow-hidden">
-      <VideoCarousel 
-        slides={slides} 
-        height="100vh" 
-        mobileHeight="300px" 
-        showOverlay={true} 
-      />
+    <div class="relative w-full overflow-hidden py-4 bg-yellow" data-animate="bounce" data-animate-delay="0">
+      <div class="w-[90%] mx-auto h-[500px] overflow-hidden shadow-xl rounded-none md:rounded-[24px]">
+        <VideoCarousel 
+          slides={slides} 
+          height="500px" 
+          mobileHeight="500px" 
+          showOverlay={true}
+          width="100%"
+          borderRadius="0"
+        />
+      </div>
     </div>
     
-    <!-- Sección de Productos Zibas -->
-    {zibasProducts.length > 0 && (
-      <section id="products" class="w-full py-4 bg-blue pt-16">
+    <!-- Sección Back To School -->
+    <div data-animate="bounce" data-animate-delay="80">
+      <BackToSchoolSection />
+    </div>
+    
+    <!-- Sección de Productos Cappy -->
+    {cappyProducts.length > 0 && (
+      <section id="products" class="w-full bg-yellow py-12 md:py-16" data-animate="bounce" data-animate-delay="140">
         <div class="container mx-auto px-4">
-          {brandsAssets.home?.title && (
-          <div class="text-center mb-2 relative z-20" >
-            <h2 class="text-3xl md:text-4xl italic font-bold mb-3" style={`color: white`}>
-              {brandsAssets.home?.title}
-            </h2>
-            {brandsAssets.home?.subtitle && (
-              <h1 class="text-6xl md:text-9xl italic font-bold " style={`color: white`}>
-                {brandsAssets.home?.subtitle}
-              </h1>
-            )}
+          <div class="grid grid-cols-1 md:grid-cols-[35%_65%] gap-8 md:gap-12 items-center">
+            {/* Columna de textos */}
+            <div class="space-y-4 md:space-y-6">
+              {brandsAssets.home?.title && (
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-blue">
+                  {brandsAssets.home?.title}
+                </h2>
+              )}
+              {brandsAssets.home?.subtitle && (
+                <h3 class="text-2xl md:text-3xl font-bold text-blue">
+                  {brandsAssets.home?.subtitle}
+                </h3>
+              )}
+              <div class="pt-2">
+                <a
+                  href={`/${currentLang}/${currentLang === 'es' ? 'productos' : 'products'}`}
+                  class="inline-flex items-center px-8 py-3 rounded-full bg-blue text-white font-semibold text-sm md:text-base shadow-md hover:shadow-lg transition-all duration-200"
+                >
+                  {currentLang === 'es' ? 'Ver todos los productos' : 'View all products'}
+                </a>
+              </div>
+            </div>
+
+            {/* Columna del carrusel */}
+            <div class="w-full overflow-hidden">
+              <ProductsCarousel 
+                products={products}
+                color={'white'}
+                autoplay={true}
+                speed={4000}
+                slidesPerView={2}
+                spaceBetween={20}
+                loop={true}
+                className=""
+              />
+            </div>
           </div>
-        )}
-          <ProductsCarousel 
-            products={products}
-            color={'white'}
-            autoplay={true}
-            speed={4000}
-            slidesPerView={3}
-            spaceBetween={30}
-            loop={true}
-            className="max-w-7xl mx-auto mb-8"
-          />
         </div>
       </section>
     )}
+
+    <!-- Sección de Juegos -->
+    <div data-animate="bounce" data-animate-delay="220">
+      <GamesSection 
+        games={games}
+        title={currentLang === 'es' ? 'Diviertete con cappy' : 'Have fun with cappy'}
+        howToPlay={{
+          title: currentLang === 'es' ? '¿Cómo participar?' : 'How to participate?',
+          steps: currentLang === 'es' 
+            ? [
+                'Juega',
+                'Toma captura de tu puntaje.',
+                'Comparte y comenta en nuestras redes tu experiencia'
+              ]
+            : [
+                'Play',
+                'Take a screenshot of your score.',
+                'Share and comment on our social media about your experience'
+              ]
+        }}
+        ctaText={currentLang === 'es' ? 'Jugar ahora mismo' : 'Play now'}
+        ctaUrl={`/${currentLang}/${currentLang === 'es' ? 'juegos' : 'games'}`}
+      />
+    </div>
+
     <!-- Sección de recetas con carrusel -->
-    <section id="recipes" class="w-full py-12" transition:animate="slide">
+    <!-- <section id="recipes" class="w-full py-12" transition:animate="slide">
       <div class="container mx-auto px-4">
         {recipesAssets.home?.title && (
           <div class="text-center mb-16 relative z-20" >
@@ -143,105 +216,12 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
           textButton={recipesAssets.home?.view_more || 'Ver Todas'}
         />
       </div>
-    </section>
+    </section> -->
 
 
     <!-- Sección Gallery -->
-    <section id="gallery" class="bg-pink w-full py-12" transition:animate="slide">
-      <div class="container mx-auto px-4">
-        {Array.isArray(galleryAssets.images) && galleryAssets.images.length > 0 && (
-          <MasonryGallery 
-            items={galleryAssets.images}
-            columns={3}
-            title={galleryAssets.title}
-            className=""
-          />
-        )}
-      </div>
-    </section>
 
 
-
-
-    <!-- Sección News -->
-      <section id="news" class="bg-yellow w-full py-12 hidden" transition:animate="slide">
-  <div class="container mx-auto px-4">
-    {newsAssets.home.title && (
-      <div class="text-center mb-16 relative z-20 overflow-hidden" >
-          <div class="absolute left-0 top-0 w-[100%] h-[100%] -z-10 pointer-events-none -ml-[250px]">
-            <PixelGrid
-               pixelSize={20}
-               density={0.7}
-               introDuration={800}
-               loopInterval={1100}
-               mutateAmount={50}
-             />
-          </div>
-        <h2 class="text-3xl md:text-4xl italic font-bold mb-4 text-brown relative z-10">
-          {newsAssets.home.title}
-        </h2>
-        {newsAssets.home.subtitle && (
-          <h1 class="text-6xl md:text-9xl italic font-bold mb-4 text-brown relative z-10 flex items-center justify-center">
-            
-            <span class="font-title pl-2 relative z-10">{newsAssets.home.subtitle}</span>
-          </h1>
-        
-        )}
-      </div>
-    )}
-
-    {latestBlogPosts.length === 0 ? (
-      <div class="max-w-5xl mx-auto text-center py-12">
-        <p class="text-brown text-lg md:text-xl font-semibold">{noNewsText}</p>
-      </div>
-    ) : (
-      <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 items-start">
-          <!-- Columna izquierda: 3 más recientes -->
-          <div class="md:col-span-2">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-brown font-title text-lg md:text-xl font-bold uppercase tracking-wide">{topNewsLabel}</h3>
-              <div class="flex-1 ml-4 border-b border-brown/40"></div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {latestBlogPosts.slice(0,3).map((post) => (
-                <BlogCard
-                  image={post.image || '/images/blog/placeholder.jpg'}
-                  title={post.title}
-                  id={post.id}
-                  slug={post.slug}
-                />
-              ))}
-            </div>
-          </div>
-
-          <!-- Columna derecha: destacados (posiciones 3 y 4) -->
-          <div class="md:col-span-1">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-brown font-title text-lg md:text-xl font-bold uppercase tracking-wide">{featuredLabel}</h3>
-              <div class="flex-1 ml-4 border-b border-brown/40"></div>
-            </div>
-            <div class="grid grid-cols-1 gap-6">
-              {latestBlogPosts.slice(3,5).map((post) => (
-                <BlogCard
-                  image={post.image || '/images/blog/placeholder.jpg'}
-                  title={post.title}
-                  id={post.id}
-                  slug={post.slug}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-        <div class="flex justify-center mt-10">
-          <a href={`/${currentLang}/blog`} class="border-2 border-brown text-brown py-2 px-8 rounded-full text-center text-sm md:text-base font-medium hover:bg-brown hover:text-white transition-colors">
-            {currentLang==='es' ? 'Ver más' : 'View more'}
-          </a>
-        </div>
-      </div>
-    )}
-  </div>
-</section>
 
 
     <!-- Sección Abaout -->
@@ -267,10 +247,10 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
         <p class="text-white font-sans  text-xl leading-relaxed w-100%">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante bibendum finibus. Nullam nec metus vel ante bibendum finibus.</p>
       </div>
       <div>
-        <LazyImage src="https://snack.yummiespromociones.com/zibas/gallery16.webp" class="py-4" alt="Ziba's" />
+        <LazyImage src="https://snack.yummiespromociones.com/cappy/gallery16.webp" class="py-4" alt="Cappy" />
       </div>
       <div>
-        <LazyImage src="https://snack.yummiespromociones.com/zibas/gallery15.webp" class="py-4" alt="Ziba's" />
+        <LazyImage src="https://snack.yummiespromociones.com/cappy/gallery15.webp" class="py-4" alt="Cappy" />
         <h4 class="md:text-4xl text-lg font-bold text-white font-title">LOREM IPSUM DOLOR</h4>
         <p class="text-white font-sans text-xl  leading-relaxed w-100%">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante bibendum finibus. Nullam nec metus vel ante bibendum finibus.</p>
       </div>
@@ -278,8 +258,9 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
   </div>
 </section> -->
 
-
-
-
+    <!-- Sección de Video a Pantalla Completa -->
+    <div data-animate="bounce" data-animate-delay="300">
+      <FullWidthVideoSection />
+    </div>
 
   </main>

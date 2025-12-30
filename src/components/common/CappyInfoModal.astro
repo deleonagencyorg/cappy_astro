@@ -1,0 +1,138 @@
+---
+import { t, type Locale } from '../../i18n/i18n';
+import { logos } from '../../config/assets';
+
+export interface Props {
+  currentLang: Locale;
+}
+
+const { currentLang } = Astro.props;
+const cappyModal = t('cappy_modal', { namespace: 'common', locale: currentLang }) as any;
+---
+
+<!-- Modal con z-index máximo, completamente fuera del flujo del header -->
+<div 
+  id="cappyInfoModal" 
+  class="fixed inset-0 hidden"
+  style="z-index: 999999 !important;"
+  role="dialog" 
+  aria-modal="true"
+  aria-labelledby="cappyModalTitle"
+>
+  <!-- Backdrop oscuro -->
+  <div 
+    class="cappy-info-modal-backdrop fixed inset-0 bg-black/70"
+    style="z-index: 999998 !important;"
+  ></div>
+  
+  <!-- Contenedor del modal centrado -->
+  <div 
+    class="fixed inset-0 flex items-center justify-center p-4 overflow-y-auto"
+    style="z-index: 999999 !important;"
+  >
+    <!-- Contenido del modal -->
+    <div 
+      class="relative w-full max-w-4xl rounded-2xl bg-primary overflow-hidden shadow-2xl transform transition-all"
+      style="z-index: 999999 !important;"
+    >
+      <!-- Botón cerrar -->
+      <button 
+        type="button" 
+        class="cappy-info-modal-close absolute top-4 right-4 z-10 text-black hover:text-secondary transition-colors p-2 rounded-full hover:bg-black/10"
+        aria-label={cappyModal?.closeLabel || 'Close'}
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- Grid de contenido: imagen + texto -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-0 items-center">
+        <!-- Columna izquierda: Imagen -->
+        <div class="flex justify-center p-6 md:p-10">
+          <img
+            src="https://snack.yummiespromociones.com/SnacksyummiesAssets/Gemini_Generated.webp"
+            alt={cappyModal?.imageAlt || logos.principal.alt}
+            class="w-40 md:w-72 h-auto"
+            loading="eager"
+          />
+        </div>
+        
+        <!-- Columna derecha: Texto -->
+        <div class="p-6 md:p-10">
+          <h2 
+            id="cappyModalTitle"
+            class="font-title text-secondary text-4xl md:text-5xl leading-tight mb-4"
+          >
+            {cappyModal?.title}
+          </h2>
+          <div class="space-y-4 text-black text-sm md:text-base font-sans">
+            {Array.isArray(cappyModal?.paragraphs) ? (
+              cappyModal.paragraphs.map((p: string) => <p>{p}</p>)
+            ) : (
+              <p>{cappyModal?.description}</p>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    function initCappyModal() {
+      const modal = document.getElementById('cappyInfoModal');
+      const openButtons = document.querySelectorAll('.cappy-modal-trigger');
+      const closeButtons = document.querySelectorAll('.cappy-info-modal-close');
+      const backdrop = document.querySelector('.cappy-info-modal-backdrop');
+
+      if (!modal || openButtons.length === 0) return;
+
+      // Prevenir inicialización múltiple
+      if (modal.dataset.initialized === 'true') return;
+      modal.dataset.initialized = 'true';
+
+      function openModal(e) {
+        if (e) e.preventDefault();
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+
+      // Event listeners para todos los botones de apertura
+      openButtons.forEach(function(btn) {
+        btn.addEventListener('click', openModal);
+      });
+
+      closeButtons.forEach(function(btn) {
+        btn.addEventListener('click', closeModal);
+      });
+
+      if (backdrop) {
+        backdrop.addEventListener('click', closeModal);
+      }
+
+      // Cerrar con ESC
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+          closeModal();
+        }
+      });
+    }
+
+    // Inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCappyModal);
+    } else {
+      initCappyModal();
+    }
+    
+    // Re-inicializar en navegación de Astro
+    document.addEventListener('astro:page-load', initCappyModal);
+  })();
+</script>

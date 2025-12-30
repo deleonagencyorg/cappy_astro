@@ -1,0 +1,39 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import PromoDetailView from '../../../views/Promos/Detail/index.astro';
+import { setLocale, type Locale, t } from '../../../i18n/i18n';
+
+export async function getStaticPaths() {
+  const paths: any[] = [];
+
+  const locales: Locale[] = ['es', 'en'];
+  for (const locale of locales) {
+    const promos = (t('items', { namespace: 'promos', locale: locale as Locale }) || []) as any[];
+    for (const promo of promos) {
+      if (!promo?.slug) continue;
+      paths.push({
+        params: { lang: locale, slug: promo.slug },
+        props: { currentLang: locale }
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { currentLang } = Astro.props as { currentLang: Locale };
+const { lang, slug } = Astro.params as { lang: Locale; slug: string };
+
+setLocale(lang as Locale);
+
+const promosMeta = t('meta', { namespace: 'promos', locale: currentLang }) || {};
+const promos = (t('items', { namespace: 'promos', locale: currentLang }) || []) as any[];
+const promo = promos.find((p) => p.slug === slug);
+
+const title = promo ? `${promosMeta.title || 'Promociones Cappy'} - ${promo.descripcion}` : (promosMeta.title || 'Promociones Cappy');
+const description = promo ? promo.descripcion : (promosMeta.description || 'Promociones Cappy');
+---
+
+<MainLayout title={title} description={description}>
+  <PromoDetailView currentLang={currentLang} slug={slug} />
+</MainLayout>
