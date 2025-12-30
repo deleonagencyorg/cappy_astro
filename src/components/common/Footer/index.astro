@@ -22,16 +22,7 @@ const headline = currentLang === 'es'
 // Imagen del león (mock). Si deseas otra URL, dime y la cambio.
 const lionImageUrl = 'https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy leon41.webp';
 
-const supportTitle = currentLang === 'es' ? 'Soporte' : 'Support';
-const homeTitle = currentLang === 'es' ? 'Inicio' : 'Home';
-
-const privacyText = currentLang === 'es' ? 'Política de privacidad' : 'Privacy Policy';
-const termsText = currentLang === 'es' ? 'Términos de uso' : 'Terms of Use';
-const cookiesText = currentLang === 'es' ? 'Política de cookies' : 'Cookie Policy';
-
-const privacyUrl = t('footer.privacy_policy_url', { namespace: 'common', locale: currentLang }) || (currentLang === 'es' ? '/es/politica-privacidad' : '/en/privacy-policy');
-const termsUrl = currentLang === 'es' ? '/es/terminos-y-condiciones' : '/en/terms-and-conditions';
-const cookiesUrl = currentLang === 'es' ? '/es/politica-cookies' : '/en/cookie-policy';
+const sitemapTitle = currentLang === 'es' ? 'Mapa del sitio' : 'Sitemap';
 ---
 
 {loading ? (
@@ -47,24 +38,14 @@ const cookiesUrl = currentLang === 'es' ? '/es/politica-cookies' : '/en/cookie-p
               {headline}
             </h3>
 
-            <div class="mt-10 grid grid-cols-2 gap-10">
-              <div>
-                <h4 class="font-title text-2xl font-bold text-blue">{homeTitle}</h4>
-                <div class="mt-4 flex flex-col gap-2">
-                  {menuItems.map((item: any) => (
-                    <a href={item.href} class="font-sans text-base hover:opacity-80">
-                      {item.text}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h4 class="font-title text-2xl font-bold text-blue">{supportTitle}</h4>
-                <div class="mt-4 flex flex-col gap-2">
-                  <a href={privacyUrl} class="font-sans text-base hover:opacity-80">{privacyText}</a>
-                  <a href={termsUrl} class="font-sans text-base hover:opacity-80">{termsText}</a>
-                  <a href={cookiesUrl} class="font-sans text-base hover:opacity-80">{cookiesText}</a>
-                </div>
+            <div class="mt-10">
+              <h4 class="font-title text-2xl font-bold text-blue mb-4">{sitemapTitle}</h4>
+              <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+                {menuItems.map((item: any) => (
+                  <a href={item.href} class="font-sans text-base hover:text-blue transition-colors">
+                    {item.text}
+                  </a>
+                ))}
               </div>
             </div>
 
