@@ -8,35 +8,29 @@ export default function BackToSchoolRedirect({
   baseUrl = 'https://backtoschool.yummiespromociones.com/' 
 }: BackToSchoolRedirectProps) {
   useEffect(() => {
-    const destination = baseUrl + (window.location.search || '');
+    const searchParams = window.location.search;
+    const destination = baseUrl + searchParams;
+    
+    // Enviar evento a GTM si hay parámetros UTM
+    if (searchParams && typeof window !== 'undefined' && (window as any).dataLayer) {
+      const params = new URLSearchParams(searchParams);
+      const hasUtm = Array.from(params.keys()).some(key => key.startsWith('utm_'));
+      
+      if (hasUtm) {
+        (window as any).dataLayer.push({
+          event: 'backtoschool_redirect',
+          destination: destination,
+          utm_source: params.get('utm_source') || '',
+          utm_medium: params.get('utm_medium') || '',
+          utm_campaign: params.get('utm_campaign') || '',
+        });
+      }
+    }
+    
+    // Redirección inmediata
     window.location.replace(destination);
   }, [baseUrl]);
 
-  return (
-    <div style={{ 
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center', 
-      minHeight: '100vh',
-      fontFamily: 'system-ui, -apple-system, sans-serif',
-      backgroundColor: '#f5f5f5'
-    }}>
-      <div style={{ textAlign: 'center' }}>
-        <p style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>
-          Redirigiendo a Back to School...
-        </p>
-        <noscript>
-          <a 
-            href={baseUrl}
-            style={{ 
-              color: '#00601b', 
-              textDecoration: 'underline' 
-            }}
-          >
-            Continuar
-          </a>
-        </noscript>
-      </div>
-    </div>
-  );
+  // No renderizar nada para evitar flash de contenido
+  return null;
 }
