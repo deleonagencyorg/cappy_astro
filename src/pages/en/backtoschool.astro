@@ -1,0 +1,16 @@
+---
+import BackToSchoolRedirect from '../../components/BackToSchoolRedirect';
+export const prerender = true;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Back to School - Redirecting...</title>
+    <meta http-equiv="refresh" content="0; url=https://backtoschool.yummiespromociones.com/" />
+  </head>
+  <body>
+    <BackToSchoolRedirect client:only="react" />
+  </body>
+</html>
