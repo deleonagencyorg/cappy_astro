@@ -32,8 +32,10 @@ const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
   <div class="flex items-center justify-start gap-8" id="desktop-menu-left">
     {currentLang === 'es' && (
       <a
-        href="/es/backtoschool"
+        href="https://backtoschool.yummiespromociones.com/"
+        id="back-to-school-btn"
         class="font-title text-xl uppercase font-medium py-2 px-3 rounded-md bg-[#E30613] text-white hover:opacity-90 transition-colors"
+        data-preserve-utm="true"
       >
         Back to School
       </a>
@@ -133,3 +135,40 @@ const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
     <LanguageSwitcher activeLocale={currentLang} headerColorConfig={headerColorConfig} />
   </div>
 </nav>
+
+<script>
+  // Preservar UTMs en el botón Back to School
+  document.addEventListener('DOMContentLoaded', () => {
+    const backToSchoolBtn = document.getElementById('back-to-school-btn');
+    if (backToSchoolBtn && backToSchoolBtn.dataset.preserveUtm === 'true') {
+      backToSchoolBtn.addEventListener('click', (e) => {
+        const currentUrl = new URL(window.location.href);
+        const searchParams = currentUrl.searchParams;
+        
+        // Si hay parámetros UTM, agregarlos a la URL de destino
+        if (searchParams.toString()) {
+          const hasUtm = Array.from(searchParams.keys()).some(key => key.startsWith('utm_'));
+          
+          if (hasUtm) {
+            e.preventDefault();
+            const baseUrl = backToSchoolBtn.getAttribute('href') || 'https://backtoschool.yummiespromociones.com/';
+            const destination = baseUrl + '?' + searchParams.toString();
+            
+            // Enviar evento a GTM si está disponible
+            if (typeof window !== 'undefined' && (window as any).dataLayer) {
+              (window as any).dataLayer.push({
+                event: 'backtoschool_header_click',
+                destination: destination,
+                utm_source: searchParams.get('utm_source') || '',
+                utm_medium: searchParams.get('utm_medium') || '',
+                utm_campaign: searchParams.get('utm_campaign') || '',
+              });
+            }
+            
+            window.location.href = destination;
+          }
+        }
+      });
+    }
+  });
+</script>

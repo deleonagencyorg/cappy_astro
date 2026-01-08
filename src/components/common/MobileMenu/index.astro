@@ -38,6 +38,16 @@ const closeMenuLabel = t('menu_labels.close_main_menu', { namespace: 'common', l
       </button>
     </div>
     <nav class="flex flex-col items-center space-y-3 text-center w-full text-black" id="mobile-menu-items">
+      {currentLang === 'es' && (
+        <a
+          href="https://backtoschool.yummiespromociones.com/"
+          id="back-to-school-btn-mobile"
+          class="font-title text-xl uppercase font-medium py-2 px-4 rounded-md bg-[#E30613] text-white hover:opacity-90 transition-colors w-full max-w-xs"
+          data-preserve-utm="true"
+        >
+          Back to School
+        </a>
+      )}
       {menuItems && menuItems.map((item: any) => (
         <div class="w-full">
           <div class="flex items-center justify-center text-black">
@@ -246,10 +256,54 @@ function initMobileMenu() {
   });
 }
 
+// Función para preservar UTMs en el botón Back to School móvil
+function initBackToSchoolButton() {
+  const backToSchoolBtn = document.getElementById('back-to-school-btn-mobile');
+  if (backToSchoolBtn && backToSchoolBtn.dataset.preserveUtm === 'true') {
+    backToSchoolBtn.addEventListener('click', (e) => {
+      const currentUrl = new URL(window.location.href);
+      const searchParams = currentUrl.searchParams;
+      
+      // Si hay parámetros UTM, agregarlos a la URL de destino
+      if (searchParams.toString()) {
+        const hasUtm = Array.from(searchParams.keys()).some(key => key.startsWith('utm_'));
+        
+        if (hasUtm) {
+          e.preventDefault();
+          const baseUrl = backToSchoolBtn.getAttribute('href') || 'https://backtoschool.yummiespromociones.com/';
+          const destination = baseUrl + '?' + searchParams.toString();
+          
+          // Enviar evento a GTM si está disponible
+          if (typeof window !== 'undefined' && (window as any).dataLayer) {
+            (window as any).dataLayer.push({
+              event: 'backtoschool_mobile_click',
+              destination: destination,
+              utm_source: searchParams.get('utm_source') || '',
+              utm_medium: searchParams.get('utm_medium') || '',
+              utm_campaign: searchParams.get('utm_campaign') || '',
+            });
+          }
+          
+          window.location.href = destination;
+        }
+      }
+    });
+  }
+}
+
 // Ejecutar cuando se carga la página
-document.addEventListener('DOMContentLoaded', initMobileMenu);
+document.addEventListener('DOMContentLoaded', () => {
+  initMobileMenu();
+  initBackToSchoolButton();
+});
 
 // Ejecutar cuando Astro navega a una nueva página
-document.addEventListener('astro:page-load', initMobileMenu);
-document.addEventListener('astro:after-swap', initMobileMenu);
+document.addEventListener('astro:page-load', () => {
+  initMobileMenu();
+  initBackToSchoolButton();
+});
+document.addEventListener('astro:after-swap', () => {
+  initMobileMenu();
+  initBackToSchoolButton();
+});
 </script>
