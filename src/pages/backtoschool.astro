@@ -1,5 +1,4 @@
 ---
-import BackToSchoolRedirect from '../components/BackToSchoolRedirect';
 export const prerender = true;
 ---
 
@@ -8,10 +7,34 @@ export const prerender = true;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Back to School - Redirigiendo...</title>
+    <title>Redirigiendo...</title>
+    <script>
+      (function() {
+        const baseUrl = 'https://backtoschool.yummiespromociones.com/';
+        const searchParams = window.location.search;
+        const destination = baseUrl + searchParams;
+        
+        // Enviar evento a GTM si hay UTMs
+        if (searchParams && window.dataLayer) {
+          const params = new URLSearchParams(searchParams);
+          const hasUtm = Array.from(params.keys()).some(key => key.startsWith('utm_'));
+          
+          if (hasUtm) {
+            window.dataLayer.push({
+              event: 'backtoschool_redirect',
+              destination: destination,
+              utm_source: params.get('utm_source') || '',
+              utm_medium: params.get('utm_medium') || '',
+              utm_campaign: params.get('utm_campaign') || '',
+            });
+          }
+        }
+        
+        // Redirección inmediata
+        window.location.replace(destination);
+      })();
+    </script>
     <meta http-equiv="refresh" content="0; url=https://backtoschool.yummiespromociones.com/" />
   </head>
-  <body>
-    <BackToSchoolRedirect client:only="react" />
-  </body>
+  <body style="margin:0;padding:0;height:0;overflow:hidden;"></body>
 </html>
