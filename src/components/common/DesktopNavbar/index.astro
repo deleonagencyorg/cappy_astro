@@ -27,14 +27,14 @@ const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
 ---
 
 <!-- Desktop Navigation -->
-<nav class={`hidden md:grid grid-cols-3 items-center w-full py-3 px-6 ${headerColorConfig.backgroundColor}`} data-current-lang={currentLang}>
+<nav class={`hidden md:grid grid-cols-[1fr_auto_1fr] items-center w-full py-3 px-4 md:px-5 lg:px-6 ${headerColorConfig.backgroundColor}`} data-current-lang={currentLang}>
   <!-- Left menu -->
-  <div class="flex items-center justify-start gap-8" id="desktop-menu-left">
+  <div class="flex items-center justify-start gap-6 xl:gap-8" id="desktop-menu-left">
     {currentLang === 'es' && (
       <a
         href="https://backtoschool.yummiespromociones.com/"
         id="back-to-school-btn"
-        class="font-title text-xl uppercase font-medium py-2 px-3 rounded-md bg-[#E30613] text-white hover:opacity-90 transition-colors"
+        class="font-title text-base lg:text-lg xl:text-xl uppercase font-medium py-2 px-3 rounded-md bg-[#E30613] text-white hover:opacity-90 transition-colors md:w-24 lg:w-28 text-center leading-tight whitespace-normal break-words flex items-center justify-center"
         data-preserve-utm="true"
       >
         Back to School
@@ -44,7 +44,7 @@ const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
       <div class="relative group">
         <a
           href={item.href}
-          class={`font-title text-xl uppercase font-medium transition-colors py-2 px-1 rounded-md flex items-center ${headerColorConfig.textColor} ${headerColorConfig.hoverTextColor} ${!item.href.startsWith('#') && currentPath === item.href ? 'opacity-80' : ''}`}
+          class={`font-title text-base lg:text-lg xl:text-xl uppercase font-medium transition-colors py-2 px-1 rounded-md flex items-center ${headerColorConfig.textColor} ${headerColorConfig.hoverTextColor} ${!item.href.startsWith('#') && currentPath === item.href ? 'opacity-80' : ''}`}
         >
           {item.text}
         </a>
@@ -55,18 +55,18 @@ const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
   <!-- Center logo -->
   <div class="flex items-center justify-center">
     <a href={`/${currentLang}/`} class="block">
-      <img src={logos.principal.url} alt={logos.principal.alt} class="h-20 w-auto" />
+      <img src={logos.principal.url} alt={logos.principal.alt} class="w-auto md:h-6 lg:h-8 xl:h-12 2xl:h-20" />
     </a>
   </div>
 
   <!-- Right menu + controls -->
-  <div class="flex items-center justify-end gap-6">
-    <div class="flex items-center gap-8" id="desktop-menu-right">
+  <div class="flex items-center justify-end gap-5">
+    <div class="flex items-center gap-4 md:gap-5 xl:gap-8" id="desktop-menu-right">
       {rightMenuItems.map((item: any) => (
         <div class="relative group">
           <a 
             href={item.href} 
-            class={`font-title text-xl uppercase font-medium transition-colors py-2 px-1 rounded-md flex items-center ${headerColorConfig.textColor} ${headerColorConfig.hoverTextColor} ${!item.href.startsWith('#') && currentPath === item.href ? 'opacity-80' : ''}`}
+            class={`font-title text-base lg:text-lg xl:text-xl uppercase font-medium transition-colors py-2 px-1 rounded-md flex items-center ${headerColorConfig.textColor} ${headerColorConfig.hoverTextColor} ${!item.href.startsWith('#') && currentPath === item.href ? 'opacity-80' : ''}`}
           >
             {item.text}
             {item.submenu && (
@@ -105,7 +105,7 @@ const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
       aria-controls="cappyInfoModal"
       aria-label={cappyModal?.openLabel || 'Open Cappy info'}
     >
-      <LazyImage src="https://snack.yummiespromociones.com/SnacksyummiesAssets/Gemini_Generated.webp" alt={logos.principal.alt} class="h-10 w-auto" />
+      <LazyImage src="https://snack.yummiespromociones.com/SnacksyummiesAssets/Gemini_Generated.webp" alt={logos.principal.alt} class="md:h-8 xl:h-10 w-auto" />
     </button>
     <!-- Social Media Icons -->
     <div class="flex items-center gap-3">
@@ -117,7 +117,7 @@ const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
           title={sm.name}
           class="hover:opacity-80 transition-opacity"
         >
-          <svg class="w-5 h-5 fill-[#E30613]" viewBox="0 0 24 24">
+          <svg class="md:w-4 md:h-4 xl:w-5 xl:h-5 fill-[#E30613]" viewBox="0 0 24 24">
             {sm.name === 'Facebook' && (
               <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
             )}
