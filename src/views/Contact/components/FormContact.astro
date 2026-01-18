@@ -19,6 +19,11 @@ const locale = currentLang || getLocale();
 // Get contact data from locale
 const contact = locale === 'es' ? contactEs : contactEn;
 
+// API configuration
+const apiHost = import.meta.env.PUBLIC_CONTACT_API_HOST || 'https://api-crm.yummiespromociones.com/api';
+const apiToken = import.meta.env.PUBLIC_CONTACT_API_TOKEN || '';
+const contactFormPath = import.meta.env.PUBLIC_CONTACT_FORM_PATH || '/api/v1/auth/email/custom';
+
 // Define countries and their departments
 const countriesData = {
   'Guatemala': [
@@ -81,6 +86,7 @@ const contactReasonPlaceholder = locale === 'es' ? 'Selecciona el tipo de consul
       </label>
       <select 
         name="contactReason" 
+        id="contactReasonSelect"
         required
         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
       >
@@ -180,6 +186,9 @@ const contactReasonPlaceholder = locale === 'es' ? 'Selecciona el tipo de consul
       ></textarea>
     </div>
     
+    <!-- Dynamic Fields Container -->
+    <div id="dynamicFields" class="space-y-4"></div>
+    
     <!-- Submit Button -->
     <button 
       type="submit"
@@ -190,62 +199,390 @@ const contactReasonPlaceholder = locale === 'es' ? 'Selecciona el tipo de consul
   </form>
 </div>
 
-<script define:vars={{ countriesData, departmentPlaceholder }}>
-  // Dynamic department loading based on country selection
-  document.addEventListener('DOMContentLoaded', function() {
-    const countrySelect = document.getElementById('countrySelect');
-    const departmentSelect = document.getElementById('departmentSelect');
+<script is:inline data-department-placeholder={departmentPlaceholder} data-country-placeholder={countryPlaceholder} data-locale={locale} data-api-host={apiHost} data-api-token={apiToken} data-contact-form-path={contactFormPath}>
+(function() {
+  // Get script data attributes
+  const scriptTag = document.currentScript;
+  const departmentPlaceholder = scriptTag?.getAttribute('data-department-placeholder') || 'Primero selecciona un país';
+  const countryPlaceholder = scriptTag?.getAttribute('data-country-placeholder') || 'Selecciona tu país';
+  const locale = scriptTag?.getAttribute('data-locale') || 'es';
+  const apiHost = scriptTag?.getAttribute('data-api-host') || 'https://api-crm.yummiespromociones.com/api';
+  const apiToken = scriptTag?.getAttribute('data-api-token') || '';
+  const contactFormPath = scriptTag?.getAttribute('data-contact-form-path') || '/api/v1/auth/email/custom';
+  
+  // Countries data
+  const countriesData = {
+    'Guatemala': [
+      'Guatemala', 'Alta Verapaz', 'Baja Verapaz', 'Chimaltenango', 'Chiquimula',
+      'El Progreso', 'Escuintla', 'Huehuetenango', 'Izabal', 'Jalapa',
+      'Jutiapa', 'Petén', 'Quetzaltenango', 'Quiché', 'Retalhuleu',
+      'Sacatepéquez', 'San Marcos', 'Santa Rosa', 'Sololá', 'Suchitepéquez',
+      'Totonicapán', 'Zacapa'
+    ],
+    'El Salvador': [
+      'Ahuachapán', 'Cabañas', 'Chalatenango', 'Cuscatlán', 'La Libertad',
+      'La Paz', 'La Unión', 'Morazán', 'San Miguel', 'San Salvador',
+      'San Vicente', 'Santa Ana', 'Sonsonate', 'Usulután'
+    ],
+    'Honduras': [
+      'Atlántida', 'Choluteca', 'Colón', 'Comayagua', 'Copán', 'Cortés',
+      'El Paraíso', 'Francisco Morazán', 'Gracias a Dios', 'Intibucá',
+      'Islas de la Bahía', 'La Paz', 'Lempira', 'Ocotepeque', 'Olancho',
+      'Santa Bárbara', 'Valle', 'Yoro'
+    ],
+    'Nicaragua': [
+      'Boaco', 'Carazo', 'Chinandega', 'Chontales', 'Estelí', 'Granada',
+      'Jinotega', 'León', 'Madriz', 'Managua', 'Masaya', 'Matagalpa',
+      'Nueva Segovia', 'Río San Juan', 'Rivas', 'Región Autónoma del Atlántico Norte',
+      'Región Autónoma del Atlántico Sur'
+    ],
+    'Costa Rica': [
+      'San José', 'Alajuela', 'Cartago', 'Heredia', 'Guanacaste', 'Puntarenas', 'Limón'
+    ],
+    'República Dominicana': [
+      'Distrito Nacional', 'Azua', 'Baoruco', 'Barahona', 'Dajabón', 'Duarte',
+      'Elías Piña', 'El Seibo', 'Espaillat', 'Hato Mayor', 'Hermanas Mirabal',
+      'Independencia', 'La Altagracia', 'La Romana', 'La Vega', 'María Trinidad Sánchez',
+      'Monseñor Nouel', 'Monte Cristi', 'Monte Plata', 'Pedernales', 'Peravia',
+      'Puerto Plata', 'Samaná', 'San Cristóbal', 'San José de Ocoa', 'San Juan',
+      'San Pedro de Macorís', 'Sánchez Ramírez', 'Santiago', 'Santiago Rodríguez',
+      'Santo Domingo', 'Valverde'
+    ]
+  };
+
+  // Simple file validation function
+  function validateFile(file) {
+    if (file.size > 10 * 1024 * 1024) {
+      return { valid: false, error: locale === 'es' ? 'El archivo debe ser menor a 10MB' : 'File must be smaller than 10MB' };
+    }
     
-    if (countrySelect && departmentSelect) {
-      countrySelect.addEventListener('change', function() {
-        const selectedCountry = this.value;
+    const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+    if (!allowedTypes.includes(file.type)) {
+      return { valid: false, error: locale === 'es' ? 'Solo se permiten archivos PDF, JPG y PNG' : 'Only PDF, JPG and PNG files are allowed' };
+    }
+    
+    return { valid: true };
+  }
+
+  // Form submission function using the API
+  async function submitContactForm(formData) {
+    try {
+      // Handle "Enviar Hoja de vida" redirect case
+      if (formData.contactReason === 'Enviar Hoja de vida') {
+        window.location.href = 'https://www.dinant.com/buscamos-talento-como-tu/';
+        return { success: true, message: 'Redirecting to careers page...' };
+      }
+
+      // Map contact reason to template
+      function getTemplateByContactReason(contactReason) {
+        const templateMap = {
+          'Soy cliente': 'client',
+          'Quiero ser cliente': 'ser_cliente',
+          'Exportaciones': 'exportaciones',
+          'Quiero ser proveedor': 'ser_proveedor',
+          'Soy Estudiante Universitario': 'estudiante_universitario',
+          'Soy Periodista/ Medio de comunicación': 'periodista_medio',
+          'Línea Ética YUMMIES': 'linea_etica',
+          'Otros': 'otros',
+          'Soy un ganador': 'ganador'
+        };
         
-        // Clear department options
-        departmentSelect.innerHTML = '<option value="">'+departmentPlaceholder+'</option>';
-        
-        if (selectedCountry && countriesData[selectedCountry]) {
-          // Enable department select
-          departmentSelect.disabled = false;
-          departmentSelect.classList.remove('disabled:bg-gray-100', 'disabled:cursor-not-allowed');
-          
-          // Add departments for selected country
-          countriesData[selectedCountry].forEach(function(department) {
-            const option = document.createElement('option');
-            option.value = department;
-            option.textContent = department;
-            departmentSelect.appendChild(option);
-          });
-        } else {
-          // Disable department select if no country selected
-          departmentSelect.disabled = true;
-          departmentSelect.classList.add('disabled:bg-gray-100', 'disabled:cursor-not-allowed');
-          departmentSelect.innerHTML = '<option value="">'+departmentPlaceholder+'</option>';
+        return templateMap[contactReason] || 'otros';
+      }
+
+      // Validate file if present
+      if (formData.file && formData.file instanceof File && formData.file.size > 0) {
+        const fileValidation = validateFile(formData.file);
+        if (!fileValidation.valid) {
+          return {
+            success: false,
+            message: fileValidation.error || 'Invalid file'
+          };
+        }
+      }
+
+      // Create FormData for multipart submission
+      const multipartData = new FormData();
+
+      // Add template field based on contact reason
+      const template = getTemplateByContactReason(formData.contactReason);
+      multipartData.append('template', template);
+      multipartData.append('site', "Cappy");
+
+      // Prepare data with required prefixes for specific fields
+      const dataToSend = { ...formData };
+      if (dataToSend.dynamicOrPromotion) {
+        dataToSend.dynamicOrPromotion = `Dinámica o promoción: ${dataToSend.dynamicOrPromotion}`;
+      }
+      if (dataToSend.award) {
+        dataToSend.award = `Premio adjudicado: ${dataToSend.award}`;
+      }
+
+      // Add all form fields according to the API structure
+      Object.entries(dataToSend).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          if (key === 'file' && value instanceof File) {
+            // Add file with proper field name for attachments
+            multipartData.append('attachments', value);
+          } else {
+            // Convert all other fields to string
+            multipartData.append(key, String(value));
+          }
         }
       });
+
+      // Build full API URL
+      const apiUrl = `${apiHost}${contactFormPath}`;
+
+      console.log('Submitting contact form to:', apiUrl);
+      console.log('Template for contact reason "' + formData.contactReason + '":', template);
+
+      // Submit to API
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': apiToken
+        },
+        body: multipartData,
+      });
+
+      if (!response.ok) {
+        let errorMessage = `HTTP error! status: ${response.status}`;
+        
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorData.error || errorMessage;
+        } catch (parseError) {
+          console.error('Error parsing error response:', parseError);
+        }
+
+        throw new Error(errorMessage);
+      }
+
+      const result = await response.json();
+      return {
+        success: true,
+        message: result.message || (locale === 'es' ? 'Formulario enviado exitosamente' : 'Form submitted successfully'),
+        data: result.data
+      };
+
+    } catch (error) {
+      console.error('Contact form submission error:', error);
+      return {
+        success: false,
+        message: error instanceof Error ? error.message : (locale === 'es' ? 'Error al enviar el formulario' : 'Error sending form')
+      };
     }
-    
-    // Form submission handler
+  }
+
+  // Initialize the form functionality
+  function initFormFunctionality() {
+    const contactReasonSelect = document.getElementById('contactReasonSelect');
+    const countrySelect = document.getElementById('countrySelect');
+    const departmentSelect = document.getElementById('departmentSelect');
+    const dynamicFields = document.getElementById('dynamicFields');
     const form = document.getElementById('contactForm');
-    if (form) {
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
-        
-        // Here you would typically send the data to your backend
-        console.log('Form submitted:', data);
-        
-        // Show success message (you can customize this)
-        alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
-        
-        // Reset form
-        this.reset();
-        departmentSelect.disabled = true;
-        departmentSelect.classList.add('disabled:bg-gray-100', 'disabled:cursor-not-allowed');
-        departmentSelect.innerHTML = '<option value="">'+departmentPlaceholder+'</option>';
+
+    // If any of the required elements are missing, exit early
+    if (!contactReasonSelect || !countrySelect || !departmentSelect || !dynamicFields || !form) {
+      console.error('Required form elements not found');
+      return;
+    }
+
+    // Populate countries
+    if (countrySelect.options.length <= 1) {
+      Object.keys(countriesData).forEach(country => {
+        const option = document.createElement('option');
+        option.value = country;
+        option.textContent = country;
+        countrySelect.appendChild(option);
       });
     }
-  });
+
+    // Handle contact reason change
+    contactReasonSelect.onchange = function() {
+      const selectedReason = this.value;
+      console.log('Contact reason changed to:', selectedReason);
+      updateDynamicFields(selectedReason);
+    };
+
+    // Handle country change
+    countrySelect.onchange = function() {
+      const selectedCountry = this.value;
+      
+      // Clear department options
+      departmentSelect.innerHTML = `<option value="">${departmentPlaceholder}</option>`;
+      
+      if (selectedCountry && countriesData[selectedCountry]) {
+        // Enable department select
+        departmentSelect.disabled = false;
+        departmentSelect.classList.remove('disabled:bg-gray-100', 'disabled:cursor-not-allowed');
+        
+        // Add departments for selected country
+        countriesData[selectedCountry].forEach(function(department) {
+          const option = document.createElement('option');
+          option.value = department;
+          option.textContent = department;
+          departmentSelect.appendChild(option);
+        });
+      } else {
+        // Disable department select if no country selected
+        departmentSelect.disabled = true;
+        departmentSelect.classList.add('disabled:bg-gray-100', 'disabled:cursor-not-allowed');
+      }
+    };
+
+    // Handle form submission
+    form.onsubmit = async function(e) {
+      e.preventDefault();
+      
+      try {
+        // Get form data
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        
+        // Convert phone to number if present
+        if (data.phone && data.phone !== '') {
+          data.phone = Number(data.phone);
+        }
+        
+        // Handle file upload
+        const fileInput = document.querySelector('input[type="file"]');
+        if (fileInput && fileInput.files[0]) {
+          data.file = fileInput.files[0];
+        }
+        
+        console.log('Form data to submit:', data);
+        
+        // Submit form
+        const result = await submitContactForm(data);
+        
+        if (result.success) {
+          alert(locale === 'es' ? '¡Gracias por tu mensaje! Te contactaremos pronto.' : 'Thank you for your message! We will contact you soon.');
+          
+          // Reset form
+          this.reset();
+          if (departmentSelect) {
+            departmentSelect.disabled = true;
+            departmentSelect.classList.add('disabled:bg-gray-100', 'disabled:cursor-not-allowed');
+            departmentSelect.innerHTML = `<option value="">${departmentPlaceholder}</option>`;
+          }
+          if (dynamicFields) {
+            dynamicFields.innerHTML = '';
+          }
+        } else {
+          // Show error message
+          alert(result.message);
+        }
+        
+      } catch (error) {
+        console.error('Form submission error:', error);
+        alert(locale === 'es' ? 'Error al enviar el formulario' : 'Error sending form');
+      }
+    };
+    
+    // Initialize dynamic fields with default contact reason if selected
+    if (contactReasonSelect.value) {
+      updateDynamicFields(contactReasonSelect.value);
+    }
+  }
+
+  // Function to update dynamic fields based on contact reason
+  function updateDynamicFields(contactReason) {
+    const dynamicFieldsContainer = document.getElementById('dynamicFields');
+    if (!dynamicFieldsContainer) {
+      console.error('Dynamic fields container not found');
+      return;
+    }
+    
+    console.log('Updating dynamic fields for reason:', contactReason);
+    
+    // Clear existing dynamic fields
+    dynamicFieldsContainer.innerHTML = '';
+
+    // Reset phone requirement by default
+    const phoneInputReset = document.querySelector('input[name="phone"]');
+    if (phoneInputReset) {
+      phoneInputReset.required = false;
+    }
+    
+    // Reset message placeholder
+    const messageTextarea = document.querySelector('textarea[name="message"]');
+    if (messageTextarea) {
+      messageTextarea.placeholder = '';
+    }
+    
+    // Handle redirect case
+    if (contactReason === 'Enviar Hoja de vida') {
+      window.location.href = 'https://www.dinant.com/buscamos-talento-como-tu/';
+      return;
+    }
+    
+    // Create dynamic fields based on contact reason
+    switch (contactReason) {
+      case 'Soy un ganador':
+        createWinnerFields();
+        break;
+      default:
+        console.log('No specific fields for reason:', contactReason);
+    }
+  }
+
+  // Winner fields creation
+  function createWinnerFields() {
+    const dynamicFieldsContainer = document.getElementById('dynamicFields');
+    if (!dynamicFieldsContainer) return;
+    
+    // Solo disponible en español
+    if (locale !== 'es') {
+      dynamicFieldsContainer.innerHTML = `
+        <div class="alert alert-info">
+          <p>Esta opción solo está disponible en español.</p>
+        </div>
+      `;
+      return;
+    }
+    
+    dynamicFieldsContainer.innerHTML = `
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">Dinámica o promoción en la que ganó *</label>
+        <input type="text" name="dynamicOrPromotion" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all" />
+      </div>
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">Premio adjudicado *</label>
+        <input type="text" name="award" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all" />
+      </div>
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">Adjuntar archivo</label>
+        <input type="file" name="file" accept=".pdf,.jpg,.jpeg,.png" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all" />
+        <p class="text-sm text-gray-600 mt-1">PDF, JPG, PNG (máx. 10MB)</p>
+      </div>
+    `;
+
+    // Make phone required for winners
+    const phoneInput = document.querySelector('input[name="phone"]');
+    if (phoneInput) {
+      phoneInput.required = true;
+    }
+
+    // Update message placeholder with example text
+    const messageTextarea = document.querySelector('textarea[name="message"]');
+    if (messageTextarea) {
+      messageTextarea.placeholder = 'Escribe la promoción en la que ganaste o detalla el premio que ganaste. Ej. PS5, giftcards, etc';
+    }
+  }
+
+  // Initialize on DOMContentLoaded (initial page load)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFormFunctionality);
+  } else {
+    initFormFunctionality();
+  }
+  
+  // Also initialize on astro:page-load (for client-side navigation)
+  document.addEventListener('astro:page-load', initFormFunctionality);
+  
+  // Backup initialization
+  setTimeout(initFormFunctionality, 100);
+})();
 </script>

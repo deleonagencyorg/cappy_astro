@@ -150,7 +150,8 @@ const options = dynamicOptions[locale];
         name="country" 
         id="countrySelect"
         required
-        class="w-full font-semibold uppercase flex justify-center text-blue items-center gap-5 p-[15px_20px] border-2 border-[#0b2f87] rounded-full bg-transparent focus:bg-white focus:ring-2 focus:ring-[#0b2f87]/30 focus:border-[#0b2f87] transition-all"
+        disabled
+        class="w-full font-semibold uppercase flex justify-center text-blue items-center gap-5 p-[15px_20px] border-2 border-[#0b2f87] rounded-full bg-transparent focus:bg-white focus:ring-2 focus:ring-[#0b2f87]/30 focus:border-[#0b2f87] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <option value="">{countryPlaceholder}</option>
       </select>
@@ -261,7 +262,7 @@ const options = dynamicOptions[locale];
   buttonText={locale === 'es' ? "Cerrar" : "Close"}
 />
 
-<script is:inline data-department-placeholder={departmentPlaceholder} data-country-placeholder={countryPlaceholder} data-locale={locale} data-api-host={apiHost} data-api-token={apiToken} data-contact-form-path={contactFormPath} data-labels={JSON.stringify(labels)} data-options={JSON.stringify(options)}>
+<script is:inline data-department-placeholder={departmentPlaceholder} data-country-placeholder={countryPlaceholder} data-locale={locale} data-api-host={apiHost} data-api-token={apiToken} data-contact-form-path={contactFormPath} data-labels={JSON.stringify(labels)} data-options={JSON.stringify(options)} data-message-placeholder={contact.form.message.placeholder}>
 (function() {
   // Get data from script attributes
   const scriptTag = document.currentScript;
@@ -273,6 +274,7 @@ const options = dynamicOptions[locale];
   const contactFormPath = scriptTag.getAttribute('data-contact-form-path');
   const labels = JSON.parse(scriptTag.getAttribute('data-labels'));
   const options = JSON.parse(scriptTag.getAttribute('data-options'));
+  const messagePlaceholder = scriptTag.getAttribute('data-message-placeholder') || '';
   // Countries data
   const countriesData = {
     'Guatemala': [
@@ -318,6 +320,8 @@ const options = dynamicOptions[locale];
   let citySelect;
   let dynamicFields;
   let form;
+  let phoneInput;
+  let messageTextarea;
 
   // Simple file validation function
   function validateFile(file) {
@@ -477,6 +481,16 @@ const options = dynamicOptions[locale];
     contactReasonSelect.onchange = function() {
       const selectedReason = this.value;
       console.log('Contact reason changed to:', selectedReason);
+      
+      // Enable country selector when a contact reason is selected
+      if (selectedReason && countrySelect) {
+        countrySelect.disabled = false;
+        countrySelect.classList.remove('disabled:opacity-50', 'disabled:cursor-not-allowed');
+      } else if (countrySelect) {
+        countrySelect.disabled = true;
+        countrySelect.classList.add('disabled:opacity-50', 'disabled:cursor-not-allowed');
+      }
+      
       updateDynamicFields(selectedReason);
     };
 
@@ -533,6 +547,16 @@ const options = dynamicOptions[locale];
         const fileInput = document.querySelector('input[type="file"]');
         if (fileInput && fileInput.files[0]) {
           data.file = fileInput.files[0];
+        }
+
+        // Prefix special fields for "Soy un ganador"
+        if (data.contactReason === 'Soy un ganador') {
+          if (data.dynamicOrPromotion) {
+            data.dynamicOrPromotion = `Dinámica o promoción: ${data.dynamicOrPromotion}`;
+          }
+          if (data.award) {
+            data.award = `Premio adjudicado: ${data.award}`;
+          }
         }
         
         console.log('Form data to submit:', data);
@@ -624,6 +648,20 @@ const options = dynamicOptions[locale];
     
     // Clear existing dynamic fields
     dynamicFields.innerHTML = '';
+    // Cache base inputs
+    if (!phoneInput) {
+      phoneInput = document.querySelector('input[name="phone"]');
+    }
+    if (!messageTextarea) {
+      messageTextarea = document.querySelector('textarea[name="message"]');
+    }
+    // Reset defaults
+    if (phoneInput) {
+      phoneInput.required = false;
+    }
+    if (messageTextarea) {
+      messageTextarea.placeholder = messagePlaceholder;
+    }
     
     // Handle redirect case
     if (contactReason === 'Enviar Hoja de vida') {
@@ -809,6 +847,20 @@ const options = dynamicOptions[locale];
       return;
     }
     
+    // Make phone required and adjust message placeholder
+    if (!phoneInput) {
+      phoneInput = document.querySelector('input[name="phone"]');
+    }
+    if (phoneInput) {
+      phoneInput.required = true;
+    }
+    if (!messageTextarea) {
+      messageTextarea = document.querySelector('textarea[name="message"]');
+    }
+    if (messageTextarea) {
+      messageTextarea.placeholder = 'Escribe la promoción en la que ganaste o detalla el premio que ganaste. Ej. PS5, giftcards, etc';
+    }
+
     dynamicFields.innerHTML = `
       <div>
         <label class="block text-blue uppercase font-semibold mb-2">Dinámica o promoción en la que ganó *</label>
@@ -817,6 +869,11 @@ const options = dynamicOptions[locale];
       <div>
         <label class="block text-blue uppercase font-semibold mb-2">Premio adjudicado *</label>
         <input type="text" name="award" required class="w-full px-4 py-3 border-2 border-[#0b2f87] rounded-full bg-primary text-black placeholder:text-black/60 focus:bg-white focus:ring-2 focus:ring-[#0b2f87]/30 focus:border-[#0b2f87] transition-all" />
+      </div>
+      <div>
+        <label class="block text-blue uppercase font-semibold mb-2">${labels.file}</label>
+        <input type="file" name="file" accept=".pdf,.jpg,.jpeg,.png" class="w-full px-4 py-3 border-2 border-[#0b2f87] rounded-full bg-primary text-black focus:bg-white focus:ring-2 focus:ring-[#0b2f87]/30 focus:border-[#0b2f87] transition-all" />
+        <p class="text-sm text-blue mt-1">${labels.fileHelp}</p>
       </div>
     `;
   }
