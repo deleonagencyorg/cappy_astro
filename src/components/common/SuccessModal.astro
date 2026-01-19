@@ -42,7 +42,7 @@ const {
     
     <!-- Título centrado sin el botón -->
     <div class="flex justify-center items-center mb-4">
-      <h3 class="md:text-4xl text-2xl font-bold text-primary font-title" id="modal-title">{title}</h3>
+      <h3 class="md:text-4xl text-2xl font-bold text-blue font-title text-center" id="modal-title">{title}</h3>
     </div>
     
     <div class="mb-6">
@@ -51,11 +51,11 @@ const {
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
         </svg>
       </div>
-      <p class="text-gray-700 text-center" id="modal-message">{message}</p>
+      <p class="text-blue text-center" id="modal-message">{message}</p>
     </div>
     
     <div class="flex justify-center">
-      <button type="button" class="modal-close px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-all">
+      <button type="button" class="modal-close px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all">
         {buttonText}
       </button>
     </div>
