@@ -74,127 +74,283 @@
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp"
     }
   },
-  "items": [
+ "items": [
     { 
-      "id": "cappy-queso-intenso",
-      "slug": "cappy-queso-intenso",
-      "name": "Cappy Queso Intenso",
+      "id": "cappy-explosion-de-queso",
+      "slug": "cappy-explosion-de-queso",
+      "name": "Cappy Explosion de Queso",
       "category": "gorditos",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Gordito.webp",
-      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Gordito.webp",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",
       "background_color": "#FDE820",
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
       "text_color": "#FDE820",
-      "description": "Snack extruido de maíz crujiente con sabor a queso intenso.",
+      "description": "Crunchy extruded corn snack with intense cheese flavor.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-yellow.webp",
       "sizes": [
         {
           "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-gorditos-queso-intenso-2.webp"
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp"
         }
       ],
      "weight": [
-        "14g"
-      ]
+        "16g"
+      ],
+      "nutrition": {
+        "title": "Nutrition details",
+        "serving": "Serving size: 1oz (28g). Servings per container: 0.28",
+        "rows": [
+          { "label": "Energy", "value": "650 kJ (160 kcal)" },
+          { "label": "Energy from fat", "value": "400 kJ (90 kcal)" },
+          { "label": "Total fat", "value": "10 g (13% DV)" },
+          { "label": "Saturated fat", "value": "5 g (25% DV)" },
+          { "label": "Trans fat", "value": "0 g (0% DV)" },
+          { "label": "Cholesterol", "value": "0 mg (0% DV)" },
+          { "label": "Sodium", "value": "270 mg (12% DV)" },
+          { "label": "Total carbohydrates", "value": "16 g (6% DV)" },
+          { "label": "Dietary fiber", "value": "0 g (0% DV)" },
+          { "label": "Sugars", "value": "<1 g" },
+          { "label": "Protein", "value": "1 g" },
+          { "label": "Vitamin D", "value": "0% DV" },
+          { "label": "Calcium", "value": "0% DV" },
+          { "label": "Iron", "value": "0% DV" },
+          { "label": "Potassium", "value": "0% DV" }
+        ],
+        "disclaimer": "Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs."
+      }
     },
      {
-      "id": "cappy-infladitos-queso-mantequilla",
-      "slug": "cappy-infladitos-queso-mantequilla",
+      "id": "cappy-infladitos-y-queso-mantequilla",
+      "slug": "cappy-infladitos-y-queso-mantequilla",
       "name": "Cappy Infladitos Queso y Mantequilla",
       "category": "infladitos",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Infladito.webp",
-      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Infladito.webp",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Queso_Mantequilla.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Queso_Mantequilla.webp",
       "background_color": "#FDE820",
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
       "text_color": "#FDE820",
-      "description": "Snack extruido de maíz crujiente con sabor a queso intenso.",
+      "description": "Crunchy extruded corn snack with intense cheese flavor.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-blue.webp",
       "sizes": [
         {
           "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Infladito.webp"
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Queso_Mantequilla.webp"
         }
       ],
       "weight": [
-        "14g"
-      ]
+        "16g"
+      ],
+      "nutrition": {
+        "title": "Nutrition details",
+        "serving": "Serving size: 1oz (28g). Servings per container: 0.43",
+        "rows": [
+          { "label": "Energy", "value": "700 kJ (170 kcal)" },
+          { "label": "Energy from fat", "value": "500 kJ (120 kcal)" },
+          { "label": "Total fat", "value": "13 g (17% DV)" },
+          { "label": "Saturated fat", "value": "6 g (30% DV)" },
+          { "label": "Trans fat", "value": "0 g (0% DV)" },
+          { "label": "Cholesterol", "value": "0 mg (0% DV)" },
+          { "label": "Sodium", "value": "240 mg (10% DV)" },
+          { "label": "Total carbohydrates", "value": "13 g (5% DV)" },
+          { "label": "Dietary fiber", "value": "0 g (0% DV)" },
+          { "label": "Sugars", "value": "2 g" },
+          { "label": "Protein", "value": "1 g" },
+          { "label": "Vitamin D", "value": "0% DV" },
+          { "label": "Calcium", "value": "2% DV" },
+          { "label": "Iron", "value": "0% DV" },
+          { "label": "Potassium", "value": "2% DV" }
+        ],
+        "disclaimer": "Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs."
+      }
     },
   
     {
-      "id": "cappy-queso-y-mantequilla",
-      "slug": "cappy-queso-y-mantequilla",
-      "name": "Cappy Queso y Mantequilla",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Toreano.webp",
-      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Toreano.webp",
+      "id": "cappy-infladitos-pisitos",
+      "slug": "cappy-infladitos-pisitos",
+      "name": "Cappy Infladitos Pisitos",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp",
       "background_color": "#FE5A00",
       "category": "infladitos",
       "header_text_color": "#FFFFFF",
       "color_button": "#FE5A00",
       "text_color": "#FE5A00",
-      "description": "Infladitos de maíz con sabor a queso y mantequilla.",
+      "description": "Corn puffs with spicy cheese and butter flavor.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-red2.webp",
       "sizes": [
         {
           "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-queso-y-mantequilla-2.webp"
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp"
         }
       ],
       "weight": [
-        "14g"
-      ]
+        "16g"
+      ],
+      "nutrition": {
+        "title": "Nutrition details",
+        "serving": "Serving size: 1oz (28g). Servings per container: 0.43",
+        "rows": [
+          { "label": "Energy", "value": "700 kJ (170 kcal)" },
+          { "label": "Energy from fat", "value": "500 kJ (120 kcal)" },
+          { "label": "Total fat", "value": "12 g (15% DV)" },
+          { "label": "Saturated fat", "value": "6 g (30% DV)" },
+          { "label": "Trans fat", "value": "0 g (0% DV)" },
+          { "label": "Cholesterol", "value": "0 mg (0% DV)" },
+          { "label": "Sodium", "value": "370 mg (16% DV)" },
+          { "label": "Total carbohydrates", "value": "13 g (5% DV)" },
+          { "label": "Dietary fiber", "value": "<1 g (2% DV)" },
+          { "label": "Sugars", "value": "0 g" },
+          { "label": "Protein", "value": "2 g" },
+          { "label": "Vitamin D", "value": "0% DV" },
+          { "label": "Calcium", "value": "0% DV" },
+          { "label": "Iron", "value": "0% DV" },
+          { "label": "Potassium", "value": "0% DV" }
+        ],
+        "disclaimer": "Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs."
+      }
     },
     {
-      "id": "cappy-palitos-de-papa",
-      "slug": "cappy-palitos-de-papa",
-      "name": "Cappy Palitos de Papa",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Palitos.webp",
-      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Palitos.webp",
+      "id": "cappy-palitos-de-papas-ketchup",
+      "slug": "cappy-palitos-de-papas-ketchup",
+      "name": "Cappy Palitos de Papas Ketchup",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Palitos_de_papas_sketchup.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Palitos_de_papas_sketchup.webp",
       "background_color": "#BEDE89",
       "category": "palitos_de_papa",
       "header_text_color": "#1C1C1C",
       "color_button": "#BEDE89",
       "text_color": "#BEDE89",
-      "description": "Palitos crujientes con el sabor que acompaña cualquier momento.",
+      "description": "Crunchy sticks with the flavor that accompanies any moment.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-red.webp",
       "sizes": [
         {
           "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-palitos-de-papa-2.webp"
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Palitos_de_papas_sketchup.webp"
         }
       ],
      "weight": [
-        "14g"
-      ]
+        "16g"
+      ],
+      "nutrition": {
+        "title": "Nutrition details",
+        "serving": "Serving size: 1oz (28g). Servings per container: 0.43",
+        "rows": [
+          { "label": "Energy", "value": "650 kJ (150 kcal)" },
+          { "label": "Energy from fat", "value": "300 kJ (70 kcal)" },
+          { "label": "Total fat", "value": "8 g (10% DV)" },
+          { "label": "Saturated fat", "value": "4 g (20% DV)" },
+          { "label": "Trans fat", "value": "0 g (0% DV)" },
+          { "label": "Cholesterol", "value": "0 mg (0% DV)" },
+          { "label": "Sodium", "value": "240 mg (10% DV)" },
+          { "label": "Total carbohydrates", "value": "17 g (6% DV)" },
+          { "label": "Dietary fiber", "value": "<1 g (2% DV)" },
+          { "label": "Sugars", "value": "1 g" },
+          { "label": "Protein", "value": "1 g" },
+          { "label": "Vitamin D", "value": "2% DV" },
+          { "label": "Calcium", "value": "0% DV" },
+          { "label": "Iron", "value": "2% DV" },
+          { "label": "Potassium", "value": "2% DV" }
+        ],
+        "disclaimer": "Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs."
+      }
     },
     {
       "id": "cappy-tornitos-queso-y-mantequilla",
       "slug": "cappy-tornitos-queso-y-mantequilla",
       "name": "Cappy Tornitos Queso y Mantequilla",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Toreano_Queso.webp",
-      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Chile_Toreano_Queso.webp",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Queso_Mantequilla.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Queso_Mantequilla.webp",
       "background_color": "#004AB2",
       "header_text_color": "#FFFFFF",
       "category": "tornitos",
       "color_button": "#004AB2",
       "text_color": "#FFFFFF",
-      "description": "Tornitos de maíz con sabor a queso y mantequilla.",
+      "description": "Corn twists with cheese and butter flavor.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-orange.webp",
+            "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-orange.webp",
       "sizes": [
         {
           "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-queso-y-mantequilla-2.webp"
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Queso_Mantequilla.webp"
         }
       ],
      "weight": [
-        "14g"
-      ]
+        "16g"
+      ],
+      "nutrition": {
+        "title": "Nutrition details",
+        "serving": "Serving size: 1oz (28g). Servings per container: 0.39",
+        "rows": [
+          { "label": "Energy", "value": "600 kJ (140 kcal)" },
+          { "label": "Energy from fat", "value": "250 kJ (60 kcal)" },
+          { "label": "Total fat", "value": "6 g (8% DV)" },
+          { "label": "Saturated fat", "value": "3 g (15% DV)" },
+          { "label": "Trans fat", "value": "0 g (0% DV)" },
+          { "label": "Cholesterol", "value": "0 mg (0% DV)" },
+          { "label": "Sodium", "value": "260 mg (11% DV)" },
+          { "label": "Total carbohydrates", "value": "19 g (7% DV)" },
+          { "label": "Dietary fiber", "value": "0 g (0% DV)" },
+          { "label": "Sugars", "value": "<1 g" },
+          { "label": "Protein", "value": "2 g" },
+          { "label": "Vitamin D", "value": "0% DV" },
+          { "label": "Calcium", "value": "0% DV" },
+          { "label": "Iron", "value": "0% DV" },
+          { "label": "Potassium", "value": "0% DV" }
+        ],
+        "disclaimer": "Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs."
+      }
+    },
+     {
+      "id": "cappy-tornitos-chile-toreado",
+      "slug": "cappy-tornitos-chile-toreado",
+      "name": "Cappy Tornitos Chile Toreado",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Chile_Toreado.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Chile_Toreado.webp",
+      "background_color": "#004AB2",
+      "header_text_color": "#FFFFFF",
+      "category": "tornitos",
+      "color_button": "#004AB2",
+      "text_color": "#FFFFFF",
+      "description": "Corn twists with roasted chili flavor.",
+      "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
+            "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-green.webp",
+      "sizes": [
+        {
+          "value": "150",
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Chile_Toreado.webp"
+        }
+      ],
+     "weight": [
+        "16g"
+      ],
+      "nutrition": {
+        "title": "Nutrition details",
+        "serving": "Serving size: 1oz (28g). Servings per container: 0.39",
+        "rows": [
+          { "label": "Energy", "value": "550 kJ (130 kcal)" },
+          { "label": "Energy from fat", "value": "200 kJ (50 kcal)" },
+          { "label": "Total fat", "value": "6 g (8% DV)" },
+          { "label": "Saturated fat", "value": "3 g (15% DV)" },
+          { "label": "Trans fat", "value": "0 g (0% DV)" },
+          { "label": "Cholesterol", "value": "0 mg (0% DV)" },
+          { "label": "Sodium", "value": "580 mg (25% DV)" },
+          { "label": "Total carbohydrates", "value": "19 g (7% DV)" },
+          { "label": "Dietary fiber", "value": "0 g (0% DV)" },
+          { "label": "Sugars", "value": "<1 g" },
+          { "label": "Protein", "value": "2 g" },
+          { "label": "Vitamin D", "value": "0% DV" },
+          { "label": "Calcium", "value": "0% DV" },
+          { "label": "Iron", "value": "2% DV" },
+          { "label": "Potassium", "value": "0% DV" }
+        ],
+        "disclaimer": "Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs."
+      }
     }
   ]
 }

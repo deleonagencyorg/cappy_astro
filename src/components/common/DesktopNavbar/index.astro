@@ -27,9 +27,9 @@ const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
 ---
 
 <!-- Desktop Navigation -->
-<nav class={`hidden md:grid grid-cols-[1fr_auto_1fr] items-center w-full py-3 px-4 md:px-5 lg:px-6 ${headerColorConfig.backgroundColor}`} data-current-lang={currentLang}>
+<nav class={`hidden md:grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center w-full py-3 px-4 md:px-5 lg:px-6 ${headerColorConfig.backgroundColor}`} data-current-lang={currentLang}>
   <!-- Left menu -->
-  <div class="flex items-center justify-start gap-6 xl:gap-8" id="desktop-menu-left">
+  <div class="flex items-center justify-start gap-4 lg:gap-6 xl:gap-8" id="desktop-menu-left">
     {currentLang === 'es' && (
       <a
         href="https://backtoschool.yummiespromociones.com/"
@@ -60,8 +60,8 @@ const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
   </div>
 
   <!-- Right menu + controls -->
-  <div class="flex items-center justify-end gap-5">
-    <div class="flex items-center gap-4 md:gap-5 xl:gap-8" id="desktop-menu-right">
+  <div class="flex items-center justify-end gap-3 lg:gap-4">
+    <div class="flex items-center gap-4 lg:gap-6 xl:gap-8" id="desktop-menu-right">
       {rightMenuItems.map((item: any) => (
         <div class="relative group">
           <a 
