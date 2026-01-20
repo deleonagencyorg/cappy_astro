@@ -45,6 +45,7 @@ const { currentLang, productId } = Astro.props;
 
 // Obtener datos desde traducciones
 const productsAssets = t('home', { namespace: 'products', locale: currentLang }) || {};
+
 const products = t('items', { namespace: 'products', locale: currentLang as Locale }) || [];
 const stockists = t('stockist', { namespace: 'products', locale: currentLang as Locale }) || [];
 const product = products.find((item: Product) => item.id === productId);
@@ -76,17 +77,17 @@ const safeProduct: Product = {
   
 };
 
+// Nutrition data: prefer per-item override, fallback to generic detailPage
+const nutrition = (product as any)?.nutrition || (detailPage as any)?.nutrition || null;
+
 // Obtener todos los productos como un array
 const productsData = t('items', { locale: currentLang, namespace: 'products' }) || [];
 const allProductsArray = Array.isArray(productsData) ? productsData : [];
 
-// Filtrar productos relacionados - simplificado para evitar errores
+// Mostrar todos los productos excepto el actual
 let relatedProducts: any[] = [];
-// Solo usar productos de la misma categoría si hay más de 1 producto
 if (allProductsArray.length > 1) {
-  relatedProducts = allProductsArray
-    .filter((p: any) => p.id !== productId)
-    .slice(0, 3);
+  relatedProducts = allProductsArray.filter((p: any) => p.id !== productId);
 }
 
 
@@ -128,32 +129,37 @@ if (allProductsArray.length > 1) {
             )}
           </div>
 
-          {/* <details class="pd-anim pd-anim-left mt-8 sm:mt-10 rounded-2xl bg-yellow/40 border-2 border-blue/20">
-            <summary class="cursor-pointer select-none px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-blue font-title italic font-extrabold text-lg sm:text-xl md:text-2xl">
-              <span>{detailPage?.nutrition?.title}</span>
-              <span class="text-blue font-title italic font-extrabold">+</span>
-            </summary>
-            <div class="px-5 sm:px-6 pb-5 sm:pb-6">
-              <div class="text-blue font-text italic font-medium text-sm sm:text-base mb-3">
-                {detailPage?.nutrition?.serving}
+          <div class="mt-8 sm:mt-10 border-t-2 border-blue/30"></div>
+          {nutrition && (
+            <details class="pd-anim pd-anim-left mt-4 rounded-2xl bg-yellow/40 border-2 border-blue/30">
+              <summary class="cursor-pointer select-none px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-blue font-title italic font-extrabold text-lg sm:text-xl md:text-2xl">
+                <span>{nutrition.title}</span>
+                <span class="text-blue font-title italic font-extrabold">+</span>
+              </summary>
+              <div class="px-5 sm:px-6 pb-5 sm:pb-6">
+                {nutrition?.serving && (
+                  <div class="text-blue font-text italic font-medium text-sm sm:text-base mb-3">
+                    {nutrition.serving}
+                  </div>
+                )}
+                <div class="w-full overflow-hidden rounded-xl border-2 border-blue/20 bg-white/40">
+                  <table class="w-full text-left">
+                    <tbody>
+                      {Array.isArray(nutrition?.rows) && nutrition.rows.map((row: any) => (
+                        <tr class="border-b border-blue/10 last:border-b-0">
+                          <td class="px-4 py-3 text-blue font-text italic font-medium text-sm sm:text-base">{row.label}</td>
+                          <td class="px-4 py-3 text-blue font-title italic font-extrabold text-sm sm:text-base">{row.value}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {nutrition?.disclaimer && (
+                  <div class="mt-3 text-blue/80 font-text italic text-sm">{nutrition.disclaimer}</div>
+                )}
               </div>
-              <div class="w-full overflow-hidden rounded-xl border border-blue/20 bg-white/40">
-                <table class="w-full text-left">
-                  <tbody>
-                    {Array.isArray(detailPage?.nutrition?.rows) && detailPage.nutrition.rows.map((row: any) => (
-                      <tr class="border-b border-blue/10 last:border-b-0">
-                        <td class="px-4 py-3 text-blue font-text italic font-medium text-sm sm:text-base">{row.label}</td>
-                        <td class="px-4 py-3 text-blue font-title italic font-extrabold text-sm sm:text-base">{row.value}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              {detailPage?.nutrition?.disclaimer && (
-                <div class="mt-3 text-blue/80 font-text italic text-sm">{detailPage.nutrition.disclaimer}</div>
-              )}
-            </div>
-          </details> */}
+            </details>
+          )}
         </div>
 
         <div class="w-full flex justify-center lg:justify-end">
@@ -211,17 +217,19 @@ if (allProductsArray.length > 1) {
           {detailPage?.flavorsTitle}
         </h2>
       </div>
-      <ProductsCarousel
-        products={relatedProducts}
-        autoplay={true}
-        speed={4000}
-        slidesPerView={3}
-        spaceBetween={30}
-        loop={true}
-        paddingTop="24px"
-        mobilePaddingTop="16px"
-        className="max-w-7xl mx-auto"
-      />
+      <div class="md:pl-0 pl-2">
+        <ProductsCarousel
+          products={relatedProducts}
+          autoplay={true}
+          speed={4000}
+          slidesPerView={4}
+          spaceBetween={24}
+          loop={true}
+          paddingTop="24px"
+          mobilePaddingTop="16px"
+          className="max-w-7xl mx-auto"
+        />
+      </div>
     </div>
   </section>
 )}

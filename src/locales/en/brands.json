@@ -508,47 +508,48 @@
             "title": "Cappy",
             "url": "#",
             "alt": "Cappy", 
-            "products": [
+       "products": [
                 {
-                    "id": "cappy-queso-intenso",
-                    "title": "Cappy Queso Intenso",
-                    "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-gorditos-queso-intenso-2.webp",
-                    "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-gorditos-queso-intenso-2.webp"
+                    "id": "cappy-explosion-de-queso",
+                    "slug": "cappy-explosion-de-queso",
+                    "title": "Cappy Explosion de Queso",
+                    "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",
+                    "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp"
                 },
                 {
-                    "id": "cappy-infladitos-picositos",
-                    "slug": "cappy-infladitos-picositos",
-                    "title": "Cappy Infladitos Picositos",
-                    "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-picositos-2.webp",
-                    "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-picositos-2.webp"
+                    "id": "cappy-infladitos-y-queso-mantequilla",
+                    "slug": "cappy-infladitos-y-queso-mantequilla",
+                    "title": "Cappy Infladitos Queso y Mantequilla",
+                    "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Queso_Mantequilla.webp",
+                    "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Queso_Mantequilla.webp"
                 },
                 {
-                    "id": "cappy-queso-y-mantequilla",
-                    "slug": "cappy-queso-y-mantequilla",
-                    "title": "Cappy Queso y Mantequilla",
-                    "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-queso-y-mantequilla-2.webp",
-                    "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-queso-y-mantequilla-2.webp"
+                    "id": "cappy-infladitos-pisitos",
+                    "slug": "cappy-infladitos-pisitos",
+                    "title": "Cappy Infladitos Pisitos",
+                    "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp",
+                    "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp"
                 },
                 {
-                    "id": "cappy-palitos-de-papa",
-                    "slug": "cappy-palitos-de-papa",
-                    "title": "Cappy Palitos de Papa",
-                    "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-palitos-de-papa-2.webp",
-                    "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-palitos-de-papa-2.webp"
-                },
-                {
-                    "id": "cappy-tornitos-chile-toreado",
-                    "slug": "cappy-tornitos-chile-toreado",
-                    "title": "Cappy Tornitos Chile Toreado",
-                    "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-chile-toreado-2.webp",
-                    "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-chile-toreado-2.webp"
+                    "id": "cappy-palitos-de-papas-ketchup",
+                    "slug": "cappy-palitos-de-papas-ketchup",
+                    "title": "Cappy Palitos de Papas Ketchup",
+                    "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Palitos_de_papas_sketchup.webp",
+                    "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Palitos_de_papas_sketchup.webp"
                 },
                 {
                     "id": "cappy-tornitos-queso-y-mantequilla",
                     "slug": "cappy-tornitos-queso-y-mantequilla",
                     "title": "Cappy Tornitos Queso y Mantequilla",
-                    "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-queso-y-mantequilla-2.webp",
-                    "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-queso-y-mantequilla-2.webp"
+                    "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Queso_Mantequilla.webp",
+                    "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Queso_Mantequilla.webp"
+                },
+                {
+                    "id": "cappy-tornitos-chile-toreado",
+                    "slug": "cappy-tornitos-chile-toreado",
+                    "title": "Cappy Tornitos Chile Toreado",
+                    "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Chile_Toreado.webp",
+                    "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Chile_Toreado.webp"
                 }
             ]
         },
