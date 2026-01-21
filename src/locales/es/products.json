@@ -218,8 +218,8 @@
       "id": "cappy-palitos-de-papas-ketchup",
       "slug": "cappy-palitos-de-papas-ketchup",
       "name": "Cappy Palitos de Papas Ketchup",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Palitos_de_papas_sketchup.webp",
-      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Palitos_de_papas_sketchup.webp",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp",
       "background_color": "#BEDE89",
       "category": "palitos_de_papa",
       "header_text_color": "#1C1C1C",
@@ -231,7 +231,7 @@
       "sizes": [
         {
           "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Palitos_de_papas_sketchup.webp"
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp"
         }
       ],
      "weight": [
