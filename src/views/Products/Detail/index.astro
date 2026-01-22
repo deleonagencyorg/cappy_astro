@@ -56,6 +56,10 @@ const brandsList = brandsAssets.brands || [];
 const zibasBrand = brandsList.find((brand: any) => brand.id === 'cappy');
 const zibasProducts = (zibasBrand?.products || []).filter((product: any) => product.id !== productId);
 
+function hashStringToInt(value: string) {
+  return Array.from(value || '').reduce((acc, ch) => ((acc * 31) + ch.charCodeAt(0)) >>> 0, 0);
+}
+
 // Si el producto no existe, lanzar error
 if (!product || Object.keys(product).length === 0) {
   throw new Error(t('errors.product_not_found', { locale: currentLang }));
@@ -74,11 +78,25 @@ const safeProduct: Product = {
   available: product.available || '',
   description: product.description || '',
   weight: Array.isArray(product.weight) ? product.weight : [],
-  
 };
 
 // Nutrition data: prefer per-item override, fallback to generic detailPage
 const nutrition = (product as any)?.nutrition || (detailPage as any)?.nutrition || null;
+
+const brandChipImages = [
+  (zibasBrand as any)?.imageChip1,
+  (zibasBrand as any)?.imageChip2,
+  (zibasBrand as any)?.imageChip3,
+  (zibasBrand as any)?.imageChip4,
+].filter(Boolean) as string[];
+
+const chipImage =
+  (product as any)?.chip_image ||
+  (brandChipImages.length
+    ? brandChipImages[hashStringToInt(safeProduct.id) % brandChipImages.length]
+    : '') ||
+  (detailPage as any)?.crunch?.image ||
+  safeProduct.image;
 
 // Obtener todos los productos como un array
 const productsData = t('items', { locale: currentLang, namespace: 'products' }) || [];
@@ -97,10 +115,9 @@ if (allProductsArray.length > 1) {
   <article
     id="product-detail"
     class="product-detail bg-yellow pt-8 pb-10 md:pt-12 md:pb-14"
-    transition:animate="slide"
   >
     <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center lg:items-start">
         <div class="w-full">
           <h1 class="pd-anim pd-anim-left pd-delay-1 text-blue font-title italic font-extrabold leading-[0.95] text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
             {safeProduct.name}
@@ -183,6 +200,8 @@ if (allProductsArray.length > 1) {
     </div>
   </article>
 )}
+
+
 
 <!-- {detailPage?.crunch && (
   <section class="w-full bg-yellow py-10 md:py-14">

@@ -30,6 +30,11 @@ export const onRequest = defineMiddleware(async ({ request, redirect }, next) =>
     return next();
   }
 
+  // Permitir que la página 404 se renderice sin redirecciones
+  if (section === '404') {
+    return next();
+  }
+
   // Caso especial para yummiesone: redirigir a home en inglés
   if (section === 'yummiesone' && lang === 'en') {
     return redirect('/en');
@@ -40,7 +45,7 @@ export const onRequest = defineMiddleware(async ({ request, redirect }, next) =>
   
   // Si la ruta no existe, redirigir al home
   if (!routeExists) {
-    return redirect(`/${lang}`);
+    return redirect(`/${lang}/404`);
   }
 
   // Verificar si hay una discrepancia entre el idioma y la sección

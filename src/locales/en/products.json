@@ -73,8 +73,7 @@
       "buttonText": "Contact us",
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp"
     }
-  },
- "items": [
+  },  "items": [
     { 
       "id": "cappy-explosion-de-queso",
       "slug": "cappy-explosion-de-queso",
@@ -86,7 +85,7 @@
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
       "text_color": "#FDE820",
-      "description": "Crunchy extruded corn snack with intense cheese flavor.",
+      "description": "Corn extruded snack with cheese flavor.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-yellow.webp",
       "sizes": [
@@ -96,11 +95,11 @@
         }
       ],
      "weight": [
-        "16g"
+        "1oz-(28g)"
       ],
       "nutrition": {
         "title": "Nutrition details",
-        "serving": "Serving size: 1oz (28g). Servings per container: 0.28",
+        "serving": "Serving size: 1 oz (28 g). Servings per container: 0.28",
         "rows": [
           { "label": "Energy", "value": "650 kJ (160 kcal)" },
           { "label": "Energy from fat", "value": "400 kJ (90 kcal)" },
@@ -121,7 +120,7 @@
         "disclaimer": "Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs."
       }
     },
-     {
+    {
       "id": "cappy-infladitos-y-queso-mantequilla",
       "slug": "cappy-infladitos-y-queso-mantequilla",
       "name": "Cappy Infladitos Queso y Mantequilla",
@@ -132,7 +131,7 @@
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
       "text_color": "#FDE820",
-      "description": "Crunchy extruded corn snack with intense cheese flavor.",
+      "description": "Corn extruded snack with cheese and butter flavor.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-blue.webp",
       "sizes": [
@@ -142,11 +141,11 @@
         }
       ],
       "weight": [
-        "16g"
+        "1oz-(28g)"
       ],
       "nutrition": {
         "title": "Nutrition details",
-        "serving": "Serving size: 1oz (28g). Servings per container: 0.43",
+        "serving": "Serving size: 1 oz (28 g). Servings per container: 0.43",
         "rows": [
           { "label": "Energy", "value": "700 kJ (170 kcal)" },
           { "label": "Energy from fat", "value": "500 kJ (120 kcal)" },
@@ -169,9 +168,9 @@
     },
   
     {
-      "id": "cappy-infladitos-pisitos",
-      "slug": "cappy-infladitos-pisitos",
-      "name": "Cappy Infladitos Pisitos",
+      "id": "cappy-infladitos-picotos",
+      "slug": "cappy-infladitos-picotos",
+      "name": "Cappy Infladitos Picotos",
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp",
       "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp",
       "background_color": "#FE5A00",
@@ -179,7 +178,7 @@
       "header_text_color": "#FFFFFF",
       "color_button": "#FE5A00",
       "text_color": "#FE5A00",
-      "description": "Corn puffs with spicy cheese and butter flavor.",
+      "description": "Corn puffs with cheese, butter and jalapeño flavor.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-red2.webp",
       "sizes": [
@@ -189,11 +188,11 @@
         }
       ],
       "weight": [
-        "16g"
+        "1oz-(28g)"
       ],
       "nutrition": {
         "title": "Nutrition details",
-        "serving": "Serving size: 1oz (28g). Servings per container: 0.43",
+        "serving": "Serving size: 1 oz (28 g). Servings per container: 0.43",
         "rows": [
           { "label": "Energy", "value": "700 kJ (170 kcal)" },
           { "label": "Energy from fat", "value": "500 kJ (120 kcal)" },
@@ -225,7 +224,7 @@
       "header_text_color": "#1C1C1C",
       "color_button": "#BEDE89",
       "text_color": "#BEDE89",
-      "description": "Crunchy sticks with the flavor that accompanies any moment.",
+      "description": "French-style potato sticks with ketchup.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-red.webp",
       "sizes": [
@@ -235,11 +234,11 @@
         }
       ],
      "weight": [
-        "16g"
+        "1oz-(28g)"
       ],
       "nutrition": {
         "title": "Nutrition details",
-        "serving": "Serving size: 1oz (28g). Servings per container: 0.43",
+        "serving": "Serving size: 1 oz (28 g). Servings per container: 0.43",
         "rows": [
           { "label": "Energy", "value": "650 kJ (150 kcal)" },
           { "label": "Energy from fat", "value": "300 kJ (70 kcal)" },
@@ -281,11 +280,11 @@
         }
       ],
      "weight": [
-        "16g"
+        "1oz-(28g)"
       ],
       "nutrition": {
         "title": "Nutrition details",
-        "serving": "Serving size: 1oz (28g). Servings per container: 0.39",
+        "serving": "Serving size: 1 oz (28 g). Servings per container: 0.39",
         "rows": [
           { "label": "Energy", "value": "600 kJ (140 kcal)" },
           { "label": "Energy from fat", "value": "250 kJ (60 kcal)" },
@@ -327,11 +326,11 @@
         }
       ],
      "weight": [
-        "16g"
+        "1oz-(28g)"
       ],
       "nutrition": {
         "title": "Nutrition details",
-        "serving": "Serving size: 1oz (28g). Servings per container: 0.39",
+        "serving": "Serving size: 1 oz (28 g). Servings per container: 0.39",
         "rows": [
           { "label": "Energy", "value": "550 kJ (130 kcal)" },
           { "label": "Energy from fat", "value": "200 kJ (50 kcal)" },
@@ -352,5 +351,4 @@
         "disclaimer": "Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs."
       }
     }
-  ]
-}
+  ]}

@@ -86,7 +86,7 @@
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
       "text_color": "#FDE820",
-      "description": "Snack extruido de maíz crujiente con sabor a queso intenso.",
+      "description": "Extruido de maiz con sabor a queso",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-yellow.webp",
       "sizes": [
@@ -96,7 +96,7 @@
         }
       ],
      "weight": [
-        "16g"
+        "1oz-(28g)"
       ],
       "nutrition": {
         "title": "Detalle de nutrición",
@@ -132,7 +132,7 @@
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
       "text_color": "#FDE820",
-      "description": "Snack extruido de maíz crujiente con sabor a queso intenso.",
+      "description": "Extruidos de maiz con sabor a queso y mantequilla",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-blue.webp",
       "sizes": [
@@ -142,7 +142,7 @@
         }
       ],
       "weight": [
-        "16g"
+        "1oz-(28g)"
       ],
       "nutrition": {
         "title": "Detalle de nutrición",
@@ -169,9 +169,9 @@
     },
   
     {
-      "id": "cappy-infladitos-pisitos",
-      "slug": "cappy-infladitos-pisitos",
-      "name": "Cappy Infladitos Pisitos",
+      "id": "cappy-infladitos-picotos",
+      "slug": "cappy-infladitos-picotos",
+      "name": "Cappy Infladitos Picotos",
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp",
       "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp",
       "background_color": "#FE5A00",
@@ -179,7 +179,7 @@
       "header_text_color": "#FFFFFF",
       "color_button": "#FE5A00",
       "text_color": "#FE5A00",
-      "description": "Infladitos de maíz con sabor a queso y mantequilla picositos.",
+      "description": "Extruidos de maiz con sabor a queso, mantequilla y jalapeño",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-red2.webp",
       "sizes": [
@@ -189,7 +189,7 @@
         }
       ],
       "weight": [
-        "16g"
+        "1oz-(28g)"
       ],
       "nutrition": {
         "title": "Detalle de nutrición",
@@ -225,7 +225,7 @@
       "header_text_color": "#1C1C1C",
       "color_button": "#BEDE89",
       "text_color": "#BEDE89",
-      "description": "Palitos crujientes con el sabor que acompaña cualquier momento.",
+      "description": "Palitos de papa a la francesa con ketchup",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-red.webp",
       "sizes": [
@@ -235,7 +235,7 @@
         }
       ],
      "weight": [
-        "16g"
+        "1oz-(28g)"
       ],
       "nutrition": {
         "title": "Detalle de nutrición",
@@ -271,7 +271,7 @@
       "category": "tornitos",
       "color_button": "#004AB2",
       "text_color": "#FFFFFF",
-      "description": "Tornitos de maíz con sabor a queso y mantequilla.",
+      "description": "Extruidos de maiz con sabor a queso y mantequilla",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
             "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-orange.webp",
       "sizes": [
@@ -281,7 +281,7 @@
         }
       ],
      "weight": [
-        "16g"
+        "1oz-(28g)"
       ],
       "nutrition": {
         "title": "Detalle de nutrición",
@@ -317,7 +317,7 @@
       "category": "tornitos",
       "color_button": "#004AB2",
       "text_color": "#FFFFFF",
-      "description": "Tornitos de maíz con sabor a chile toreado.",
+      "description": "Extruidos de maiz con sabor a chiles toreados",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
             "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-green.webp",
       "sizes": [
