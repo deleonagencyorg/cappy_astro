@@ -33,6 +33,9 @@ const currentLang = Astro.url.pathname.split('/')[1] === 'es' ? 'es' : 'en';
 // Asegurarse de que games es un array
 const gamesItems = Array.isArray(games) ? games : [];
 
+const gamesCount = gamesItems.length;
+const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummies/placeholder.webp';
+
 import LazyImage from '../LazyImage.astro';
 ---
 
@@ -40,20 +43,15 @@ import LazyImage from '../LazyImage.astro';
   
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      {gamesItems.map((game) => (
+      {gamesCount === 0 ? (
         <div class="swiper-slide">
-          <a 
-            href={game.url}
-            class="game-card-cta"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <div class="game-card-cta">
             <div class="game-card">
               <div class="game-background"></div>
               <div class="game-image-container">
                 <LazyImage 
-                  src={game.image} 
-                  alt={game.title}
+                  src={PLACEHOLDER_IMAGE_URL}
+                  alt="Cappy"
                   class="game-image"
                   width={300}
                   height={400}
@@ -61,21 +59,50 @@ import LazyImage from '../LazyImage.astro';
               </div>
             </div>
             <div class="game-info">
-              <h3 class="game-title">{game.title}</h3>
-              {game.description && (
-                <p class="game-description">{game.description}</p>
-              )}
+              <h3 class="game-title">&nbsp;</h3>
             </div>
-          </a>
+          </div>
         </div>
-      ))}
+      ) : (
+        gamesItems.map((game) => (
+          <div class="swiper-slide">
+            <a 
+              href={game.url}
+              class="game-card-cta"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div class="game-card">
+                <div class="game-background"></div>
+                <div class="game-image-container">
+                  <LazyImage 
+                    src={game.image} 
+                    alt={game.title}
+                    class="game-image"
+                    width={300}
+                    height={400}
+                  />
+                </div>
+              </div>
+              <div class="game-info">
+                <h3 class="game-title">{game.title}</h3>
+                {game.description && (
+                  <p class="game-description">{game.description}</p>
+                )}
+              </div>
+            </a>
+          </div>
+        ))
+      )}
     </div>
     
     <!-- Navegación -->
-    <div class="carousel-controls">
-      <button class="carousel-control swiper-button-prev" type="button"></button>
-      <button class="carousel-control swiper-button-next" type="button"></button>
-    </div>
+    {gamesCount > 1 && (
+      <div class="carousel-controls">
+        <button class="carousel-control swiper-button-prev" type="button"></button>
+        <button class="carousel-control swiper-button-next" type="button"></button>
+      </div>
+    )}
   </div>
 </div>
 
@@ -256,6 +283,9 @@ import LazyImage from '../LazyImage.astro';
       const swiperContainer = this.container.querySelector('.swiper-container') as HTMLElement;
       
       if (!swiperContainer) return;
+
+      const slidesCount = swiperContainer.querySelectorAll('.swiper-slide').length;
+      if (slidesCount <= 1) return;
 
       this.swiper = new Swiper(swiperContainer, {
         modules: [Navigation, Autoplay],
