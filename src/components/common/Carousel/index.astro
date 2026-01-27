@@ -29,6 +29,9 @@ const firstSlide = slides[0] || {};
 // Opcional: Precargar la primera imagen para mejorar el LCP
 const preloadFirstImage = true && firstSlide.mobile && firstSlide.desktop;
 
+const slidesCount = Array.isArray(slides) ? slides.length : 0;
+const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummies/placeholder.webp';
+
 ---
 
 <!-- Importar Swiper desde CDN para garantizar disponibilidad -->
@@ -43,6 +46,11 @@ const preloadFirstImage = true && firstSlide.mobile && firstSlide.desktop;
   document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       try {
+        const container = document.querySelector(carouselSelector);
+        if (!(container instanceof HTMLElement)) return;
+        const slidesCount = parseInt(container.dataset.slidesCount || '0', 10);
+        if (Number.isFinite(slidesCount) && slidesCount <= 1) return;
+
         const swiper = new Swiper(carouselSelector, {
           loop: true,
           autoplay: {
@@ -101,27 +109,45 @@ const preloadFirstImage = true && firstSlide.mobile && firstSlide.desktop;
     )}
     
     <!-- Swiper container -->
-    <div class="swiper-container main-carousel">
+    <div class="swiper-container main-carousel" data-slides-count={slidesCount}>
       <div class="swiper-wrapper">
-        {slides.map((slide, index) => (
-          <CarouselSlide 
+        {slidesCount === 0 ? (
+          <CarouselSlide
             slide={{
-              desktop: slide.desktop,
-              mobile: slide.mobile,
-              alt: slide.alt || 'Cappy',
-              title: slide.title || '',
-              subtitle: slide.subtitle || '',
-              link: slide.link || ''
+              desktop: PLACEHOLDER_IMAGE_URL,
+              mobile: PLACEHOLDER_IMAGE_URL,
+              alt: 'Cappy',
+              title: '',
+              subtitle: '',
+              link: ''
             }}
-            priority={index === 0}
+            priority={true}
           />
-        ))}
+        ) : (
+          slides.map((slide, index) => (
+            <CarouselSlide 
+              slide={{
+                desktop: slide.desktop,
+                mobile: slide.mobile,
+                alt: slide.alt || 'Cappy',
+                title: slide.title || '',
+                subtitle: slide.subtitle || '',
+                link: slide.link || ''
+              }}
+              priority={index === 0}
+            />
+          ))
+        )}
       </div>
       
       <!-- Controles de navegación -->
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
+      {slidesCount > 1 && (
+        <>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-pagination"></div>
+        </>
+      )}
     </div>
   </div>
 )}
