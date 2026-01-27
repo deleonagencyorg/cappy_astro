@@ -10,9 +10,11 @@ export default function SimpleProductCarousel({ products = [] }) {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const carouselRef = useRef(null);
+  const productsCount = Array.isArray(products) ? products.length : 0;
   
   // Auto-rotate the carousel, but pause on touch
   useEffect(() => {
+    if (productsCount <= 1) return;
     const interval = setInterval(() => {
       if (!touchStart) { // Solo avanza automáticamente si no hay un toque activo
         nextSlide();
@@ -54,6 +56,7 @@ export default function SimpleProductCarousel({ products = [] }) {
   };
   
   const nextSlide = () => {
+    if (productsCount <= 1) return;
     if (isAnimating) return;
     setIsAnimating(true);
     setActiveIndex((prevIndex) => (prevIndex + 1) % products.length);
@@ -61,6 +64,7 @@ export default function SimpleProductCarousel({ products = [] }) {
   };
   
   const prevSlide = () => {
+    if (productsCount <= 1) return;
     if (isAnimating) return;
     setIsAnimating(true);
     setActiveIndex((prevIndex) => (prevIndex - 1 + products.length) % products.length);
@@ -68,7 +72,23 @@ export default function SimpleProductCarousel({ products = [] }) {
   };
   
   if (!products || products.length === 0) {
-    return <div className="no-products">No products available</div>;
+    return (
+      <div className="simple-carousel-container">
+        <div className="carousel-viewport">
+          <div className="carousel-slide active" style={{ transform: 'translateX(0%) scale(1)', zIndex: 2, opacity: 1 }}>
+            <div className="product-card">
+              <div className="product-image-container">
+                <img 
+                  src="https://snack.yummiespromociones.com/snacksyummies/placeholder.webp"
+                  alt="Cappy"
+                  className="product-image"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
   
   return (
@@ -123,23 +143,25 @@ export default function SimpleProductCarousel({ products = [] }) {
         })}
       </div>
       
-      <div className="carousel-controls">
-        <button 
-          className="carousel-arrow carousel-arrow-left" 
-          onClick={prevSlide}
-          aria-label="Previous product"
-        >
-          <i className="fa fa-chevron-left"></i>
-        </button>
-        
-        <button 
-          className="carousel-arrow carousel-arrow-right" 
-          onClick={nextSlide}
-          aria-label="Next product"
-        >
-          <i className="fa fa-chevron-right"></i>
-        </button>
-      </div>
+      {productsCount > 1 && (
+        <div className="carousel-controls">
+          <button 
+            className="carousel-arrow carousel-arrow-left" 
+            onClick={prevSlide}
+            aria-label="Previous product"
+          >
+            <i className="fa fa-chevron-left"></i>
+          </button>
+          
+          <button 
+            className="carousel-arrow carousel-arrow-right" 
+            onClick={nextSlide}
+            aria-label="Next product"
+          >
+            <i className="fa fa-chevron-right"></i>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

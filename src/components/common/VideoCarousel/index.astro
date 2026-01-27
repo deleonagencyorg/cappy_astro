@@ -50,19 +50,42 @@ const {
 } = Astro.props;
 
 const firstSlide = slides[0] || {};
+
+const slidesCount = Array.isArray(slides) ? slides.length : 0;
+const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummies/placeholder.webp';
 ---
 
 <div class="video-carousel-container" style={`width: ${width}; margin: 0 auto; --desktop-height: ${height}; --mobile-height: ${mobileHeight};`}>
   <!-- Swiper container -->
-  <div class="swiper-container video-carousel" style={`border-radius: ${borderRadius}; overflow: hidden;`}>
+  <div class="swiper-container video-carousel" data-slides-count={slidesCount} style={`border-radius: ${borderRadius}; overflow: hidden;`}>
     <div class="swiper-wrapper">
-      {slides.map((slide, index) => {
-        const slideId = `slide-${index}`;
-        
-        return (
-          <div class="swiper-slide" id={slideId} data-slide-type={slide.type}>
-            <div class="slide-content">
-              {slide.type === 'html' && slide.html ? (
+      {slidesCount === 0 ? (
+        <div class="swiper-slide" id="slide-0" data-slide-type="image">
+          <div class="slide-content">
+            <div class="image-container">
+              <LazyImage 
+                src={PLACEHOLDER_IMAGE_URL}
+                alt="Cappy"
+                class="slide-image mobile-image"
+                loading="eager"
+              />
+              <LazyImage 
+                src={PLACEHOLDER_IMAGE_URL}
+                alt="Cappy"
+                class="slide-image desktop-image"
+                loading="eager"
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        slides.map((slide, index) => {
+          const slideId = `slide-${index}`;
+          
+          return (
+            <div class="swiper-slide" id={slideId} data-slide-type={slide.type}>
+              <div class="slide-content">
+                {slide.type === 'html' && slide.html ? (
                 <HeroBanner 
                   backgroundImage={slide.html.backgroundImage}
                   backgroundImageMobile={slide.html.backgroundImageMobile}
@@ -74,7 +97,7 @@ const firstSlide = slides[0] || {};
                   buttonText={slide.html.buttonText}
                   buttonUrl={slide.html.buttonUrl}
                 />
-              ) : slide.type === 'video' ? (
+                ) : slide.type === 'video' ? (
                 <>
                   <div class="fallback-image">
                     <LazyImage 
@@ -117,7 +140,7 @@ const firstSlide = slides[0] || {};
                     </div>
                   )}
                 </>
-              ) : (
+                ) : (
                 <>
                   <div class="image-container">
                     <LazyImage 
@@ -151,17 +174,22 @@ const firstSlide = slides[0] || {};
                     </div>
                   )}
                 </>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      )}
     </div>
     
     <!-- Navigation controls -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-pagination"></div>
+    {slidesCount > 1 && (
+      <>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+      </>
+    )}
   </div>
 </div>
 
@@ -368,6 +396,9 @@ const firstSlide = slides[0] || {};
     containers.forEach((containerEl) => {
       if (!(containerEl instanceof HTMLElement)) return;
       const container = containerEl;
+
+      const slidesCount = parseInt(container.dataset.slidesCount || '0', 10);
+      if (Number.isFinite(slidesCount) && slidesCount <= 1) return;
 
       const nextEl = container.querySelector('.swiper-button-next');
       const prevEl = container.querySelector('.swiper-button-prev');

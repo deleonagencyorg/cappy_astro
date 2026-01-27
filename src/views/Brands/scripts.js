@@ -48,8 +48,11 @@
     const prevBtn = document.querySelector('.carousel-prev');
     const nextBtn = document.querySelector('.carousel-next');
     const brandIcons = document.querySelectorAll('.brand-icon-circle');
-    
-    if (carousel && prevBtn && nextBtn && brandIcons.length > 0) {
+
+    if (carousel && prevBtn && nextBtn && brandIcons.length <= 1) {
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+    } else if (carousel && prevBtn && nextBtn && brandIcons.length > 1) {
       // Calcular el ancho de desplazamiento (aproximadamente 2-3 íconos)
       const scrollAmount = brandIcons[0].offsetWidth * 2 + 16; // Ancho de 2 íconos + gap
       
@@ -141,8 +144,18 @@
         if (prevButton) prevButton.style.display = 'none';
         if (nextButton) nextButton.style.display = 'none';
         if (validSlides.length === 0) {
-          // Si no hay slides válidos, ocultar todo el carousel
-          carousel.style.display = 'none';
+          // Si no hay slides válidos, mostrar placeholder
+          const placeholderUrl = 'https://snack.yummiespromociones.com/snacksyummies/placeholder.webp';
+          slidesContainer.innerHTML = '';
+          const placeholderSlide = document.createElement('div');
+          placeholderSlide.className = 'product-slide';
+          placeholderSlide.dataset.valid = 'true';
+          const img = document.createElement('img');
+          img.src = placeholderUrl;
+          img.alt = 'Cappy';
+          img.className = 'product-preview-image';
+          placeholderSlide.appendChild(img);
+          slidesContainer.appendChild(placeholderSlide);
         }
         return;
       }

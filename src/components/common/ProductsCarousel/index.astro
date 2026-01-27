@@ -58,6 +58,9 @@ const currentTexts = texts[currentLang as keyof typeof texts];
 // Asegurarse de que products es un array
 const productsItems = Array.isArray(products) ? products : [];
 
+const productsCount = productsItems.length;
+const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummies/placeholder.webp';
+
 import LazyImage from '../LazyImage.astro';
 ---
 
@@ -75,45 +78,74 @@ import LazyImage from '../LazyImage.astro';
   
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      {productsItems.map((product) => (
+      {productsCount === 0 ? (
         <div class="swiper-slide">
-          <a 
-            href={`/${currentLang}/${currentLang === 'es' ? 'productos' : 'products'}/${product.slug}`}
-            class="product-card-cta"
-          >
+          <div class="product-card-cta">
             <div class="product-card">
               <div
                 class="product-background"
                 style={{
                   '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                  '--hover-bg': `url(${product.background_image || cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                  '--hover-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
                   backgroundImage: 'var(--default-bg)',
                 }}
               ></div>
               <div class="product-image-container">
                 <LazyImage 
-                  src={product.imageMobile || product.image} 
-                  alt={product.name}
+                  src={PLACEHOLDER_IMAGE_URL}
+                  alt="Cappy"
                   class="product-image"
                   width={300}
                   height={400}
                 />
               </div>
             </div>
-            <p class="product-title">
-              {product.name}
-            </p>
-          </a>
+            <p class="product-title">&nbsp;</p>
+          </div>
         </div>
-      ))}
+      ) : (
+        productsItems.map((product) => (
+          <div class="swiper-slide">
+            <a 
+              href={`/${currentLang}/${currentLang === 'es' ? 'productos' : 'products'}/${product.slug}`}
+              class="product-card-cta"
+            >
+              <div class="product-card">
+                <div
+                  class="product-background"
+                  style={{
+                    '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                    '--hover-bg': `url(${product.background_image || cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                    backgroundImage: 'var(--default-bg)',
+                  }}
+                ></div>
+                <div class="product-image-container">
+                  <LazyImage 
+                    src={product.imageMobile || product.image} 
+                    alt={product.name}
+                    class="product-image"
+                    width={300}
+                    height={400}
+                  />
+                </div>
+              </div>
+              <p class="product-title">
+                {product.name}
+              </p>
+            </a>
+          </div>
+        ))
+      )}
     </div>
   </div>
 
   <!-- Navegación -->
-  <div class="carousel-controls">
-    <button class="carousel-control swiper-button-prev" type="button"></button>
-    <button class="carousel-control swiper-button-next" type="button"></button>
-  </div>
+  {productsCount > 1 && (
+    <div class="carousel-controls">
+      <button class="carousel-control swiper-button-prev" type="button"></button>
+      <button class="carousel-control swiper-button-next" type="button"></button>
+    </div>
+  )}
 </div>
 
 <style>
@@ -339,6 +371,9 @@ import LazyImage from '../LazyImage.astro';
       
       if (!swiperContainer) return;
 
+      const slidesCount = swiperContainer.querySelectorAll('.swiper-slide').length;
+      if (slidesCount <= 1) return;
+
       const prevBtn = this.container.querySelector('.swiper-button-prev') as HTMLElement | null;
       const nextBtn = this.container.querySelector('.swiper-button-next') as HTMLElement | null;
 
@@ -403,7 +438,7 @@ import LazyImage from '../LazyImage.astro';
       const scroller = container;
       const slides = container.querySelectorAll('.swiper-slide');
       
-      if (slides.length === 0) return;
+      if (slides.length <= 1) return;
 
       let currentIndex = 0;
 
