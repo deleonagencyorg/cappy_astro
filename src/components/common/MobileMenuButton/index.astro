@@ -66,13 +66,15 @@ function initMobileMenuButton() {
   const menuButton = document.getElementById('mobile-menu-button');
   
   if (menuButton) {
-    // Eliminar cualquier event listener existente para evitar duplicados
-    menuButton.removeEventListener('click', handleMobileMenuButtonClick);
-    menuButton.removeEventListener('touchstart', handleMobileMenuButtonClick);
-    
+    // Evitar inicializar más de una vez para protege contra duplicados
+    if (menuButton.dataset.mobileMenuInit === 'true') return;
+
     // Agregar event listeners para clic y toque
     menuButton.addEventListener('click', handleMobileMenuButtonClick);
     menuButton.addEventListener('touchstart', handleMobileMenuButtonClick, { passive: true });
+
+    // Marcar como inicializado
+    menuButton.dataset.mobileMenuInit = 'true';
   }
 }
 
