@@ -130,8 +130,8 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
     <!-- Sección de Productos Cappy -->
     {cappyProducts.length > 0 && (
       <section id="products" class="w-full bg-yellow py-12 md:py-16" data-animate="bounce" data-animate-delay="140">
-        <div class="container mx-auto px-4">
-          <div class="grid grid-cols-1 md:grid-cols-[35%_65%] gap-8 md:gap-12 items-center">
+        <div class="container mx-auto px-6">
+          <div class="grid grid-cols-1 md:grid-cols-[40%_65%] gap-8 md:gap-12 items-center">
             {/* Columna de textos */}
             <div class="space-y-4 md:space-y-6">
               {brandsAssets.home?.title && (
@@ -154,15 +154,18 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
               </div>
             </div>
 
-            {/* Columna del carrusel */}
-            <div class="w-full overflow-hidden">
+            <div class="w-full overflow-hidden center-items">
               <ProductsCarousel 
                 products={products}
                 color={'white'}
                 autoplay={true}
                 speed={4000}
-                slidesPerView={2}
-                spaceBetween={20}
+                data-slides-per-view-desktop="3"
+                data-slides-per-view-tablet="2"
+                data-slides-per-view-mobile="1"
+                data-space-between-desktop="20"
+                data-space-between-tablet="15"
+                data-space-between-mobile="10"
                 loop={true}
                 className=""
               />
