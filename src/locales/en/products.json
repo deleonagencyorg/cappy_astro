@@ -25,9 +25,9 @@
   "categories": {
     "all": "All",
     "infladitos": "Infladitos",
-    "palitos_de_papa": "Potato sticks",
     "gorditos": "Gorditos",
-    "tornitos": "Tornitos"
+    "tornitos": "Tornitos",
+    "palitos_de_papa": "Potato sticks"
   },
   "carousel": [
     {

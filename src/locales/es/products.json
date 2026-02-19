@@ -25,9 +25,9 @@
   "categories": {
     "all": "Todos",
     "infladitos": "Infladitos",
-    "palitos_de_papa": "Palitos de papa",
     "gorditos": "Gorditos",
-    "tornitos": "Tornitos"
+    "tornitos": "Tornitos",
+    "palitos_de_papa": "Palitos de papa"
   },
   "carousel": [
     {
