@@ -110,11 +110,11 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
   <main class="bg-primary w-full flex flex-col items-center justify-center mt-0" data-page="home">
     <!-- Slider Section con VideoCarousel -->
     <div class="relative w-full overflow-hidden py-4 bg-yellow" data-animate="bounce" data-animate-delay="0">
-      <div class="w-[90%] mx-auto h-[500px] overflow-hidden shadow-xl rounded-none md:rounded-[24px]">
+      <div class="w-[90%] mx-auto overflow-hidden shadow-xl">
         <VideoCarousel 
           slides={slides} 
           height="500px" 
-          mobileHeight="500px" 
+          mobileHeight="600px" 
           showOverlay={true}
           width="100%"
           borderRadius="0"
