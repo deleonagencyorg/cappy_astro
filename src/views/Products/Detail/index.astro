@@ -203,7 +203,7 @@ if (allProductsArray.length > 1) {
 
 
 
-<!-- {detailPage?.crunch && (
+{detailPage?.crunch && (
   <section class="w-full bg-yellow py-10 md:py-14">
     <div class="container mx-auto px-4">
       <div class="pd-anim rounded-[28px] bg-orange p-6 sm:p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -226,7 +226,7 @@ if (allProductsArray.length > 1) {
       </div>
     </div>
   </section>
-)} -->
+)}
 
 {products.length > 0 && (
   <section class="w-full bg-yellow pb-10 md:pb-14">
@@ -236,17 +236,17 @@ if (allProductsArray.length > 1) {
           {detailPage?.flavorsTitle}
         </h2>
       </div>
-      <div class="md:pl-0 pl-2">
+      <div class="md:pl-0 pl-2 pr-0">
         <ProductsCarousel
           products={relatedProducts}
           autoplay={true}
           speed={4000}
-          slidesPerView={4}
-          spaceBetween={24}
+          slidesPerView={3}
+          spaceBetween={16}
           loop={true}
           paddingTop="24px"
           mobilePaddingTop="16px"
-          className="max-w-7xl mx-auto"
+          className="max-w-4xl mx-auto"
         />
       </div>
     </div>
