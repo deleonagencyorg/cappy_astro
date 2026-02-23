@@ -33,12 +33,16 @@ const {
       alt="Background" 
       class="hero-bg-desktop"
       loading="eager"
+      priority={true}
+      context="hero"
     />
     <LazyImage 
       src={backgroundImageMobile || backgroundImage} 
       alt="Background" 
       class="hero-bg-mobile"
       loading="eager"
+      priority={true}
+      context="hero"
     />
   </div>
   
@@ -62,12 +66,16 @@ const {
             alt={title}
             class="hero-character hero-character-desktop"
             loading="eager"
+            priority={true}
+            context="hero"
           />
           <LazyImage 
             src={imageMobile || image} 
             alt={title}
             class="hero-character hero-character-mobile"
             loading="eager"
+            priority={true}
+            context="hero"
           />
         </div>
       </div>

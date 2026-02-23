@@ -5,6 +5,7 @@ import LazyImage from '../../components/common/LazyImage.astro';
 import Breadcrumb from '../../components/common/Breadcrumb/Breadcrumb.astro';
 import HeroBanner from '../../components/common/HeroBanner.astro';
 
+
 interface PromoItem {
   id: string;
   slug: string;
@@ -125,7 +126,7 @@ endedPromos.sort((a, b) => (toEndOfDayDate(b.fecha_fin)?.getTime() || 0) - (toEn
 <div class="bg-primary -mt-px -mb-px overflow-hidden">
   <div class="bg-primary  container mx-auto px-4 pt-4 pb-16">
 
-    <div class="mt-6 h-[500px] overflow-hidden shadow-xl rounded-[24px]" data-animate="bounce" data-animate-delay="0">
+    <div class="mt-6 h-[500px] overflow-hidden shadow-xl rounded-[24px]" data-animate="bounce" data-animate-delay="0" transition:persist>
       <HeroBanner
         backgroundImage={hero.backgroundImage}
         backgroundImageMobile={hero.backgroundImageMobile}

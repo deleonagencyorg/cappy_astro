@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Aplicar animaciones a Product Detail
     if (productDetailElements.productHero) {
-      setupAnimation(productDetailElements.productHero, 'down', 0, 700);
+      setupAnimation(productDetailElements.productHero, 'down', 0, 200);
       setupAnimation(productDetailElements.productImage, 'left', 200, 600);
       setupAnimation(productDetailElements.productInfo, 'right', 300, 700);
       setupAnimation(productDetailElements.relatedProducts, 'up', 400, 800);
