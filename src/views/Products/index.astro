@@ -15,18 +15,22 @@ const slides = t('carousel', { namespace: 'products', locale: currentLang }) || 
 
   <main class="bg-primary w-full flex flex-col items-center justify-center mt-0">
   <div class="w-full bg-yellow py-6 md:py-10">
-  <div class="relative w-full overflow-hidden">
-    <div class="w-[90%] mx-auto h-[500px] overflow-hidden shadow-xl rounded-none md:rounded-[24px]">
-      <VideoCarousel 
-        slides={slides}
-        height="500px"
-        mobileHeight="500px"
-        showOverlay={false}
-        width="100%"
-        borderRadius="0"
-      />
+  <div
+          class="relative w-full overflow-hidden py-4 bg-yellow"
+          data-animate="bounce"
+          data-animate-delay="0"
+        >
+      <div class="w-[90%] mx-auto overflow-hidden shadow-xl rounded-2xl">
+        <VideoCarousel
+          slides={slides}
+          height="auto"
+          mobileHeight="auto"
+          showOverlay={true}
+          width="100%"
+          borderRadius="0"
+        />
+      </div>
     </div>
-  </div>
 
   <div class="container mx-auto px-4 pt-10 pb-16">
     <ProductsFilterGrid

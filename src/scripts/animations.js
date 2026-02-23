@@ -24,7 +24,7 @@ function applyAutoTargets() {
     if (!(block instanceof HTMLElement)) return;
 
     const candidates = block.querySelectorAll(
-      'section, article, header, h1, h2, h3, p, ul, ol, li, a, button, img, .shadow-xl, .shadow-lg'
+      'section, article, .shadow-xl, .shadow-lg'
     );
 
     let added = 0;
@@ -63,7 +63,7 @@ function initAnimations() {
   const observerOptions = {
     root: null,
     rootMargin: '0px 0px -10% 0px',
-    threshold: 0.12
+    threshold: 0.1
   };
 
   observer = new IntersectionObserver((entries) => {

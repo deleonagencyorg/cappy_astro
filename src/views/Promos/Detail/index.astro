@@ -136,7 +136,7 @@ const carouselTitle = currentLang === 'es' ? 'Descubre nuestros productos' : 'Di
 
 <div class="bg-primary -mt-px -mb-px overflow-hidden">
   <div class="container mx-auto px-4 pt-4 pb-16">
-    <div class="mt-6 h-[500px] overflow-hidden shadow-xl rounded-none md:rounded-[24px]" data-animate="bounce" data-animate-delay="0">
+    <div class="mt-6 overflow-hidden shadow-xl rounded-[24px]" style="min-height: clamp(320px, 52vw, 560px);" data-animate="bounce" data-animate-delay="0" transition:persist="">
       <HeroBanner
         backgroundImage={hero.backgroundImage || promo.imagen}
         backgroundImageMobile={hero.backgroundImageMobile || hero.backgroundImage || promo.imagen}
