@@ -27,57 +27,56 @@ const {
 ---
 
 <div class="hero-banner-container">
+  <!-- Background -->
   <div class="hero-banner-bg">
-    <LazyImage 
-      src={backgroundImage} 
-      alt="Background" 
+    <LazyImage
+      src={backgroundImage}
+      alt="Background"
       class="hero-bg-desktop"
       loading="eager"
       priority={true}
       context="hero"
     />
-    <LazyImage 
-      src={backgroundImageMobile || backgroundImage} 
-      alt="Background" 
+    <LazyImage
+      src={backgroundImageMobile || backgroundImage}
+      alt="Background"
       class="hero-bg-mobile"
       loading="eager"
       priority={true}
       context="hero"
     />
   </div>
-  
+
+  <!-- Content -->
   <div class="hero-banner-content">
+    <!-- Text centrado -->
     <div class="hero-text-section">
       <h1 class="hero-title">{title}</h1>
       {subtitle && <h2 class="hero-subtitle">{subtitle}</h2>}
       {description && <p class="hero-description">{description}</p>}
       {buttonText && buttonUrl && (
-        <a href={buttonUrl} class="hero-button">
-          {buttonText}
-        </a>
+        <a href={buttonUrl} class="hero-button">{buttonText}</a>
       )}
     </div>
-    
+
     <div class="hero-image-section">
       <div class="hero-character-float">
-        <div class="hero-character-scale">
-          <LazyImage 
-            src={image} 
-            alt={title}
-            class="hero-character hero-character-desktop"
-            loading="eager"
-            priority={true}
-            context="hero"
-          />
-          <LazyImage 
-            src={imageMobile || image} 
-            alt={title}
-            class="hero-character hero-character-mobile"
-            loading="eager"
-            priority={true}
-            context="hero"
-          />
-        </div>
+        <LazyImage
+          src={image}
+          alt={title}
+          class="hero-character hero-character-desktop"
+          loading="eager"
+          priority={true}
+          context="hero"
+        />
+        <LazyImage
+          src={imageMobile || image}
+          alt={title}
+          class="hero-character hero-character-mobile"
+          loading="eager"
+          priority={true}
+          context="hero"
+        />
       </div>
     </div>
   </div>
@@ -87,19 +86,18 @@ const {
   .hero-banner-container {
     position: relative;
     width: 100%;
-    height: 100%;
+    min-height: clamp(320px, 55vw, 560px);
     overflow: hidden;
+    display: flex;
+    align-items: stretch;
   }
 
   .hero-banner-bg {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     z-index: 1;
   }
-  
+
   .hero-banner-bg img {
     width: 100%;
     height: 100%;
@@ -107,217 +105,155 @@ const {
     animation: heroKenBurns 24s ease-in-out infinite alternate;
     will-change: transform;
   }
-  
-  .hero-bg-desktop {
-    display: none;
-  }
-  
-  .hero-bg-mobile {
-    display: block;
-  }
-  
+
+  .hero-bg-desktop { display: none; }
+  .hero-bg-mobile  { display: block; }
+
+  /* ── Wrapper del contenido ───────────────────────────────────────────────── */
   .hero-banner-content {
     position: relative;
     z-index: 2;
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 3.5rem 1.5rem 2.5rem;
-    gap: 1rem;
+    /* Padding escala*/
+    padding: clamp(1.5rem, 5vw, 3rem) clamp(1rem, 4vw, 4rem);
+    gap: clamp(0.5rem, 2vw, 1.5rem);
+    box-sizing: border-box;
   }
-  
+
   .hero-text-section {
     width: 100%;
-    max-width: 500px;
+    max-width: 540px;
     text-align: center;
     z-index: 3;
+    flex-shrink: 0;
   }
-  
-  .hero-title {
-    font-size: 2.5rem;
-    font-weight: 900;
-    line-height: 1;
-    color: white;
-    margin-bottom: 0.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
-  
+
+  .hero-title,
   .hero-subtitle {
-    font-size: 2.5rem;
+    font-size: clamp(1.5rem, 4.8vw, 3.5rem);
     font-weight: 900;
-    line-height: 1;
+    line-height: 1.05;
     color: white;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin: 0 0 0.1em;
+    word-break: break-word;
   }
-  
+
   .hero-description {
-    font-size: 1rem;
+    font-size: clamp(0.82rem, 1.6vw, 1.125rem);
     font-weight: 400;
     color: white;
-    margin-bottom: 1.5rem;
-    line-height: 1.4;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    margin: 0.6em 0 1.2em;
+    line-height: 1.45;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.25);
   }
-  
+
   .hero-button {
     display: inline-block;
-    padding: 0.75rem 2rem;
+    padding: clamp(0.55rem, 1.4vw, 1rem) clamp(1.2rem, 2.5vw, 2.5rem);
     background-color: white;
     color: #0066cc;
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: clamp(0.78rem, 1.4vw, 1rem);
     border-radius: 50px;
     text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    white-space: nowrap;
   }
-  
+
   .hero-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
   }
-  
+
+  /* ── Sección del León ────────────────────────────────────────────────────── */
   .hero-image-section {
     position: relative;
     width: 100%;
-    max-width: 400px;
-    height: auto;
+    max-width: 360px;
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    z-index: 2;
+    align-items: center;
+    height: clamp(200px, 40vw, 460px);
   }
 
   .hero-character-float {
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    transform-origin: 50% 80%;
+    align-items: center;
     animation: cappyFloat 2.8s ease-in-out infinite;
     will-change: transform;
+    transform-origin: 50% 85%;
   }
 
-  .hero-character-scale {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    transform: scale(1);
-    transform-origin: 50% 70%;
-  }
-  
   .hero-character {
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
-    object-position: bottom center;
-    max-height: 600px;
-  }
-
-  @keyframes cappyFloat {
-    0% {
-      transform: translateY(0) rotate(-0.6deg);
-    }
-    50% {
-      transform: translateY(-10px) rotate(0.6deg);
-    }
-    100% {
-      transform: translateY(0) rotate(-0.6deg);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-character-float {
-      animation: none;
-      transform: none;
-    }
-  }
-  
-  .hero-character-desktop {
-    display: none;
-  }
-  
-  .hero-character-mobile {
+    object-position: center;
     display: block;
   }
-  
+
+  .hero-character-desktop { display: none; }
+  .hero-character-mobile  { display: block; }
+
+  /* ── Tablet 768px+ ───────────────────────────────────────────────────────── */
   @media (min-width: 768px) {
-    .hero-bg-desktop {
-      display: block;
+    .hero-bg-desktop { display: block; }
+    .hero-bg-mobile  { display: none; }
+
+    .hero-banner-container {
+      min-height: clamp(380px, 46vw, 560px);
     }
-    
-    .hero-bg-mobile {
-      display: none;
-    }
-    
+
     .hero-banner-content {
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      padding: 3rem 4rem;
-      gap: 0.5rem;
       max-width: 1400px;
       margin: 0 auto;
     }
-    
+
     .hero-text-section {
-      flex: 1;
-      max-width: 600px;
-      text-align: left;
+      flex: 1 1 45%;
+      max-width: 520px;
+      text-align: center;
     }
-    
-    .hero-title {
-      font-size: 3.5rem;
-      margin-bottom: 0.25rem;
-    }
-    
-    .hero-subtitle {
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
-    }
-    
-    .hero-description {
-      font-size: 1.125rem;
-      margin-bottom: 2rem;
-    }
-    
-    .hero-button {
-      padding: 1rem 2.5rem;
-      font-size: 1rem;
-    }
-    
+
     .hero-image-section {
-      flex: 1;
-      max-width: 900px;
-      height: 100%;
-      align-items: center;
+      flex: 1 1 45%;
+      max-width: 520px;
+      height: clamp(300px, 43vw, 540px);
     }
-    
-    .hero-character {
-      max-height: 900px;
-    }
-    
-    .hero-character-desktop {
-      display: block;
-      margin-top: 230px;
-    }
-    
-    .hero-character-mobile {
-      display: none;
-    }
-  }
-  
-  .html-slide-active .hero-banner-container {
-    height: 100%;
+
+    .hero-character-desktop { display: block; }
+    .hero-character-mobile  { display: none; }
   }
 
-  .html-slide-active .hero-banner-container .hero-banner-content {
-    height: 100%;
+  /* ── Desktop ────────────────────────────────────── */
+  @media (min-width: 1024px) {
+    .hero-banner-container {
+      min-height: clamp(420px, 40vw, 580px);
+    }
+
+    .hero-text-section {
+      max-width: 580px;
+    }
+
+    .hero-image-section {
+      max-width: 640px;
+      height: clamp(380px, 38vw, 580px);
+    }
   }
 
   .html-slide-active .hero-banner-container .hero-banner-bg img {
@@ -325,211 +261,53 @@ const {
     animation-delay: 0ms, 700ms;
   }
 
-  .html-slide-active .hero-banner-container .hero-image-section {
-    height: 100%;
-    align-items: flex-end;
-  }
-
-  .html-slide-active .hero-banner-container .hero-character {
-    height: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
-
   .html-slide-active .hero-banner-container .hero-title {
-    animation: heroBounceIn 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation: heroBounceIn 600ms cubic-bezier(0.34,1.56,0.64,1) both;
     animation-delay: 0ms;
   }
-
   .html-slide-active .hero-banner-container .hero-subtitle {
-    animation: heroBounceIn 620ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation: heroBounceIn 620ms cubic-bezier(0.34,1.56,0.64,1) both;
     animation-delay: 40ms;
   }
-
   .html-slide-active .hero-banner-container .hero-description {
-    animation: heroBounceIn 640ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation: heroBounceIn 640ms cubic-bezier(0.34,1.56,0.64,1) both;
     animation-delay: 80ms;
   }
-
   .html-slide-active .hero-banner-container .hero-button {
-    animation: heroBounceIn 660ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation: heroBounceIn 660ms cubic-bezier(0.34,1.56,0.64,1) both;
     animation-delay: 120ms;
   }
-
   .html-slide-active .hero-banner-container .hero-image-section {
-    animation: heroImageBounceIn 680ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation: heroBounceIn 680ms cubic-bezier(0.34,1.56,0.64,1) both;
     animation-delay: 160ms;
   }
 
-  @media (max-width: 767px) {
-    .html-slide-active .hero-banner-container .hero-text-section {
-      transform: translateY(18px);
-    }
-
-    .html-slide-active .hero-banner-container .hero-image-section {
-      animation: none;
-      transform: translateY(140px);
-    }
-
-    .html-slide-active .hero-banner-container .hero-character-mobile {
-      transform: translateX(-24px);
-    }
-  }
-
-  @media (min-width: 768px) {
-    .html-slide-active .hero-banner-container .hero-banner-content {
-      justify-content: center;
-      gap: 0.25rem;
-    }
-
-    .html-slide-active .hero-banner-container .hero-text-section,
-    .html-slide-active .hero-banner-container .hero-image-section {
-      flex: 0 0 auto;
-    }
-
-    .html-slide-active .hero-banner-container .hero-text-section {
-      max-width: 520px;
-    }
-
-    .html-slide-active .hero-banner-container .hero-image-section {
-      max-width: 520px;
-      margin-left: -120px;
-    }
-
-    .html-slide-active .hero-banner-container .hero-character-desktop {
-      transform: translateX(-120px);
-    }
+  /* ── Keyframes ───────────────────────────────────────────────────────────── */
+  @keyframes cappyFloat {
+    0%   { transform: translateY(0)     rotate(-0.6deg); }
+    50%  { transform: translateY(-10px) rotate( 0.6deg); }
+    100% { transform: translateY(0)     rotate(-0.6deg); }
   }
 
   @keyframes heroBounceIn {
-    0% {
-      opacity: 0;
-      transform: translateY(14px) scale(0.98);
-    }
-    55% {
-      opacity: 1;
-      transform: translateY(-5px) scale(1.01);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
+    0%   { opacity: 0; transform: translateY(14px) scale(0.98); }
+    55%  { opacity: 1; transform: translateY(-5px)  scale(1.01); }
+    100% { opacity: 1; transform: translateY(0)      scale(1);   }
   }
 
   @keyframes heroBgIn {
-    0% {
-      opacity: 0;
-      transform: scale(1.02);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
+    0%   { opacity: 0; transform: scale(1.02); }
+    100% { opacity: 1; transform: scale(1);    }
   }
 
   @keyframes heroKenBurns {
-    0% {
-      transform: scale(1) translate3d(0, 0, 0);
-    }
-    100% {
-      transform: scale(1.08) translate3d(-1.5%, -1%, 0);
-    }
-  }
-
-  @keyframes heroImageBounceIn {
-    0% {
-      opacity: 0;
-      transform: translateY(14px) scale(0.98);
-    }
-    55% {
-      opacity: 1;
-      transform: translateY(-5px) scale(1.01);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(160px) scale(1);
-    }
+    0%   { transform: scale(1)    translate3d(0,     0,   0); }
+    100% { transform: scale(1.08) translate3d(-1.5%, -1%, 0); }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-banner-bg img {
-      animation: none;
-      transform: none;
-    }
-    .html-slide-active .hero-banner-container .hero-banner-bg img {
-      animation: none;
-    }
-  }
-
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .hero-banner-content {
-      justify-content: center;
-      gap: 1.25rem;
-    }
-
-    .hero-text-section {
-      text-align: center;
-      max-width: 520px;
-      margin: 0 auto;
-    }
-
-    .hero-image-section {
-      align-items: center;
-      justify-content: center;
-      max-width: 520px;
-      margin: 0 auto;
-    }
-
-    .hero-character-scale {
-      transform: scale(1.22);
-    }
-
-    .hero-character-desktop {
-      margin-top: 0;
-    }
-
-    .html-slide-active .hero-banner-container .hero-banner-content {
-      justify-content: center;
-      gap: 1.25rem;
-    }
-
-    .html-slide-active .hero-banner-container .hero-image-section {
-      margin-left: 0;
-      max-width: 520px;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .html-slide-active .hero-banner-container .hero-character-desktop {
-      transform: none;
-    }
-  }
-
-  @media (max-width: 767px) {
-    .hero-banner-content {
-      justify-content: flex-start;
-      padding-top: 5.5rem;
-      padding-bottom: 2rem;
-    }
-
-    .hero-text-section {
-      margin-top: 0.5rem;
-    }
-
-    .hero-image-section {
-      margin-top: 0.5rem;
-    }
-
-    .html-slide-active .hero-banner-container .hero-text-section {
-      transform: none;
-    }
-
-    .html-slide-active .hero-banner-container .hero-image-section {
-      transform: none;
-    }
-
-    .html-slide-active .hero-banner-container .hero-character-mobile {
-      transform: none;
-    }
+    .hero-banner-bg img,
+    .hero-character-float { animation: none; transform: none; }
+    .html-slide-active .hero-banner-container .hero-banner-bg img { animation: none; }
   }
 </style>
