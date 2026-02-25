@@ -9,7 +9,7 @@ html, body {
   width: 100%;
   position: relative;
   max-width: 100vw;
-  background-color: white;
+  background-color: #FFED00; /* primary: evita flash blanco entre rutas */
 }
 
 /* Controles globales para carouseles (Swiper) */
