@@ -141,11 +141,14 @@ function getHueRotate(color: string) {
   return '0deg';
 }
 
-// Generar srcset para imágenes responsivas
+// Generar srcset para imágenes responsivas (solo para dominios que soportan transformaciones)
 const isExternal = src.startsWith('http');
 let srcset = '';
 
-if (isExternal && src.includes('assets.doguiygatibienestar.com')) {
+// Solo generar srcset para dominios que lo soportan explícitamente
+const supportsSrcset = src.includes('assets.doguiygatibienestar.com');
+
+if (isExternal && supportsSrcset) {
     srcset = [
       `${src}?w=640 640w`,
       `${src}?w=768 768w`,
@@ -160,13 +163,9 @@ if (isExternal && src.includes('assets.doguiygatibienestar.com')) {
       `${baseUrl}-1024w.webp 1024w`,
       `${baseUrl}-1280w.webp 1280w`
     ].join(', ');
-} else if (isExternal) { 
-    srcset = [
-      `${src}?w=640&q=80 640w`,
-      `${src}?w=768&q=80 768w`,
-      `${src}?w=1024&q=80 1024w`,
-      `${src}?w=1280&q=80 1280w`
-    ].join(', ');
+} else if (isExternal && !supportsSrcset) {
+    // Para imágenes externas sin soporte, no generar srcset
+    srcset = '';
 }
 
 ---
