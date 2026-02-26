@@ -12,30 +12,4 @@ export default defineConfig({
       applyBaseStyles: true,
     }),
   ],
-  // Optimizaciones de build y performance
-  build: {
-    inlineStylesheets: 'auto',
-    format: 'file',
-  },
-  // Compresión y output
-  vite: {
-    build: {
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true,
-        },
-      },
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'vendor': ['react', 'react-dom'],
-          },
-        },
-      },
-    },
-    ssr: {
-      external: ['sharp'],
-    },
-  },
 });
