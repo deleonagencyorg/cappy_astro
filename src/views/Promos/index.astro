@@ -1,9 +1,10 @@
 ---
 import { t } from '../../i18n/i18n';
 import type { Locale } from '../../i18n/i18n';
-import LazyImage from '../../components/common/LazyImage.astro';
+//import img from '../../components/common/img.astro'; 
 import Breadcrumb from '../../components/common/Breadcrumb/Breadcrumb.astro';
 import HeroBanner from '../../components/common/HeroBanner.astro';
+
 
 interface PromoItem {
   id: string;
@@ -95,7 +96,7 @@ endedPromos.sort((a, b) => (toEndOfDayDate(b.fecha_fin)?.getTime() || 0) - (toEn
 ---
 
 <Fragment slot="head">
-  <link rel="canonical" href={canonicalUrl} />
+    <link rel="canonical" href={canonicalUrl} />
   <meta property="og:url" content={canonicalUrl} />
   <meta property="og:type" content="website" />
   <meta property="og:title" content={pageTitle} />
@@ -125,7 +126,7 @@ endedPromos.sort((a, b) => (toEndOfDayDate(b.fecha_fin)?.getTime() || 0) - (toEn
 <div class="bg-primary -mt-px -mb-px overflow-hidden">
   <div class="bg-primary  container mx-auto px-4 pt-4 pb-16">
 
-    <div class="mt-6 h-[500px] overflow-hidden shadow-xl rounded-[24px]" data-animate="bounce" data-animate-delay="0">
+    <div class="mt-6 overflow-hidden shadow-xl rounded-[24px]" style="min-height: clamp(320px, 52vw, 560px);" data-animate="bounce" data-animate-delay="0" transition:persist="">
       <HeroBanner
         backgroundImage={hero.backgroundImage}
         backgroundImageMobile={hero.backgroundImageMobile}
@@ -179,7 +180,7 @@ endedPromos.sort((a, b) => (toEndOfDayDate(b.fecha_fin)?.getTime() || 0) - (toEn
                     {labels.activeBadge}
                   </span>
                   <div class="h-[170px] bg-white/10 overflow-hidden">
-                    <LazyImage
+                    <img
                       src={promo.imagen}
                       alt={promo.descripcion}
                       class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
@@ -218,7 +219,7 @@ endedPromos.sort((a, b) => (toEndOfDayDate(b.fecha_fin)?.getTime() || 0) - (toEn
                     {labels.activeBadge}
                   </span>
                   <div class="h-[210px] bg-white/10 overflow-hidden">
-                    <LazyImage
+                    <img
                       src={promo.imagen}
                       alt={promo.descripcion}
                       class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
@@ -292,7 +293,7 @@ endedPromos.sort((a, b) => (toEndOfDayDate(b.fecha_fin)?.getTime() || 0) - (toEn
                     {labels.endedBadge}
                   </span>
                   <div class="h-[170px] bg-white/10 overflow-hidden">
-                    <LazyImage
+                    <img
                       src={promo.imagen}
                       alt={promo.descripcion}
                       class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
@@ -331,7 +332,7 @@ endedPromos.sort((a, b) => (toEndOfDayDate(b.fecha_fin)?.getTime() || 0) - (toEn
                     {labels.endedBadge}
                   </span>
                   <div class="h-[210px] bg-white/10 overflow-hidden">
-                    <LazyImage
+                    <img
                       src={promo.imagen}
                       alt={promo.descripcion}
                       class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
@@ -386,7 +387,7 @@ endedPromos.sort((a, b) => (toEndOfDayDate(b.fecha_fin)?.getTime() || 0) - (toEn
           </div>
 
           <div class="w-full md:w-1/2 px-6 md:px-10 py-8 md:py-10 flex items-end justify-center md:justify-end">
-            <LazyImage
+            <img
               src={cta.image}
               alt={cta.title}
               class="w-full max-w-[420px] h-auto object-contain"

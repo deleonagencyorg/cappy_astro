@@ -1,0 +1,10 @@
+{
+  "name": "Cappy Snacks",
+  "short_name": "Cappy",
+  "description": "Descubre la variedad de productos Cappy",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#FFED00",
+  "theme_color": "#FFED00",
+  "icons": []
+}

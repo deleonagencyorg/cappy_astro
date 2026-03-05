@@ -28,6 +28,7 @@ const countryPlaceholder = locale === 'es' ? 'Selecciona tu país' : 'Select you
 const departmentPlaceholder = locale === 'es' ? 'Primero selecciona un país' : 'First select a country';
 const contactReasonPlaceholder = locale === 'es' ? 'Selecciona el tipo de consulta' : 'Select the type of inquiry';
 
+
 // Get API configuration from environment variables
 const apiHost = import.meta.env.PUBLIC_CONTACT_API_HOST || 'https://api-crm.yummiespromociones.com/api';
 const apiToken = import.meta.env.PUBLIC_CONTACT_API_TOKEN || '';
@@ -721,10 +722,6 @@ const options = dynamicOptions[locale];
           <option value="">${locale === 'es' ? 'Selecciona una opción' : 'Select an option'}</option>
           ${options.clientAreaOfInterest.map((option) => '<option value="' + option + '">' + option + '</option>').join('')}
         </select>
-      </div>
-      <div>
-        <label class="block text-blue uppercase font-semibold mb-2">${labels.message}</label>
-        <textarea name="message" rows="4" class="w-full px-4 py-3 border-2 border-[#0b2f87] rounded-2xl tertiary text-black placeholder:text-black/60 focus:bg-white focus:ring-2 focus:ring-[#0b2f87]/30 focus:border-[#0b2f87] transition-all resize-none"></textarea>
       </div>
       <div>
         <label class="block text-blue uppercase font-semibold mb-2">${labels.file}</label>

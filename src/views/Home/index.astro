@@ -109,12 +109,16 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
 
   <main class="bg-primary w-full flex flex-col items-center justify-center mt-0" data-page="home">
     <!-- Slider Section con VideoCarousel -->
-    <div class="relative w-full overflow-hidden py-4 bg-yellow" data-animate="bounce" data-animate-delay="0">
-      <div class="w-[90%] mx-auto h-[500px] overflow-hidden shadow-xl rounded-none md:rounded-[24px]">
-        <VideoCarousel 
-          slides={slides} 
-          height="500px" 
-          mobileHeight="500px" 
+    <div
+          class="relative w-full overflow-hidden py-4 bg-yellow"
+          data-animate="bounce"
+          data-animate-delay="0"
+        >
+      <div class="w-[90%] mx-auto overflow-hidden shadow-xl rounded-2xl">
+        <VideoCarousel
+          slides={slides}
+          height="auto"
+          mobileHeight="auto"
           showOverlay={true}
           width="100%"
           borderRadius="0"
@@ -131,7 +135,7 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
     {cappyProducts.length > 0 && (
       <section id="products" class="w-full bg-yellow py-12 md:py-16" data-animate="bounce" data-animate-delay="140">
         <div class="container mx-auto px-6">
-          <div class="grid grid-cols-1 md:grid-cols-[40%_65%] gap-8 md:gap-12 items-center">
+          <div class="grid grid-cols-1 md:grid-cols-[35%_65%] gap-8 md:gap-12 items-center">
             {/* Columna de textos */}
             <div class="space-y-4 md:space-y-6">
               {brandsAssets.home?.title && (

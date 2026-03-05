@@ -55,9 +55,9 @@ const slidesCount = Array.isArray(slides) ? slides.length : 0;
 const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummies/placeholder.webp';
 ---
 
-<div class="video-carousel-container" style={`width: ${width}; margin: 0 auto; --desktop-height: ${height}; --mobile-height: ${mobileHeight};`}>
+<div class="video-carousel-container" style={`width: ${width}; margin: 0 auto; --desktop-height: ${height}; --mobile-height: ${mobileHeight}; --border-radius: ${borderRadius};`}>
   <!-- Swiper container -->
-  <div class="swiper-container video-carousel" data-slides-count={slidesCount} style={`border-radius: ${borderRadius}; overflow: hidden;`}>
+  <div class="swiper-container video-carousel" data-slides-count={slidesCount} style={`overflow: hidden;`}>
     <div class="swiper-wrapper">
       {slidesCount === 0 ? (
         <div class="swiper-slide" id="slide-0" data-slide-type="image">
@@ -212,25 +212,39 @@ const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummie
   }
   
   .video-carousel-container {
-    position: relative;
-    overflow: visible;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius, 0);
+}
+
+.swiper-container {
+  overflow: hidden;
+  border-radius: var(--border-radius, 0);
+}
+
+@media (max-width: 767px) {
+  .slide-content {
+    height: var(--mobile-height) !important;
   }
+  
+  .video-carousel-container,
+  .swiper-container {
+    border-radius: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .video-carousel-container,
+  .swiper-container {
+    border-radius: 24px;
+  }
+}
   
   .slide-content {
     position: relative;
     width: 100%;
     overflow: hidden;
     height: var(--desktop-height);
-  }
-  
-  .swiper-container {
-    overflow: hidden;
-  }
-  
-  @media (max-width: 767px) {
-    .slide-content {
-      height: var(--mobile-height) !important;
-    }
   }
   
   .fallback-image {
