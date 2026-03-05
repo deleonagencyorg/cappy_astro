@@ -1,8 +1,8 @@
 ---
 import GoogleTagManager from '../components/common/GoogleTagManager.astro';
 import Favicon from '../components/Favicon.astro';
-// import GoogleTagManager from './i18n/GoogleTagManager.astro';
-// import GoogleTagManagerNoScript from './i18n/GoogleTagManagerNoScript.astro';
+import MetaPixel from '../components/common/MetaPixel.astro';
+import TikTokPixel from '../components/common/TikTokPixel.astro';
 import { type Locale } from '../i18n/i18n'; // t is not used, Locale type might be needed
 import Header from '../components/common/Header/index.astro';
 import Footer from '../components/common/Footer/index.astro';
@@ -48,6 +48,8 @@ if (headerColors) {
 ---
 <html lang={currentLang}>
   <head>
+    <MetaPixel />
+    <TikTokPixel />
     <Favicon />
     <GoogleTagManager />
     
@@ -57,6 +59,12 @@ if (headerColors) {
     {description && <meta name="description" content={description} />}
     <ViewTransitions />
     <slot name="head" />
+    <script is:inline>
+      document.addEventListener('astro:page-load', () => {
+        if (window.fbq) fbq('track', 'PageView');
+        if (window.ttq) ttq.page();
+      });
+    </script>
     {/* <GoogleTagManager /> */}
   </head>
   <body class={`font-sans min-h-screen flex flex-col ${className || ''}`}>
