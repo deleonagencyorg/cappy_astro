@@ -69,6 +69,10 @@ const toDate = (value: string) => {
   return Number.isNaN(d.getTime()) ? null : d;
 };
 
+const now = new Date();
+const endDate = toDate(promo.fecha_fin);
+const isExpired = endDate ? now > endDate : false;
+
 const formatDate = (value: string) => {
   const d = toDate(value);
   if (!d) return value;
@@ -91,6 +95,11 @@ const termsContent = terms.content;
 const faqsTitle = faqs.title || (currentLang === 'es' ? '¿Tienes dudas? te las respondemos' : 'Questions? We’ve got answers');
 
 const hasFaqs = Array.isArray(faqs.items) && faqs.items.length > 0;
+
+// Modify hero, prizes, and terms to hide buttons if expired
+const modifiedHero = isExpired ? { ...hero, buttonText: undefined, buttonUrl: undefined } : hero;
+const modifiedPrizes = isExpired ? { ...prizes, buttonText: undefined, buttonUrl: undefined } : prizes;
+const modifiedTerms = isExpired ? { ...terms, buttonText: undefined, url: undefined } : terms;
 
 const products = (t('items', { namespace: 'products', locale: currentLang }) || []) as any[];
 const productsDetailPage = t('detailPage', { namespace: 'products', locale: currentLang }) || {};
@@ -145,8 +154,9 @@ const carouselTitle = currentLang === 'es' ? 'Descubre nuestros productos' : 'Di
         title={hero.title || promo.descripcion}
         subtitle={hero.subtitle}
         description={hero.description}
-        buttonText={hero.buttonText}
-        buttonUrl={hero.buttonUrl}
+        buttonText={!isExpired ? String(hero.buttonText ?? '') || undefined : undefined}
+        buttonUrl={!isExpired ? String(hero.buttonUrl ?? '') || undefined : undefined}
+        
       />
     </div>
 
@@ -223,17 +233,6 @@ const carouselTitle = currentLang === 'es' ? 'Descubre nuestros productos' : 'Di
               ))}
             </div>
           </div>
-
-          {(prizes.buttonText && prizes.buttonUrl) && (
-            <div class="p-6 md:p-8 pt-0">
-              <a
-                href={prizes.buttonUrl}
-                class="block w-full text-center px-6 py-3 rounded-full bg-white text-blue font-bold transition hover:opacity-90"
-              >
-                {prizes.buttonText}
-              </a>
-            </div>
-          )}
         </div>
       </aside>
     </div>
