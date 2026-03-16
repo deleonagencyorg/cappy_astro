@@ -40,12 +40,8 @@ const closeMenuLabel = t('menu_labels.close_main_menu', { namespace: 'common', l
     <nav class="flex flex-col items-center space-y-3 text-center w-full text-black" id="mobile-menu-items">
       {currentLang === 'es' && (
         <a
-          href="https://backtoschool.yummiespromociones.com/"
-          id="back-to-school-btn-mobile"
-          class="font-title text-xl uppercase font-medium py-2 px-4 rounded-md bg-[#E30613] text-white hover:opacity-90 transition-colors w-full max-w-xs"
-          data-preserve-utm="true"
         >
-          Back to School
+          {/* Botón Promo Móvil */}
         </a>
       )}
       {menuItems && menuItems.map((item: any) => (

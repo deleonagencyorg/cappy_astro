@@ -77,7 +77,6 @@ export default function OfficesTabs({ title = '', locations = {} }) {
 
                 {active?.email && (
                   <div className="flex items-start gap-3">
-                    <span className="mt-[2px]">+</span>
                     <a href={`mailto:${active.email}`} className="underline break-all">
                       {active.email}
                     </a>

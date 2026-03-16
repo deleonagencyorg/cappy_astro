@@ -32,12 +32,9 @@ const rightMenuItems = Array.isArray(menuItems) ? menuItems.slice(2) : [];
   <div class="flex items-center justify-start gap-4 lg:gap-6 xl:gap-8" id="desktop-menu-left">
     {currentLang === 'es' && (
       <a
-        href="https://backtoschool.yummiespromociones.com/"
-        id="back-to-school-btn"
-        class="font-title text-base lg:text-lg xl:text-xl uppercase font-medium py-2 px-3 rounded-md bg-[#E30613] text-white hover:opacity-90 transition-colors md:w-24 lg:w-28 text-center leading-tight whitespace-normal break-words flex items-center justify-center"
-        data-preserve-utm="true"
+      
       >
-        Back to School
+        {/* Botón Promo */}
       </a>
     )}
     {leftMenuItems.map((item: any) => (
