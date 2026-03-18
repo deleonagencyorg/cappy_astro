@@ -141,9 +141,17 @@ import LazyImage from '../LazyImage.astro';
 
   <!-- Navegación -->
   {productsCount > 1 && (
-    <div class="carousel-controls pr-8 mr-2">
-      <button class="carousel-control swiper-button-prev" type="button"></button>
-      <button class="carousel-control swiper-button-next" type="button"></button>
+    <div class="carousel-controls">
+      <button class="carousel-btn carousel-btn-prev" type="button" aria-label="Anterior">
+        <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.5 14L8.5 9.5L13.5 5" stroke="#004AB2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="carousel-btn carousel-btn-next" type="button" aria-label="Siguiente">
+        <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.5 14L12.5 9.5L7.5 5" stroke="#004AB2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   )}
 </div>
@@ -160,7 +168,7 @@ import LazyImage from '../LazyImage.astro';
     position: relative;
     width: 100%;
     max-width: 100%;
-    padding: 0 40px;
+    padding: 0 10px;
     overflow: visible;
     margin: 0 auto;
   }
@@ -313,7 +321,45 @@ import LazyImage from '../LazyImage.astro';
     max-width: 250px;
   }
 
-  /* Mobile: card sizing */
+  /* Controles de navegación */
+  .carousel-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0 2rem;
+  }
+
+  .carousel-btn {
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border: 2px solid #004AB2;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    transition: background-color 200ms ease;
+    flex-shrink: 0;
+  }
+
+  .carousel-btn:hover {
+    background-color: #004AB2;
+  }
+
+  .carousel-btn:hover svg path {
+    stroke: white;
+  }
+
+  .carousel-btn svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+
+  /* Mobile */
   @media (max-width: 767px) {
     .products-carousel {
       padding-top: var(--pc-padding-top-mobile, 80px);
@@ -322,6 +368,7 @@ import LazyImage from '../LazyImage.astro';
     .product-card {
       width: min(320px, 85vw);
       margin: 0 auto;
+      justify-content: flex-start;
     }
 
     .product-title {
@@ -330,22 +377,16 @@ import LazyImage from '../LazyImage.astro';
       font-size: 1rem;
     }
 
-    /* Show navigation controls on mobile */
     .carousel-controls {
-      display: flex;
-      justify-content: flex-start;
-      gap: 0.5rem;
-      margin-top: 1rem;
-      padding: 0 1rem;
+      justify-content: center;
     }
   }
 </style>
 
 <script>
   import Swiper from 'swiper';
-  import { Navigation, Autoplay } from 'swiper/modules';
+  import { Autoplay } from 'swiper/modules';
   import 'swiper/css';
-  import 'swiper/css/navigation';
 
   interface ProductsCarouselOptions {
     autoplay?: boolean;
@@ -374,8 +415,8 @@ import LazyImage from '../LazyImage.astro';
       const slidesCount = swiperContainer.querySelectorAll('.swiper-slide').length;
       if (slidesCount <= 1) return;
 
-      const prevBtn = this.container.querySelector('.swiper-button-prev') as HTMLElement | null;
-      const nextBtn = this.container.querySelector('.swiper-button-next') as HTMLElement | null;
+      const prevBtn = this.container.querySelector('.carousel-btn-prev') as HTMLElement | null;
+      const nextBtn = this.container.querySelector('.carousel-btn-next') as HTMLElement | null;
 
       // Add event listeners to prevent swiper from handling link clicks
       const productLinks = swiperContainer.querySelectorAll('a[data-no-swipe]');
@@ -400,7 +441,7 @@ import LazyImage from '../LazyImage.astro';
       }
 
       this.swiper = new Swiper(swiperContainer, {
-        modules: [Navigation, Autoplay],
+        modules: [Autoplay],
         slidesPerView: dsSlides || this.options.slidesPerView || 3,
         spaceBetween: dsSpace || this.options.spaceBetween || 30,
         loop: this.options.loop !== false,
@@ -413,21 +454,14 @@ import LazyImage from '../LazyImage.astro';
           delay: this.options.speed || 5000,
           disableOnInteraction: false,
         } : false,
-        navigation: {
-          nextEl: nextBtn,
-          prevEl: prevBtn,
-        },
-        // Prevent swiper from handling clicks on links with data-no-animation
         preventClicksPropagation: true,
         preventClicks: false,
         noSwiping: true,
         noSwipingClass: 'swiper-no-swiping',
       });
 
-      // Add swiper-no-swiping class to all links with data-no-swipe attribute
-      productLinks.forEach(link => {
-        link.classList.add('swiper-no-swiping');
-      });
+      prevBtn?.addEventListener('click', () => this.swiper?.slidePrev());
+      nextBtn?.addEventListener('click', () => this.swiper?.slideNext());
     }
 
     private initMobileNavigation(
@@ -437,7 +471,7 @@ import LazyImage from '../LazyImage.astro';
     ): void {
       const scroller = container;
       const slides = container.querySelectorAll('.swiper-slide');
-      
+
       if (slides.length <= 1) return;
 
       let currentIndex = 0;
@@ -453,10 +487,7 @@ import LazyImage from '../LazyImage.astro';
         const MOBILE_CENTER_NUDGE_PX = 20;
         const targetLeft = Math.round(index * w + MOBILE_CENTER_NUDGE_PX);
         requestAnimationFrame(() => {
-          scroller.scrollTo({
-            left: targetLeft,
-            behavior: 'smooth'
-          });
+          scroller.scrollTo({ left: targetLeft, behavior: 'smooth' });
         });
       };
 
@@ -491,9 +522,7 @@ import LazyImage from '../LazyImage.astro';
   // Función para inicializar carruseles
   function initializeCarousels() {
     cleanupCarousels();
-    
-    const carousels = document.querySelectorAll('.products-carousel');
-    carousels.forEach((element: Element) => {
+    document.querySelectorAll('.products-carousel').forEach((element: Element) => {
       if (element instanceof HTMLElement) {
         const instance = new ProductsCarousel(element, {
           autoplay: element.dataset.autoplay !== 'false',
@@ -514,4 +543,4 @@ import LazyImage from '../LazyImage.astro';
   document.addEventListener('astro:after-swap', initializeCarousels);
   // Limpiar antes del swap de Astro
   document.addEventListener('astro:before-swap', cleanupCarousels);
-</script> 
+</script>
