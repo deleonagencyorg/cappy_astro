@@ -217,9 +217,9 @@ if (allProductsArray.length > 1) {
         </div>
         <div class="flex justify-center md:justify-end">
           <LazyImage
-            src={detailPage.crunch.image}
+            src={(product as any)?.crunch?.image || detailPage.crunch.image}
             alt={detailPage.crunch.title}
-            class="w-full max-w-[360px] h-auto object-contain"
+            class="w-[150px] h-[150px] object-contain m-10 md:mr-30"
             loading="lazy"
           />
         </div>
