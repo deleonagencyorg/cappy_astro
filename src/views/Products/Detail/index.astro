@@ -203,7 +203,7 @@ if (allProductsArray.length > 1) {
 
 
 
-<!-- {detailPage?.crunch && (
+{detailPage?.crunch && (
   <section class="w-full bg-yellow py-10 md:py-14">
     <div class="container mx-auto px-4">
       <div class="pd-anim rounded-[28px] bg-orange p-6 sm:p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -217,16 +217,16 @@ if (allProductsArray.length > 1) {
         </div>
         <div class="flex justify-center md:justify-end">
           <LazyImage
-            src={detailPage.crunch.image}
+            src={(product as any)?.crunch?.image || detailPage.crunch.image}
             alt={detailPage.crunch.title}
-            class="w-full max-w-[360px] h-auto object-contain"
+            class="w-[150px] h-[150px] object-contain m-10 md:mr-30"
             loading="lazy"
           />
         </div>
       </div>
     </div>
   </section>
-)} -->
+)} 
 
 {products.length > 0 && (
   <section class="w-full bg-yellow pb-10 md:pb-14">
