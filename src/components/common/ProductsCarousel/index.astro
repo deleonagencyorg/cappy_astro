@@ -385,8 +385,9 @@ import LazyImage from '../LazyImage.astro';
 
 <script>
   import Swiper from 'swiper';
-  import { Autoplay } from 'swiper/modules';
+  import { Navigation, Autoplay } from 'swiper/modules';
   import 'swiper/css';
+  import 'swiper/css/navigation';
 
   interface ProductsCarouselOptions {
     autoplay?: boolean;
@@ -441,7 +442,7 @@ import LazyImage from '../LazyImage.astro';
       }
 
       this.swiper = new Swiper(swiperContainer, {
-        modules: [Autoplay],
+        modules: [Navigation, Autoplay],
         slidesPerView: dsSlides || this.options.slidesPerView || 3,
         spaceBetween: dsSpace || this.options.spaceBetween || 30,
         loop: this.options.loop !== false,
