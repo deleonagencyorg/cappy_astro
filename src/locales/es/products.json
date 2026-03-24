@@ -81,10 +81,10 @@
       "name": "Cappy Explosion de Queso",
       "category": "gorditos",
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",
-      "imageMobile": "https://snack.yumm1iespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",      
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",      
       "background_color": "#FDE820",
       "crunch": {
-        "image":"https://snack.yummiespromociones.com/snacksyummies/cappy-chip2.webp"
+        "image":"https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy.webp"
       },
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
@@ -132,7 +132,7 @@
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Queso_Mantequilla.webp",
       "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Queso_Mantequilla.webp",
       "crunch": {
-        "image":"https://snack.yummiespromociones.com/snacksyummies/cappy-chip1.webp"
+        "image":"https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Infladitos.webp"
       },
       "background_color": "#FDE820",
       "header_text_color": "#5B3F2E",
@@ -181,7 +181,7 @@
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp",
       "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp",
       "crunch": {
-        "image":"https://snack.yummiespromociones.com/snacksyummies/cappy-chip1.webp"
+        "image":"https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Infladitos.webp"
       },
       "background_color": "#FE5A00",
       "category": "infladitos",
@@ -279,7 +279,7 @@
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Queso_Mantequilla.webp",
       "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Queso_Mantequilla.webp",
       "crunch": {
-        "image":"https://snack.yummiespromociones.com/snacksyummies/cappy-chip3.webp"
+        "image":"https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Tornito.webp"
       },
       "background_color": "#004AB2",
       "header_text_color": "#FFFFFF",
@@ -328,7 +328,7 @@
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Chile_Toreado.webp",
       "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Chile_Toreado.webp",
       "crunch": {
-        "image":"https://snack.yummiespromociones.com/snacksyummies/cappy-chip2.webp"
+        "image":"https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy.webp"
       },
       "background_color": "#004AB2",
       "header_text_color": "#FFFFFF",
