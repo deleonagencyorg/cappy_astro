@@ -85,9 +85,8 @@ import LazyImage from '../LazyImage.astro';
               <div
                 class="product-background"
                 style={{
-                  '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
                   '--hover-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                  backgroundImage: 'var(--default-bg)',
+                  backgroundImage: 'var(--hover-bg)',
                 }}
               ></div>
               <div class="product-image-container">
@@ -114,9 +113,8 @@ import LazyImage from '../LazyImage.astro';
                 <div
                   class="product-background"
                   style={{
-                    '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
                     '--hover-bg': `url(${product.background_image || cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                    backgroundImage: 'var(--default-bg)',
+                    backgroundImage: 'var(--hover-bg)',
                   }}
                 ></div>
                 <div class="product-image-container">
@@ -238,37 +236,12 @@ import LazyImage from '../LazyImage.astro';
     position: absolute;
     inset: 8%;
     border-radius: 32px;
-    background-color: #f5d000; /* fallback */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     transition: opacity 220ms ease;
   }
 
-  .product-background::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background-image: var(--hover-bg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0;
-    transition: opacity 220ms ease;
-  }
-
-  @media (hover: hover) {
-    .product-card-cta:hover .product-background::after,
-    .product-card-cta:focus-visible .product-background::after {
-      opacity: 1;
-    }
-
-    .product-card-cta:hover .product-card,
-    .product-card-cta:focus-visible .product-card {
-      animation: cappyHoverBounce 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
-    }
-  }
 
   @keyframes cappyHoverBounce {
     0% {
@@ -284,9 +257,6 @@ import LazyImage from '../LazyImage.astro';
 
   @media (prefers-reduced-motion: reduce) {
     .product-background,
-    .product-background::after {
-      transition: none;
-    }
     .product-card-cta:hover .product-card,
     .product-card-cta:focus-visible .product-card {
       animation: none;
@@ -380,6 +350,11 @@ import LazyImage from '../LazyImage.astro';
       justify-content: center;
     }
   }
+
+    .product-card-cta:hover .product-card,
+    .product-card-cta:focus-visible .product-card {
+      animation: cappyHoverBounce 700ms ease forwards;
+    }
 </style>
 
 <script>

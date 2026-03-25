@@ -81,13 +81,13 @@
       "category": "gorditos",
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",
       "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",
-      "background_color": "#FDE820",
+      "background_color": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_amarillo.webp",
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
       "text_color": "#FDE820",
       "description": "Corn extruded snack with cheese flavor.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-yellow.webp",
+      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_amarillo.webp",
       "sizes": [
         {
           "value": "150",
@@ -180,7 +180,7 @@
       "text_color": "#FE5A00",
       "description": "Corn puffs with cheese, butter and jalapeño flavor.",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-red2.webp",
+      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_rojo.webp",
       "sizes": [
         {
           "value": "150",
@@ -209,52 +209,6 @@
           { "label": "Calcium", "value": "0% DV" },
           { "label": "Iron", "value": "0% DV" },
           { "label": "Potassium", "value": "0% DV" }
-        ],
-        "disclaimer": "Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs."
-      }
-    },
-    {
-      "id": "cappy-palitos-de-papas-ketchup",
-      "slug": "cappy-palitos-de-papas-ketchup",
-      "name": "Cappy Palitos de Papas Ketchup",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp",
-      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp",
-      "background_color": "#BEDE89",
-      "category": "palitos_de_papa",
-      "header_text_color": "#1C1C1C",
-      "color_button": "#BEDE89",
-      "text_color": "#BEDE89",
-      "description": "French-style potato sticks with ketchup.",
-      "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-red.webp",
-      "sizes": [
-        {
-          "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp"
-        }
-      ],
-     "weight": [
-        "1oz-(28g)"
-      ],
-      "nutrition": {
-        "title": "Nutrition details",
-        "serving": "Serving size: 1 oz (28 g). Servings per container: 0.43",
-        "rows": [
-          { "label": "Energy", "value": "650 kJ (150 kcal)" },
-          { "label": "Energy from fat", "value": "300 kJ (70 kcal)" },
-          { "label": "Total fat", "value": "8 g (10% DV)" },
-          { "label": "Saturated fat", "value": "4 g (20% DV)" },
-          { "label": "Trans fat", "value": "0 g (0% DV)" },
-          { "label": "Cholesterol", "value": "0 mg (0% DV)" },
-          { "label": "Sodium", "value": "240 mg (10% DV)" },
-          { "label": "Total carbohydrates", "value": "17 g (6% DV)" },
-          { "label": "Dietary fiber", "value": "<1 g (2% DV)" },
-          { "label": "Sugars", "value": "1 g" },
-          { "label": "Protein", "value": "1 g" },
-          { "label": "Vitamin D", "value": "2% DV" },
-          { "label": "Calcium", "value": "0% DV" },
-          { "label": "Iron", "value": "2% DV" },
-          { "label": "Potassium", "value": "2% DV" }
         ],
         "disclaimer": "Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs."
       }
@@ -301,6 +255,52 @@
           { "label": "Calcium", "value": "0% DV" },
           { "label": "Iron", "value": "0% DV" },
           { "label": "Potassium", "value": "0% DV" }
+        ],
+        "disclaimer": "Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs."
+      }
+    },
+    {
+      "id": "cappy-palitos-de-papas-ketchup",
+      "slug": "cappy-palitos-de-papas-ketchup",
+      "name": "Cappy Palitos de Papas Ketchup",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp",
+      "background_color": "#BEDE89",
+      "category": "palitos_de_papa",
+      "header_text_color": "#1C1C1C",
+      "color_button": "#BEDE89",
+      "text_color": "#BEDE89",
+      "description": "French-style potato sticks with ketchup.",
+      "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
+      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_rojo.webp",
+      "sizes": [
+        {
+          "value": "150",
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp"
+        }
+      ],
+     "weight": [
+        "1oz-(28g)"
+      ],
+      "nutrition": {
+        "title": "Nutrition details",
+        "serving": "Serving size: 1 oz (28 g). Servings per container: 0.43",
+        "rows": [
+          { "label": "Energy", "value": "650 kJ (150 kcal)" },
+          { "label": "Energy from fat", "value": "300 kJ (70 kcal)" },
+          { "label": "Total fat", "value": "8 g (10% DV)" },
+          { "label": "Saturated fat", "value": "4 g (20% DV)" },
+          { "label": "Trans fat", "value": "0 g (0% DV)" },
+          { "label": "Cholesterol", "value": "0 mg (0% DV)" },
+          { "label": "Sodium", "value": "240 mg (10% DV)" },
+          { "label": "Total carbohydrates", "value": "17 g (6% DV)" },
+          { "label": "Dietary fiber", "value": "<1 g (2% DV)" },
+          { "label": "Sugars", "value": "1 g" },
+          { "label": "Protein", "value": "1 g" },
+          { "label": "Vitamin D", "value": "2% DV" },
+          { "label": "Calcium", "value": "0% DV" },
+          { "label": "Iron", "value": "2% DV" },
+          { "label": "Potassium", "value": "2% DV" }
         ],
         "disclaimer": "Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs."
       }
