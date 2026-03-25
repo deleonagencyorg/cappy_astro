@@ -158,7 +158,7 @@ import LazyImage from '../LazyImage.astro';
 
 <style>
   .products-carousel {
-    width: 100%;
+    width: 90%;
     padding: 1rem 0;
     overflow: visible;
     padding-top: var(--pc-padding-top, 120px);
@@ -168,8 +168,8 @@ import LazyImage from '../LazyImage.astro';
     position: relative;
     width: 100%;
     max-width: 100%;
-    padding: 0 10px;
-    overflow: hidden;
+    padding: 0;
+    overflow: visible;
     margin: 0 auto;
   }
 
@@ -227,10 +227,11 @@ import LazyImage from '../LazyImage.astro';
 
   .product-card {
     position: relative;
-    width: 100%;
-    max-width: 260px;
+    width: 260px;
     aspect-ratio: 3 / 4;
     display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 0 auto;
   }
 
@@ -316,7 +317,7 @@ import LazyImage from '../LazyImage.astro';
     font-weight: 600;
     color: #004AB2; /* azul de Cappy */
     text-align: left;
-    width: 90%;
+    width: 100%;
     max-width: 250px;
   }
 
@@ -384,9 +385,10 @@ import LazyImage from '../LazyImage.astro';
 
 <script>
   import Swiper from 'swiper';
-  import { Navigation, Autoplay, Pagination } from 'swiper/modules';
+  import { Navigation, Autoplay } from 'swiper/modules';
   import 'swiper/css';
   import 'swiper/css/navigation';
+import { fa } from 'zod/v4/locales';
 
   interface ProductsCarouselOptions {
     autoplay?: boolean;
@@ -441,61 +443,28 @@ import LazyImage from '../LazyImage.astro';
       }
 
       this.swiper = new Swiper(swiperContainer, {
-        modules: [Autoplay, Navigation],
+        modules: [Navigation, Autoplay],
         slidesPerView: dsSlides || this.options.slidesPerView || 3,
-        spaceBetween: dsSpace || this.options.spaceBetween || 50,
+        spaceBetween: dsSpace || this.options.spaceBetween || 30,
         loop: this.options.loop !== false,
-        slidesOffsetBefore: 0,
-        loopAdditionalSlides: 1,
         roundLengths: true,
         watchOverflow: true,
         slideToClickedSlide: false,
         centeredSlides: false,
+        centeredSlidesBounds: false,
+        slidesOffsetBefore: 0,
         autoplay: this.options.autoplay ? {
           delay: this.options.speed || 5000,
           disableOnInteraction: false,
         } : false,
-        navigation: {
-          nextEl: nextBtn,
-          prevEl: prevBtn,
-        },
-        breakpoints: {
-          0: {
-            slidesPerView: 1,
-            spaceBetween: 10,
-          },
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
-          640: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 30,
-          },
-          1024: {
-            slidesPerView: this.options.slidesPerView || 2,
-            spaceBetween: 50,
-          },
-          1280: {
-            slidesPerView: 3,   
-            spaceBetween: 40,
-          },
-        },
         preventClicksPropagation: true,
         preventClicks: false,
         noSwiping: true,
         noSwipingClass: 'swiper-no-swiping',
       });
 
-
-      // Add swiper-no-swiping class to all links with data-no-swipe attribute
-      productLinks.forEach(link => {
-        link.classList.add('swiper-no-swiping');
-      });
+      prevBtn?.addEventListener('click', () => this.swiper?.slidePrev());
+      nextBtn?.addEventListener('click', () => this.swiper?.slideNext());
     }
 
     private initMobileNavigation(
