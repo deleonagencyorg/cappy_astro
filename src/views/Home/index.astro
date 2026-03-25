@@ -19,6 +19,7 @@ import './styles.css';
 // i18n and Data Imports
 import { t, getLocale } from '../../i18n/i18n';
 import { InstagramEmbed } from 'react-social-media-embed';
+import { tr } from 'framer-motion/m';
 
 
 
@@ -161,7 +162,6 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
             <div class="w-full overflow-hidden">
               <ProductsCarousel 
                 products={products}
-                slidesPerView={2}
                 color={'white'}
                 autoplay={true}
                 speed={4000}
@@ -171,7 +171,7 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
                 data-space-between-desktop="30"
                 data-space-between-tablet="20"
                 data-space-between-mobile="10"
-                loop={false}
+                loop={true}
                 className=""
               />
             </div>
