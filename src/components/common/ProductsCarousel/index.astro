@@ -85,11 +85,9 @@ import LazyImage from '../LazyImage.astro';
               <div
                 class="product-background"
                 style={{
-                  '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                  '--hover-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                  backgroundImage: 'var(--default-bg)',
-                }}
-              ></div>
+                '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                '--hover-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+              }}></div>
               <div class="product-image-container">
                 <LazyImage 
                   src={PLACEHOLDER_IMAGE_URL}
@@ -114,11 +112,9 @@ import LazyImage from '../LazyImage.astro';
                 <div
                   class="product-background"
                   style={{
-                    '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                    '--hover-bg': `url(${product.background_image || cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                    backgroundImage: 'var(--default-bg)',
-                  }}
-                ></div>
+                  '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                  '--hover-bg': `url(${product.background_image || cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                }}></div>
                 <div class="product-image-container">
                   <LazyImage 
                     src={product.imageMobile || product.image} 
@@ -382,6 +378,15 @@ import LazyImage from '../LazyImage.astro';
     .carousel-controls {
       justify-content: center;
     }
+    
+  /* Fondo hover siempre visible en móvil */
+  .product-background {
+    background-image: var(--hover-bg) !important;
+  }
+
+  .product-background::after {
+    display: none;
+  }
   }
 </style>
 
