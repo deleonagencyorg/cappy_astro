@@ -85,11 +85,9 @@ import LazyImage from '../LazyImage.astro';
               <div
                 class="product-background"
                 style={{
-                  '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                  '--hover-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                  backgroundImage: 'var(--default-bg)',
-                }}
-              ></div>
+                '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                '--hover-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+              }}></div>
               <div class="product-image-container">
                 <LazyImage 
                   src={PLACEHOLDER_IMAGE_URL}
@@ -114,11 +112,9 @@ import LazyImage from '../LazyImage.astro';
                 <div
                   class="product-background"
                   style={{
-                    '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                    '--hover-bg': `url(${product.background_image || cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                    backgroundImage: 'var(--default-bg)',
-                  }}
-                ></div>
+                  '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                  '--hover-bg': `url(${product.background_image || cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                }}></div>
                 <div class="product-image-container">
                   <LazyImage 
                     src={product.imageMobile || product.image} 
@@ -157,8 +153,8 @@ import LazyImage from '../LazyImage.astro';
 </div>
 
 <style>
-  .products-carousel {
-    width: 90%;
+    .products-carousel {
+    width: 100%;
     padding: 1rem 0;
     overflow: visible;
     padding-top: var(--pc-padding-top, 120px);
@@ -168,9 +164,10 @@ import LazyImage from '../LazyImage.astro';
     position: relative;
     width: 100%;
     max-width: 100%;
-    padding: 0;
-    overflow: visible;
+    padding: 0 2rem;
+    overflow: hidden;
     margin: 0 auto;
+    box-sizing: border-box;
   }
 
   .swiper-wrapper {
@@ -192,28 +189,29 @@ import LazyImage from '../LazyImage.astro';
   @media (max-width: 767px) {
     .swiper-container {
       padding: 0;
-      overflow-x: auto;
+      overflow-x: scroll;
       overflow-y: hidden;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; /* Firefox */
+      scrollbar-width: none;
     }
 
     .swiper-container::-webkit-scrollbar {
-      display: none; /* Chrome, Safari */
+      display: none;
     }
 
     .swiper-wrapper {
       display: flex;
       flex-wrap: nowrap;
-      gap: 0;
     }
 
     .swiper-slide {
-      flex: 0 0 100%;
-      width: 100%;
-      scroll-snap-align: center;
+      flex: 0 0 100vw;
+      width: 100vw;
+      max-width: 100vw;
+      scroll-snap-align: start;
       scroll-snap-stop: always;
+      box-sizing: border-box;
     }
   }
 
@@ -380,6 +378,15 @@ import LazyImage from '../LazyImage.astro';
     .carousel-controls {
       justify-content: center;
     }
+    
+  /* Fondo hover siempre visible en móvil */
+  .product-background {
+    background-image: var(--hover-bg) !important;
+  }
+
+  .product-background::after {
+    display: none;
+  }
   }
 </style>
 
@@ -457,11 +464,42 @@ import { fa } from 'zod/v4/locales';
           delay: this.options.speed || 5000,
           disableOnInteraction: false,
         } : false,
+        navigation: {
+          nextEl: nextBtn,
+          prevEl: prevBtn,
+        },
+        breakpoints: {
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+          },
+          1024: {
+            slidesPerView: this.options.slidesPerView || 3,
+            spaceBetween: 50,
+          },
+          1280: {
+            slidesPerView: 3,   
+            spaceBetween: 40,
+          },
+        },
         preventClicksPropagation: true,
         preventClicks: false,
         noSwiping: true,
         noSwipingClass: 'swiper-no-swiping',
       });
+
 
       prevBtn?.addEventListener('click', () => this.swiper?.slidePrev());
       nextBtn?.addEventListener('click', () => this.swiper?.slideNext());
@@ -473,37 +511,40 @@ import { fa } from 'zod/v4/locales';
       nextBtn: HTMLElement | null,
     ): void {
       const scroller = container;
-      const slides = container.querySelectorAll('.swiper-slide');
-
+      const slides = Array.from(container.querySelectorAll('.swiper-slide'));
       if (slides.length <= 1) return;
 
       let currentIndex = 0;
-
-      // Always reset on init to avoid carrying scroll position between Astro swaps
       scroller.scrollLeft = 0;
+
+      const getSlideWidth = (): number => {
+        // Usa el ancho real del primer slide, no del scroller
+        // (el scroller puede ser 90vw pero el slide es 100vw)
+        return slides[0]?.getBoundingClientRect().width || window.innerWidth;
+      };
 
       const scrollToIndex = (index: number) => {
         if (index < 0) index = 0;
         if (index >= slides.length) index = slides.length - 1;
         currentIndex = index;
-        const w = scroller.clientWidth || 1;
-        const MOBILE_CENTER_NUDGE_PX = 20;
-        const targetLeft = Math.round(index * w + MOBILE_CENTER_NUDGE_PX);
+        const slideW = getSlideWidth();
         requestAnimationFrame(() => {
-          scroller.scrollTo({ left: targetLeft, behavior: 'smooth' });
+          scroller.scrollTo({ left: index * slideW, behavior: 'smooth' });
         });
       };
 
       const updateIndexFromScroll = () => {
-        const w = scroller.clientWidth || 1;
-        currentIndex = Math.round(scroller.scrollLeft / w);
+        const slideW = getSlideWidth();
+        if (slideW > 0) {
+          currentIndex = Math.round(scroller.scrollLeft / slideW);
+        }
       };
 
-      prevBtn?.addEventListener('click', () => scrollToIndex(currentIndex - 1));
-      nextBtn?.addEventListener('click', () => scrollToIndex(currentIndex + 1));
+  prevBtn?.addEventListener('click', () => scrollToIndex(currentIndex - 1));
+  nextBtn?.addEventListener('click', () => scrollToIndex(currentIndex + 1));
 
-      scroller.addEventListener('scroll', updateIndexFromScroll, { passive: true });
-    }
+  scroller.addEventListener('scroll', updateIndexFromScroll, { passive: true });
+}
 
     public destroy(): void {
       if (this.swiper) {
