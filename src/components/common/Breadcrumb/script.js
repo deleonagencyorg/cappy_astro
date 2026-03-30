@@ -13,10 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
       link.classList.add('current');
     }
   });
-  
-  // Handle locale changes (if needed)
+
+  //evitar doble navegación
+  let isNavigating = false; 
+
   window.addEventListener('localeChanged', (event) => {
-    // Redirect to the same page in the new locale if needed
+    if (isNavigating) return; 
+
     const currentPath = window.location.pathname;
     const segments = currentPath.split('/').filter(Boolean);
     
@@ -26,9 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Only redirect if the current path starts with a locale
       if (['es', 'en'].includes(currentLocale) && currentLocale !== newLocale) {
+        isNavigating = true; 
         const newPath = currentPath.replace(`/${currentLocale}`, `/${newLocale}`);
         window.location.href = newPath;
       }
     }
+  });
+
+  window.addEventListener('pageshow', () => {
+    isNavigating = false;
   });
 });

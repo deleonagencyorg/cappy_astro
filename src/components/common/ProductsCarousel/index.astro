@@ -85,11 +85,9 @@ import LazyImage from '../LazyImage.astro';
               <div
                 class="product-background"
                 style={{
-                  '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                  '--hover-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                  backgroundImage: 'var(--default-bg)',
-                }}
-              ></div>
+                '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                '--hover-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+              }}></div>
               <div class="product-image-container">
                 <LazyImage 
                   src={PLACEHOLDER_IMAGE_URL}
@@ -114,11 +112,9 @@ import LazyImage from '../LazyImage.astro';
                 <div
                   class="product-background"
                   style={{
-                    '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                    '--hover-bg': `url(${product.background_image || cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                    backgroundImage: 'var(--default-bg)',
-                  }}
-                ></div>
+                  '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                  '--hover-bg': `url(${product.background_image || cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                }}></div>
                 <div class="product-image-container">
                   <LazyImage 
                     src={product.imageMobile || product.image} 
@@ -141,15 +137,23 @@ import LazyImage from '../LazyImage.astro';
 
   <!-- Navegación -->
   {productsCount > 1 && (
-    <div class="carousel-controls pr-8 mr-2">
-      <button class="carousel-control swiper-button-prev" type="button"></button>
-      <button class="carousel-control swiper-button-next" type="button"></button>
+    <div class="carousel-controls">
+      <button class="carousel-btn carousel-btn-prev" type="button" aria-label="Anterior">
+        <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.5 14L8.5 9.5L13.5 5" stroke="#004AB2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="carousel-btn carousel-btn-next" type="button" aria-label="Siguiente">
+        <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.5 14L12.5 9.5L7.5 5" stroke="#004AB2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   )}
 </div>
 
 <style>
-  .products-carousel {
+    .products-carousel {
     width: 100%;
     padding: 1rem 0;
     overflow: visible;
@@ -160,9 +164,10 @@ import LazyImage from '../LazyImage.astro';
     position: relative;
     width: 100%;
     max-width: 100%;
-    padding: 0 40px;
-    overflow: visible;
+    padding: 0 2rem;
+    overflow: hidden;
     margin: 0 auto;
+    box-sizing: border-box;
   }
 
   .swiper-wrapper {
@@ -184,28 +189,29 @@ import LazyImage from '../LazyImage.astro';
   @media (max-width: 767px) {
     .swiper-container {
       padding: 0;
-      overflow-x: auto;
+      overflow-x: scroll;
       overflow-y: hidden;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; /* Firefox */
+      scrollbar-width: none;
     }
 
     .swiper-container::-webkit-scrollbar {
-      display: none; /* Chrome, Safari */
+      display: none;
     }
 
     .swiper-wrapper {
       display: flex;
       flex-wrap: nowrap;
-      gap: 0;
     }
 
     .swiper-slide {
-      flex: 0 0 100%;
-      width: 100%;
-      scroll-snap-align: center;
+      flex: 0 0 100vw;
+      width: 100vw;
+      max-width: 100vw;
+      scroll-snap-align: start;
       scroll-snap-stop: always;
+      box-sizing: border-box;
     }
   }
 
@@ -313,7 +319,45 @@ import LazyImage from '../LazyImage.astro';
     max-width: 250px;
   }
 
-  /* Mobile: card sizing */
+  /* Controles de navegación */
+  .carousel-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0 2rem;
+  }
+
+  .carousel-btn {
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border: 2px solid #004AB2;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    transition: background-color 200ms ease;
+    flex-shrink: 0;
+  }
+
+  .carousel-btn:hover {
+    background-color: #004AB2;
+  }
+
+  .carousel-btn:hover svg path {
+    stroke: white;
+  }
+
+  .carousel-btn svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+
+  /* Mobile */
   @media (max-width: 767px) {
     .products-carousel {
       padding-top: var(--pc-padding-top-mobile, 80px);
@@ -322,6 +366,7 @@ import LazyImage from '../LazyImage.astro';
     .product-card {
       width: min(320px, 85vw);
       margin: 0 auto;
+      justify-content: flex-start;
     }
 
     .product-title {
@@ -330,14 +375,18 @@ import LazyImage from '../LazyImage.astro';
       font-size: 1rem;
     }
 
-    /* Show navigation controls on mobile */
     .carousel-controls {
-      display: flex;
-      justify-content: flex-start;
-      gap: 0.5rem;
-      margin-top: 1rem;
-      padding: 0 1rem;
+      justify-content: center;
     }
+    
+  /* Fondo hover siempre visible en móvil */
+  .product-background {
+    background-image: var(--hover-bg) !important;
+  }
+
+  .product-background::after {
+    display: none;
+  }
   }
 </style>
 
@@ -346,6 +395,7 @@ import LazyImage from '../LazyImage.astro';
   import { Navigation, Autoplay } from 'swiper/modules';
   import 'swiper/css';
   import 'swiper/css/navigation';
+import { fa } from 'zod/v4/locales';
 
   interface ProductsCarouselOptions {
     autoplay?: boolean;
@@ -374,8 +424,8 @@ import LazyImage from '../LazyImage.astro';
       const slidesCount = swiperContainer.querySelectorAll('.swiper-slide').length;
       if (slidesCount <= 1) return;
 
-      const prevBtn = this.container.querySelector('.swiper-button-prev') as HTMLElement | null;
-      const nextBtn = this.container.querySelector('.swiper-button-next') as HTMLElement | null;
+      const prevBtn = this.container.querySelector('.carousel-btn-prev') as HTMLElement | null;
+      const nextBtn = this.container.querySelector('.carousel-btn-next') as HTMLElement | null;
 
       // Add event listeners to prevent swiper from handling link clicks
       const productLinks = swiperContainer.querySelectorAll('a[data-no-swipe]');
@@ -407,8 +457,9 @@ import LazyImage from '../LazyImage.astro';
         roundLengths: true,
         watchOverflow: true,
         slideToClickedSlide: false,
-        centeredSlides: true,
-        centeredSlidesBounds: true,
+        centeredSlides: false,
+        centeredSlidesBounds: false,
+        slidesOffsetBefore: 0,
         autoplay: this.options.autoplay ? {
           delay: this.options.speed || 5000,
           disableOnInteraction: false,
@@ -417,17 +468,41 @@ import LazyImage from '../LazyImage.astro';
           nextEl: nextBtn,
           prevEl: prevBtn,
         },
-        // Prevent swiper from handling clicks on links with data-no-animation
+        breakpoints: {
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+          },
+          1024: {
+            slidesPerView: this.options.slidesPerView || 3,
+            spaceBetween: 50,
+          },
+          1280: {
+            slidesPerView: 3,   
+            spaceBetween: 40,
+          },
+        },
         preventClicksPropagation: true,
         preventClicks: false,
         noSwiping: true,
         noSwipingClass: 'swiper-no-swiping',
       });
 
-      // Add swiper-no-swiping class to all links with data-no-swipe attribute
-      productLinks.forEach(link => {
-        link.classList.add('swiper-no-swiping');
-      });
+
+      prevBtn?.addEventListener('click', () => this.swiper?.slidePrev());
+      nextBtn?.addEventListener('click', () => this.swiper?.slideNext());
     }
 
     private initMobileNavigation(
@@ -436,40 +511,40 @@ import LazyImage from '../LazyImage.astro';
       nextBtn: HTMLElement | null,
     ): void {
       const scroller = container;
-      const slides = container.querySelectorAll('.swiper-slide');
-      
+      const slides = Array.from(container.querySelectorAll('.swiper-slide'));
       if (slides.length <= 1) return;
 
       let currentIndex = 0;
-
-      // Always reset on init to avoid carrying scroll position between Astro swaps
       scroller.scrollLeft = 0;
+
+      const getSlideWidth = (): number => {
+        // Usa el ancho real del primer slide, no del scroller
+        // (el scroller puede ser 90vw pero el slide es 100vw)
+        return slides[0]?.getBoundingClientRect().width || window.innerWidth;
+      };
 
       const scrollToIndex = (index: number) => {
         if (index < 0) index = 0;
         if (index >= slides.length) index = slides.length - 1;
         currentIndex = index;
-        const w = scroller.clientWidth || 1;
-        const MOBILE_CENTER_NUDGE_PX = 20;
-        const targetLeft = Math.round(index * w + MOBILE_CENTER_NUDGE_PX);
+        const slideW = getSlideWidth();
         requestAnimationFrame(() => {
-          scroller.scrollTo({
-            left: targetLeft,
-            behavior: 'smooth'
-          });
+          scroller.scrollTo({ left: index * slideW, behavior: 'smooth' });
         });
       };
 
       const updateIndexFromScroll = () => {
-        const w = scroller.clientWidth || 1;
-        currentIndex = Math.round(scroller.scrollLeft / w);
+        const slideW = getSlideWidth();
+        if (slideW > 0) {
+          currentIndex = Math.round(scroller.scrollLeft / slideW);
+        }
       };
 
-      prevBtn?.addEventListener('click', () => scrollToIndex(currentIndex - 1));
-      nextBtn?.addEventListener('click', () => scrollToIndex(currentIndex + 1));
+  prevBtn?.addEventListener('click', () => scrollToIndex(currentIndex - 1));
+  nextBtn?.addEventListener('click', () => scrollToIndex(currentIndex + 1));
 
-      scroller.addEventListener('scroll', updateIndexFromScroll, { passive: true });
-    }
+  scroller.addEventListener('scroll', updateIndexFromScroll, { passive: true });
+}
 
     public destroy(): void {
       if (this.swiper) {
@@ -491,9 +566,7 @@ import LazyImage from '../LazyImage.astro';
   // Función para inicializar carruseles
   function initializeCarousels() {
     cleanupCarousels();
-    
-    const carousels = document.querySelectorAll('.products-carousel');
-    carousels.forEach((element: Element) => {
+    document.querySelectorAll('.products-carousel').forEach((element: Element) => {
       if (element instanceof HTMLElement) {
         const instance = new ProductsCarousel(element, {
           autoplay: element.dataset.autoplay !== 'false',
@@ -514,4 +587,4 @@ import LazyImage from '../LazyImage.astro';
   document.addEventListener('astro:after-swap', initializeCarousels);
   // Limpiar antes del swap de Astro
   document.addEventListener('astro:before-swap', cleanupCarousels);
-</script> 
+</script>

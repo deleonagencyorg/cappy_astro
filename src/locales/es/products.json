@@ -64,7 +64,7 @@
     "crunch": {
       "title": "Donde el crunch tiene forma",
       "description": "Tenemos snacks con una forma diferente y un sabor único para que disfrutes cada momento.",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-chip1.webp"
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-palitos.webp"
     },
     "flavorsTitle": "Descubre nuestros sabores",
     "doubts": {
@@ -81,14 +81,17 @@
       "name": "Cappy Explosion de Queso",
       "category": "gorditos",
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",
-      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",
-      "background_color": "#FDE820",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",      
+      "background_color": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_amarillo.webp",
+      "crunch": {
+        "image":"https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy.webp"
+      },
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
       "text_color": "#FDE820",
       "description": "Extruido de maiz con sabor a queso",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-yellow.webp",
+      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_amarillo.webp",
       "sizes": [
         {
           "value": "150",
@@ -128,6 +131,9 @@
       "category": "infladitos",
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Queso_Mantequilla.webp",
       "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Queso_Mantequilla.webp",
+      "crunch": {
+        "image":"https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Infladitos.webp"
+      },
       "background_color": "#FDE820",
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
@@ -174,6 +180,9 @@
       "name": "Cappy Infladitos Picotos",
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp",
       "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Infladitos_Picositos.webp",
+      "crunch": {
+        "image":"https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Infladitos.webp"
+      },
       "background_color": "#FE5A00",
       "category": "infladitos",
       "header_text_color": "#FFFFFF",
@@ -181,7 +190,7 @@
       "text_color": "#FE5A00",
       "description": "Extruidos de maiz con sabor a queso, mantequilla y jalapeño",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-red2.webp",
+      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_rojo.webp",
       "sizes": [
         {
           "value": "150",
@@ -215,57 +224,14 @@
       }
     },
     {
-      "id": "cappy-palitos-de-papas-ketchup",
-      "slug": "cappy-palitos-de-papas-ketchup",
-      "name": "Cappy Palitos de Papas Ketchup",
-      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp",
-      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp",
-      "background_color": "#BEDE89",
-      "category": "palitos_de_papa",
-      "header_text_color": "#1C1C1C",
-      "color_button": "#BEDE89",
-      "text_color": "#BEDE89",
-      "description": "Palitos de papa a la francesa con ketchup",
-      "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
-      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-red.webp",
-      "sizes": [
-        {
-          "value": "150",
-          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp"
-        }
-      ],
-     "weight": [
-        "1oz-(28g)"
-      ],
-      "nutrition": {
-        "title": "Detalle de nutrición",
-        "serving": "Tamaño de la Porción: 1oz (28g). Porciones por envase: 0.43",
-        "rows": [
-          { "label": "Energía", "value": "650 kJ (150 kcal)" },
-          { "label": "Energía de grasa", "value": "300 kJ (70 kcal)" },
-          { "label": "Grasa total", "value": "8 g (10% VD)" },
-          { "label": "Grasa saturada", "value": "4 g (20% VD)" },
-          { "label": "Grasa trans", "value": "0 g (0% VD)" },
-          { "label": "Colesterol", "value": "0 mg (0% VD)" },
-          { "label": "Sodio", "value": "240 mg (10% VD)" },
-          { "label": "Carbohidratos totales", "value": "17 g (6% VD)" },
-          { "label": "Fibra dietética", "value": "<1 g (2% VD)" },
-          { "label": "Azúcares", "value": "1 g" },
-          { "label": "Proteínas", "value": "1 g" },
-          { "label": "Vitamina D", "value": "2% VD" },
-          { "label": "Calcio", "value": "0% VD" },
-          { "label": "Hierro", "value": "2% VD" },
-          { "label": "Potasio", "value": "2% VD" }
-        ],
-        "disclaimer": "Los Valores de los Porcentajes Diarios están basados en una dieta de 8,378 kJ (2,000 cal). Sus Valores diarios pueden ser mayor o menor dependiendo de sus necesidades calóricas."
-      }
-    },
-    {
       "id": "cappy-tornitos-queso-y-mantequilla",
       "slug": "cappy-tornitos-queso-y-mantequilla",
       "name": "Cappy Tornitos Queso y Mantequilla",
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Queso_Mantequilla.webp",
       "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Queso_Mantequilla.webp",
+      "crunch": {
+        "image":"https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Tornito.webp"
+      },
       "background_color": "#004AB2",
       "header_text_color": "#FFFFFF",
       "category": "tornitos",
@@ -306,12 +272,64 @@
         "disclaimer": "Los Valores de los Porcentajes Diarios están basados en una dieta de 8,378 kJ (2,000 cal). Sus Valores diarios pueden ser mayor o menor dependiendo de sus necesidades calóricas."
       }
     },
+    {
+      "id": "cappy-palitos-de-papas-ketchup",
+      "slug": "cappy-palitos-de-papas-ketchup",
+      "name": "Cappy Palitos de Papas Ketchup",
+      "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp",
+      "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp",
+      "crunch": {
+        "image":"https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-palitos.webp"
+      },
+      "background_color": "#BEDE89",
+      "category": "palitos_de_papa",
+      "header_text_color": "#1C1C1C",
+      "color_button": "#BEDE89",
+      "text_color": "#BEDE89",
+      "description": "Palitos de papa a la francesa con ketchup",
+      "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
+      "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_rojo.webp",
+      "sizes": [
+        {
+          "value": "150",
+          "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Palitos_de_papasvf.webp"
+        }
+      ],
+     "weight": [
+        "1oz-(28g)"
+      ],
+      "nutrition": {
+        "title": "Detalle de nutrición",
+        "serving": "Tamaño de la Porción: 1oz (28g). Porciones por envase: 0.43",
+        "rows": [
+          { "label": "Energía", "value": "650 kJ (150 kcal)" },
+          { "label": "Energía de grasa", "value": "300 kJ (70 kcal)" },
+          { "label": "Grasa total", "value": "8 g (10% VD)" },
+          { "label": "Grasa saturada", "value": "4 g (20% VD)" },
+          { "label": "Grasa trans", "value": "0 g (0% VD)" },
+          { "label": "Colesterol", "value": "0 mg (0% VD)" },
+          { "label": "Sodio", "value": "240 mg (10% VD)" },
+          { "label": "Carbohidratos totales", "value": "17 g (6% VD)" },
+          { "label": "Fibra dietética", "value": "<1 g (2% VD)" },
+          { "label": "Azúcares", "value": "1 g" },
+          { "label": "Proteínas", "value": "1 g" },
+          { "label": "Vitamina D", "value": "2% VD" },
+          { "label": "Calcio", "value": "0% VD" },
+          { "label": "Hierro", "value": "2% VD" },
+          { "label": "Potasio", "value": "2% VD" }
+        ],
+        "disclaimer": "Los Valores de los Porcentajes Diarios están basados en una dieta de 8,378 kJ (2,000 cal). Sus Valores diarios pueden ser mayor o menor dependiendo de sus necesidades calóricas."
+      }
+    },
      {
       "id": "cappy-tornitos-chile-toreado",
       "slug": "cappy-tornitos-chile-toreado",
       "name": "Cappy Tornitos Chile Toreado",
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Chile_Toreado.webp",
       "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Tornitos_Chile_Toreado.webp",
+      "crunch": {
+        "image":"https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy.webp"
+      },
       "background_color": "#004AB2",
       "header_text_color": "#FFFFFF",
       "category": "tornitos",
