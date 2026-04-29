@@ -1,0 +1,40 @@
+{
+  "date": "2026-04-30",
+  "id": "cappy-gorditos-queso-smashed-burger-tacos",
+  "slug": "cappy-gorditos-queso-smashed-burger-tacos",
+  "title": "Cappy Gorditos Queso Smashed Burger Tacos",
+  "difficulty": "Fácil",
+  "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-gorditos-queso-smashed-burger-tacos.webp",
+  "gallery": [
+    "cappy-gorditos-queso-smashed-burger-tacos.webp"
+  ],
+  "type": "image",
+  "video": {
+  },
+  "preparation_time": 20,
+  "cooking_time": 10,
+  "ingredients": [
+    "4 tortillas de harina medianas",
+    "400 g de carne molida de res",
+    "Sal al gusto",
+    "Pimienta al gusto",
+    "Crema al gusto",
+    "Cebollas curtidas al gusto",
+    "Cilantro fresco al gusto",
+    "Cappy Gorditos Queso para servir",
+    "Aceite al gusto"
+  ],
+  "instructions": [
+    "Paso 1. Coloca una porción de carne molida directamente sobre cada tortilla y aplánala formando una capa delgada que cubra casi toda la superficie.",
+    "Paso 2. Sazona con sal y pimienta.",
+    "Paso 3. Calienta una sartén o plancha a fuego medio alto con un poco de aceite y coloca el taco con la carne hacia abajo, presionando ligeramente para lograr el efecto smashed.",
+    "Paso 4. Cocina hasta que la carne esté bien dorada, luego voltea.",
+    "Paso 5. Coloca los Cappy Gorditos Queso encima de la carne y cocina unos segundos más hasta que se derritan ligeramente.",
+    "Paso 6. Retira del fuego y agrega las cebollas curtidas, la crema y el cilantro fresco."
+  ],
+  "brand": ["cappy"],
+  "product": ["cappy-gorditos-queso"],
+  "category": "snack",
+  "servings": 4,
+  "description": "La fusión perfecta entre una hamburguesa smash y un taco crujiente. Carne molida aplastada sobre tortilla, gratinada con Cappy Gorditos Queso y terminada con cebollas curtidas, crema y cilantro."
+}

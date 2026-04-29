@@ -99,6 +99,11 @@
       "href": "/es/productos"
     },
     {
+      "id": " recipes",
+      "text": "Recetas",
+      "href": "/es/recipes"
+    },
+    {
       "id": "promos",
       "text": "Promociones",
       "href": "/es/promos"

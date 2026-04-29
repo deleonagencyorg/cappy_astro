@@ -1,0 +1,40 @@
+{
+  "date": "2026-04-30",
+  "id": "cappy-gorditos-queso-smashed-burger-tacos",
+  "slug": "cappy-gorditos-queso-smashed-burger-tacos",
+  "title": "Cappy Gorditos Queso Smashed Burger Tacos",
+  "difficulty": "Easy",
+  "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-gorditos-queso-smashed-burger-tacos.webp",
+  "gallery": [
+    "cappy-gorditos-queso-smashed-burger-tacos.webp"
+  ],
+  "type": "image",
+  "video": {
+  },
+  "preparation_time": 20,
+  "cooking_time": 10,
+  "ingredients": [
+    "4 medium flour tortillas",
+    "400 g ground beef",
+    "Salt to taste",
+    "Pepper to taste",
+    "Mexican crema or sour cream to taste",
+    "Pickled onions to taste",
+    "Fresh cilantro to taste",
+    "Cappy Gorditos Queso chips for serving",
+    "Oil to taste"
+  ],
+  "instructions": [
+    "Step 1. Place a portion of ground beef directly onto each tortilla and press it down to form a thin layer covering almost the entire surface.",
+    "Step 2. Season with salt and pepper.",
+    "Step 3. Heat a skillet or griddle over medium-high heat with a little oil. Place the taco meat-side down, pressing lightly to achieve the smashed effect.",
+    "Step 4. Cook until the meat is well browned, then flip.",
+    "Step 5. Place Cappy Gorditos Queso chips on top of the meat and cook for a few more seconds until they slightly melt.",
+    "Step 6. Remove from heat and add pickled onions, crema, and fresh cilantro."
+  ],
+  "brand": ["cappy"],
+  "product": ["cappy-gorditos-queso"],
+  "category": "snack",
+  "servings": 4,
+  "description": "The perfect fusion between a smash burger and a crunchy taco. Smashed ground beef on a tortilla, topped with melted Cappy Gorditos Queso chips, and finished with pickled onions, crema, and cilantro."
+}

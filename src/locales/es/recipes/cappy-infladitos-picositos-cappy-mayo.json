@@ -1,0 +1,38 @@
+{
+  "date": "2026-04-30",
+  "id": "cappy-infladitos-picositos-cappy-mayo",
+  "slug": "cappy-infladitos-picositos-cappy-mayo",
+  "title": "Cappy Infladitos Picositos Cappy Mayo",
+  "difficulty": "Fácil",
+  "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-picositos-cappy-mayo.webp",
+  "gallery": [
+    "cappy-infladitos-picositos-cappy-mayo.webp"
+  ],
+  "type": "image",
+  "video": {
+  },
+  "preparation_time": 13,
+  "cooking_time": 8,
+  "ingredients": [
+    "4 panes para hot dog",
+    "4 salchichas",
+    "1/2 taza de mayonesa",
+    "Jugo de 1/2 limón",
+    "Sal al gusto",
+    "1/2 taza de Cappy Infladitos Picositos triturados",
+    "Cappy Infladitos Picositos triturados adicionales para terminar",
+    "Aceite al gusto"
+  ],
+  "instructions": [
+    "Paso 1. Cocina las salchichas en una sartén o parrilla hasta que estén bien calientes y ligeramente doradas.",
+    "Paso 2. En un recipiente, mezcla la mayonesa con el jugo de limón, una pizca de sal y los Cappy Infladitos Picositos triturados hasta obtener una mayonesa estilo Cappy con textura y picante.",
+    "Paso 3. Abre los panes, coloca una salchicha en cada uno y unta generosamente la mayonesa por encima.",
+    "Paso 4. Termina espolvoreando más Cappy Infladitos Picositos triturados para reforzar el crunch y el picor.",
+    "Paso 5. Sirve de inmediato."
+  ],
+  "brand": ["cappy"],
+  "product": ["cappy-infladitos-picositos"],
+  "category": "snack",
+  "servings": 4,
+  "description": "Hot dogs con una mayonesa casera llena de textura y picante hecha con Cappy Infladitos Picositos. Cremosa, crujiente y con el toque perfecto de chipotle."
+}
