@@ -15,6 +15,7 @@ interface Props {
   difficulty?: string;
   servings?: number;
   rating?: number;
+  video?: string;
 }
 
 const { 
@@ -27,7 +28,8 @@ const {
   hoverImage = image,
   difficulty = "---",
   servings = 0,
-  rating = 0
+  rating = 0,
+  video = ''
 } = Astro.props;
 
 const currentLocale = getLocale();
@@ -48,6 +50,22 @@ const viewRecipeText = currentLocale === 'es' ? 'Ver Receta' : 'View Recipe';
       class="w-full h-full object-cover"
       transition:name={`recipe-image-${id}`}
     />
+    
+    <!-- Icono de play si hay video -->
+    {video && (
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div class="w-16 h-16 md:w-20 md:h-20 bg-black/40 rounded-full flex items-center justify-center backdrop-blur-sm">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            class="w-8 h-8 md:w-10 md:h-10 text-white ml-1" 
+            viewBox="0 0 24 24" 
+            fill="currentColor"
+          >
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+      </div>
+    )}
   </div>
   
   <!-- Overlay con gradiente para el estado normal -->

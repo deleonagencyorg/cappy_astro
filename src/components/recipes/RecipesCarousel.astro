@@ -17,6 +17,7 @@ interface Recipe {
   difficulty?: string;
   servings?: number;
   rating?: number;
+  video?: string;
 }
 
 // Optional items can be passed from parent (e.g., related recipes)
@@ -121,6 +122,7 @@ for (let i = 0; i < recipeItems.length; i += 1) {
                     servings={recipe.servings || 0}
                     rating={recipe.rating || 0}
                     isMainCard={false}
+                    video={recipe.video}
                   />
                 </div>
               ))}
@@ -163,6 +165,7 @@ for (let i = 0; i < recipeItems.length; i += 1) {
                 servings={recipe.servings || 0}
                 rating={recipe.rating || 0}
                 isMainCard={false}
+                video={recipe.video}
               />
             </div>
           ))}

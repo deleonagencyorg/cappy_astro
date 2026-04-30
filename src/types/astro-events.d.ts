@@ -7,6 +7,16 @@ declare global {
   interface WindowEventMap {
     'astro:page-load': CustomEvent;
   }
+
+  interface Window {
+    showShareModal?: (modalId?: string) => void;
+    videoModals?: {
+      [key: string]: {
+        open: () => void;
+        close: () => void;
+      };
+    };
+  }
 }
 
 export {};
