@@ -1,0 +1,32 @@
+{
+  "date": "2026-04-30",
+  "id": "cappy-infladitos-queso-edamame",
+  "slug": "cappy-infladitos-queso-edamame",
+  "title": "Cappy Infladitos Queso Edamame",
+  "difficulty": "Easy",
+  "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-queso-edamames.webp",
+  "gallery": [
+    "cappy-infladitos-queso-edamames.webp"
+  ],
+  "type": "image",
+ "video": "https://www.youtube.com/shorts/6Gt_rmozh_M",
+  "preparation_time": 10,
+  "cooking_time": 5,
+  "ingredients": [
+    "2 cups cooked edamame",
+    "1 tablespoon olive oil or butter",
+    "Salt to taste",
+    "Crushed Cappy Infladitos Queso chips for finishing"
+  ],
+  "instructions": [
+    "Step 1. Heat the olive oil or butter in a skillet over medium heat.",
+    "Step 2. Add the edamame and sauté for 3 to 5 minutes until hot and lightly golden.",
+    "Step 3. Season with salt to taste and remove from heat.",
+    "Step 4. Serve the edamame hot and finish by sprinkling crushed Cappy Infladitos Queso chips on top for a crunchy texture and intense flavor before serving."
+  ],
+  "brand": ["cappy"],
+  "product": ["cappy-infladitos-queso"],
+  "category": "snack",
+  "servings": 4,
+  "description": "Edamame sautéed with butter or olive oil, finished with a crunchy, flavor-packed topping of Cappy Infladitos Queso chips. An easy, quick, and addictive snack."
+}
