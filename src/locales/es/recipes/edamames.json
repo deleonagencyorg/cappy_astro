@@ -1,0 +1,30 @@
+{
+  "date": "2026-04-30",
+  "id": "edamames",
+  "slug": "edamames",
+  "title": "Edamames",
+  "difficulty": "Fácil",
+  "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-queso-edamames.webp",
+  "gallery": [
+    "cappy-infladitos-queso-edamames.webp"
+  ],
+  "type": "image",
+  "preview-image": "",
+  "video": "",
+  "preparation_time": 10,
+  "ingredients": [
+    "2 tazas de edamames cocidos",
+    "1 cucharada de aceite de oliva o mantequilla",
+    "Sal al gusto",
+    "Cappy Infladitos Queso triturados para terminar"
+  ],
+  "instructions": [
+    "Paso 1. Calienta el aceite de oliva o la mantequilla en una sartén a fuego medio y agrega los edamames; saltea durante 3 a 5 minutos hasta que estén bien calientes y ligeramente dorados.",
+    "Paso 2. Sazona con sal al gusto y retira del fuego.",
+    "Paso 3. Sirve los edamames calientes y termina espolvoreando Cappy Infladitos Queso triturados por encima para aportar textura crujiente y sabor intenso antes de servir."
+  ],
+  "brand": ["cappy"],
+  "product": ["cappy-infladitos-queso"],
+  "category": "brunch",
+  "servings": 4
+}

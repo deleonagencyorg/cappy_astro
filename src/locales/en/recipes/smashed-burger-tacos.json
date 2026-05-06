@@ -1,15 +1,16 @@
 {
   "date": "2026-04-30",
-  "id": "cappy-gorditos-queso-smashed-burger-tacos",
-  "slug": "cappy-gorditos-queso-smashed-burger-tacos",
-  "title": "Cappy Gorditos Queso Smashed Burger Tacos",
+  "id": "smashed-burger-tacos",
+  "slug": "smashed-burger-tacos",
+  "title": "Smashed Burger Tacos",
   "difficulty": "Easy",
   "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-gorditos-queso-smashed-burger-tacos.webp",
   "gallery": [
     "cappy-gorditos-queso-smashed-burger-tacos.webp"
   ],
   "type": "image",
-"video": "https://www.youtube.com/shorts/6Gt_rmozh_M",
+  "preview-image": "",
+  "video": "",
   "preparation_time": 20,
   "cooking_time": 10,
   "ingredients": [
