@@ -11,6 +11,7 @@ interface RecipeItem {
   servings?: number;
   rating?: number;
   video?: string;
+  'preview-image'?: string;
 }
 
 export interface Props {
@@ -35,6 +36,7 @@ const currentLang = getLocale();
             <div class="w-[360px] flex-shrink-0">
               <RecipeCard
                 image={recipe.image || '/images/recipes/placeholder.jpg'}
+                previewImage={recipe['preview-image']}
                 title={recipe.title}
                 time={`${recipe.preparation_time}MIN`}
                 id={recipe.id}
@@ -63,6 +65,7 @@ const currentLang = getLocale();
             <div class="w-[85%] flex-shrink-0">
               <RecipeCard
                 image={recipe.image || '/images/recipes/placeholder.jpg'}
+                previewImage={recipe['preview-image']}
                 title={recipe.title}
                 time={`${recipe.preparation_time}MIN`}
                 id={recipe.id}

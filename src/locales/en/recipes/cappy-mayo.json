@@ -1,15 +1,16 @@
 {
   "date": "2026-04-30",
-  "id": "cappy-infladitos-picositos-cappy-mayo",
-  "slug": "cappy-infladitos-picositos-cappy-mayo",
-  "title": "Cappy Infladitos Picositos Cappy Mayo",
+  "id": "hot-dog-mayo-cappy",
+  "slug": "hot-dog-mayo-cappy",
+  "title": "Cappy Mayo",
   "difficulty": "Easy",
   "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-picositos-cappy-mayo.webp",
   "gallery": [
     "cappy-infladitos-picositos-cappy-mayo.webp"
   ],
   "type": "image",
-  "video": "https://www.youtube.com/shorts/-_JmkpvcxYw",
+  "preview-image": "",
+  "video": "",
   "preparation_time": 13,
   "cooking_time": 8,
   "ingredients": [
@@ -32,6 +33,5 @@
   "brand": ["cappy"],
   "product": ["cappy-infladitos-picositos"],
   "category": "snack",
-  "servings": 4,
-  "description": "Hot dogs with a homemade mayonnaise full of texture and spice made with Cappy Infladitos Picositos. Creamy, crunchy, and with the perfect chipotle kick."
+  "servings": 4
 }

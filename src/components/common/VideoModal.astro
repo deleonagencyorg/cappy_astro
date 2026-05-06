@@ -12,8 +12,8 @@ const {
 } = Astro.props;
 
 // Extraer el ID del video de YouTube de diferentes formatos de URL
-function getYouTubeVideoId(url: string): string {
-  if (!url) return '';
+function getYouTubeVideoId(url: unknown): string {
+  if (!url || typeof url !== 'string') return '';
   
   // Formatos soportados:
   // - https://www.youtube.com/watch?v=VIDEO_ID
