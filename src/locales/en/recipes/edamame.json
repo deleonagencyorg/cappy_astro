@@ -1,14 +1,15 @@
 {
   "date": "2026-04-30",
-  "id": "cappy-infladitos-queso-edamame",
-  "slug": "cappy-infladitos-queso-edamame",
-  "title": "Cappy Infladitos Queso Edamame",
+  "id": "edamame",
+  "slug": "edamame",
+  "title": "Edamame",
   "difficulty": "Easy",
   "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-queso-edamames.webp",
   "gallery": [
     "cappy-infladitos-queso-edamames.webp"
   ],
   "type": "image",
+  "preview-image": "",
   "video": {
   },
   "preparation_time": 10,

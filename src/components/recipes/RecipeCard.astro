@@ -3,6 +3,7 @@ import LazyImage from '../common/LazyImage.astro';
 import { getLocale } from '../../i18n/i18n';
 import { Image } from 'astro:assets';
 import { fade } from 'astro:transitions';
+import type { vi } from 'zod/v4/locales';
 
 interface Props {
   image: string;
@@ -15,6 +16,8 @@ interface Props {
   difficulty?: string;
   servings?: number;
   rating?: number;
+  video?: string;
+  previewImage?: string;
 }
 
 const { 
@@ -27,7 +30,9 @@ const {
   hoverImage = image,
   difficulty = "---",
   servings = 0,
-  rating = 0
+  rating = 0,
+  video,
+  previewImage,
 } = Astro.props;
 
 const currentLocale = getLocale();
@@ -43,7 +48,7 @@ const viewRecipeText = currentLocale === 'es' ? 'Ver Receta' : 'View Recipe';
   <!-- Imagen de fondo (siempre visible) -->
   <div class="absolute inset-0 w-full h-full">
     <LazyImage
-      src={image}
+      src={previewImage || image}
       alt={title}
       class="w-full h-full object-cover"
       transition:name={`recipe-image-${id}`}

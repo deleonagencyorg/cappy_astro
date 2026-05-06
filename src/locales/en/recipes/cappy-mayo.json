@@ -1,14 +1,15 @@
 {
   "date": "2026-04-30",
-  "id": "cappy-infladitos-picositos-cappy-mayo",
-  "slug": "cappy-infladitos-picositos-cappy-mayo",
-  "title": "Cappy Infladitos Picositos Cappy Mayo",
+  "id": "cappy-mayo",
+  "slug": "cappy-mayo",
+  "title": "Cappy Mayo",
   "difficulty": "Easy",
   "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-picositos-cappy-mayo.webp",
   "gallery": [
     "cappy-infladitos-picositos-cappy-mayo.webp"
   ],
   "type": "image",
+  "preview-image": "",
   "video": {
   },
   "preparation_time": 13,

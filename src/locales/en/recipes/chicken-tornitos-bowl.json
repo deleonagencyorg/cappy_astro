@@ -1,14 +1,15 @@
 {
   "date": "2026-04-30",
-  "id": "cappy-tornitos-chile-toreado-chicken-tornitos-bowl",
-  "slug": "cappy-tornitos-chile-toreado-chicken-tornitos-bowl",
-  "title": "Cappy Tornitos Chile Toreado Chicken and Tornitos Bowl",
+  "id": "chicken-tornitos-bowl",
+  "slug": "chicken-tornitos-bowl",
+  "title": "Chicken and Tornitos Bowl",
   "difficulty": "Easy",
   "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-tornitos-chile-toreado-bowl-pollo-tornitos.webp",
   "gallery": [
     "cappy-tornitos-chile-toreado-bowl-pollo-tornitos.webp"
   ],
   "type": "image",
+  "preview-image": "",
   "video": {
   },
   "preparation_time": 25,
