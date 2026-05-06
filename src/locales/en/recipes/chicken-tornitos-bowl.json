@@ -27,14 +27,11 @@
   ],
   "instructions": [
     "Step 1. In a bowl, mix the yogurt with lemon juice, olive oil, salt, and pepper until you get a smooth and creamy sauce.",
-    "Step 2. In each bowl, place a base layer of Cappy Tornitos Chile Toreado chips.",
-    "Step 3. Distribute the hot chicken on top.",
-    "Step 4. Add the avocado and cucumber.",
-    "Step 5. Finish by drizzling with the yogurt sauce and serve immediately to keep the Tornitos crunchy."
+    "Step 2. In each bowl, place a base layer of Cappy Tornitos Chile Toreado chips, distribute the hot chicken on top, add the avocado and cucumber.",
+    "Step 3. Finish by drizzling with the yogurt sauce and serve immediately to keep the Tornitos crunchy."
   ],
   "brand": ["cappy"],
   "product": ["cappy-tornitos-chile-toreado"],
   "category": "snack",
-  "servings": 4,
-  "description": "A fresh and crunchy bowl with chicken, avocado, cucumber, and a base of Cappy Tornitos Chile Toreado chips, all topped with a creamy yogurt sauce. Perfect for eating with a spoon or with your hands."
+  "servings": 4
 }
