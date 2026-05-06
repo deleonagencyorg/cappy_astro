@@ -1,7 +1,7 @@
 {
   "date": "2026-04-30",
-  "id": "cappy-mayo",
-  "slug": "cappy-mayo",
+  "id": "hot-dog-mayo-cappy",
+  "slug": "hot-dog-mayo-cappy",
   "title": "Cappy Mayo",
   "difficulty": "Easy",
   "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-picositos-cappy-mayo.webp",
@@ -10,8 +10,7 @@
   ],
   "type": "image",
   "preview-image": "",
-  "video": {
-  },
+  "video": "",
   "preparation_time": 13,
   "cooking_time": 8,
   "ingredients": [

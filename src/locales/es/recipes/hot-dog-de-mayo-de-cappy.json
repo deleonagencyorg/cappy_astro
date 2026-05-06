@@ -1,8 +1,8 @@
 {
   "date": "2026-04-30",
-  "id": "cappy-mayo",
-  "slug": "cappy-mayo",
-  "title": "Cappy Mayo",
+  "id": "hot-dog-de-mayo-de-cappy",
+  "slug": "hot-dog-de-mayo-de-cappy",
+  "title": "Hot Dogs de mayo de cappy",
   "difficulty": "Fácil",
   "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-infladitos-picositos-cappy-mayo.webp",
   "gallery": [
@@ -10,7 +10,7 @@
   ],
   "type": "image",
   "preview-image": "",
-  "video": "",
+  "video": "https://youtu.be/-_JmkpvcxYw?si=P7UNeycU_VgmLNMb",
   "preparation_time": 13,
   "ingredients": [
     "4 panes para hot dog",
