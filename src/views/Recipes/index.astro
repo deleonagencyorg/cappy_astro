@@ -13,6 +13,8 @@ interface Recipe {
   image?: string;
   preparation_time: number;
   type?: string;
+  video?: string;
+  'preview-image'?: string;
 }
 
 const currentLang = getLocale();
@@ -111,11 +113,13 @@ function normalizeType(r: Recipe): string {
           <div class="recipe-card" data-type={normalizeType(recipe)}>
             <RecipeCard
               image={recipe.image || '/images/recipes/placeholder.jpg'}
+              previewImage={recipe['preview-image']}
               title={recipe.title}
               time={`${recipe.preparation_time}MIN`}
               id={recipe.id}
               textColor="text-white"
               iconColor="text-white"
+              video={recipe.video}  
             />
           </div>
         ))}

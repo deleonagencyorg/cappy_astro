@@ -36,7 +36,7 @@ const {
   color = '#F08C00',
   cardBackgroundImage = '',
   paddingTop = '120px',
-  mobilePaddingTop = '80px'
+  mobilePaddingTop = '4px'
 } = Astro.props;
 
 const DEFAULT_CARD_BACKGROUND_IMAGE = 'https://snack.yummiespromociones.com/SnacksyummiesAssets/bgcardcappy.webp';
@@ -360,7 +360,7 @@ import LazyImage from '../LazyImage.astro';
   /* Mobile */
   @media (max-width: 767px) {
     .products-carousel {
-      padding-top: var(--pc-padding-top-mobile, 80px);
+      padding-top: var(--pc-padding-top-mobile, 20px);
     }
 
     .product-card {
