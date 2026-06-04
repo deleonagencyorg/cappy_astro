@@ -212,101 +212,135 @@ const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummie
   }
   
   .video-carousel-container {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--border-radius, 0);
-}
-
-.swiper-container {
-  overflow: hidden;
-  border-radius: var(--border-radius, 0);
-}
-
-@media (max-width: 767px) {
-  .slide-content {
-    height: var(--mobile-height) !important;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius, 0);
   }
-  
-  .video-carousel-container,
+
   .swiper-container {
-    border-radius: 16px;
+    overflow: hidden;
+    border-radius: var(--border-radius, 0);
   }
-}
 
-@media (min-width: 768px) {
-  .video-carousel-container,
-  .swiper-container {
-    border-radius: 24px;
+  .swiper-wrapper {
+    align-items: stretch;
   }
-}
-  
+
+  .swiper-slide {
+    height: auto !important;
+  }
+
+  /* ── Border radius ───────────────────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .video-carousel-container,
+    .swiper-container {
+      border-radius: 16px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .video-carousel-container,
+    .swiper-container {
+      border-radius: 24px;
+    }
+  }
+
   .slide-content {
     position: relative;
     width: 100%;
     overflow: hidden;
     height: var(--desktop-height);
   }
-  
-  .fallback-image {
+
+  /* ── html altura por contenido en desktop ─────────────────────────── */
+  .swiper-slide[data-slide-type="html"] .slide-content {
+    height: auto;
+  }
+
+  /* ── image llena el swiper en desktop ─────────────────────────────── */
+  .swiper-slide[data-slide-type="image"] .slide-content {
+    height: 100%;
+  }
+
+  .swiper-slide[data-slide-type="image"] .image-container {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+    inset: 0;
   }
-  
-  .fallback-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+
+  /* ── Mobile todos los slides con la misma altura ────────────────────────── */
+  @media (max-width: 767px) {
+    .swiper-slide {
+      height: 390px !important;
+    }
+
+    .swiper-slide[data-slide-type="html"] .slide-content {
+      height: 390px !important;
+    }
+
+    .swiper-slide[data-slide-type="image"] .slide-content {
+      height: 390px !important;
+      aspect-ratio: unset;
+    }
   }
-  
-  .video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-  }
-  
-  .slide-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
+
+  /* ── Contenedores multimedia ─────────────────────────────────────────────── */
   .image-container {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     z-index: 2;
   }
-  
+
   .slide-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-  }
-  
-  .desktop-image {
-    display: none;
-  }
-  
-  .mobile-image {
     display: block;
   }
-  
-  .overlay {
+
+  .fallback-image {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
+    z-index: 1;
+  }
+
+  .fallback-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .video-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .slide-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── Desktop/mobile image toggle ─────────────────────────────────────────── */
+  .desktop-image { display: none; }
+  .mobile-image  { display: block; }
+
+  @media (min-width: 768px) {
+    .desktop-image { display: block; }
+    .mobile-image  { display: none; }
+  }
+
+  /* ── Overlay ─────────────────────────────────────────────────────────────── */
+  .overlay {
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -331,7 +365,12 @@ const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummie
     font-weight: 400;
     margin-bottom: 2rem;
   }
-  
+
+  @media (min-width: 768px) {
+    .slide-title   { font-size: 3.5rem; }
+    .slide-subtitle { font-size: 2rem; }
+  }
+
   .slide-link {
     display: inline-flex;
     align-items: center;
@@ -349,39 +388,16 @@ const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummie
     background-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
   }
-  
-  /* Responsive styles */
-  @media (min-width: 768px) {
-    .desktop-image {
-      display: block;
-    }
-    
-    .mobile-image {
-      display: none;
-    }
-    
-    .slide-title {
-      font-size: 3.5rem;
-    }
-    
-    .slide-subtitle {
-      font-size: 2rem;
-    }
-  }
-  
+
+  /* ── Animación html slide ────────────────────────────────────────────────── */
   .html-slide-active .slide-content {
     animation: htmlSlideFadeIn 260ms ease both;
   }
 
   @keyframes htmlSlideFadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
   }
-  
 </style>
 
 <script>

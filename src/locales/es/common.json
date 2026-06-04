@@ -80,6 +80,12 @@
           "buttonText": "Explorar todos los productos",
           "buttonUrl": "/es/productos"
         }
+      },
+      {
+        "id": "slide2",
+        "type": "image",
+        "desktop": "https://snack.yummiespromociones.com/SnacksyummiesAssets/BANNER-WEB-YUMMIES-CAPPY-1920X1080.webp",
+        "mobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/BANNER-WEB-YUMMIES-CAPPY-800X800.webp"
       }
     ]
   },
