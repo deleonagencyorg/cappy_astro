@@ -222,19 +222,16 @@ const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummie
     border-radius: var(--border-radius, 0);
   }
 
-  /* Forzar altura del slide desde las variables (desktop/mobile) para que el contenido llene el áreaa */
-  .slide-content {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    height: var(--desktop-height);
+  .swiper-wrapper {
+    align-items: stretch;
   }
 
+  .swiper-slide {
+    height: auto !important;
+  }
+
+  /* ── Border radius ───────────────────────────────────────────────────────── */
   @media (max-width: 767px) {
-    .slide-content {
-      height: var(--mobile-height) !important;
-    }
-    
     .video-carousel-container,
     .swiper-container {
       border-radius: 16px;
@@ -247,53 +244,108 @@ const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummie
       border-radius: 24px;
     }
   }
-  
-  /* Contenedores multimedia deben estar fuera del flujo y ocupar todo el slide */
-  .fallback-image,
-  .video-container,
+
+  .slide-content {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: var(--desktop-height);
+  }
+
+  /* ── html altura por contenido en desktop ─────────────────────────── */
+  .swiper-slide[data-slide-type="html"] .slide-content {
+    height: auto;
+  }
+
+  /* ── image llena el swiper en desktop ─────────────────────────────── */
+  .swiper-slide[data-slide-type="image"] .slide-content {
+    height: 100%;
+  }
+
+  .swiper-slide[data-slide-type="image"] .image-container {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* ── Mobile todos los slides con la misma altura ────────────────────────── */
+  @media (max-width: 767px) {
+    .swiper-slide {
+      height: 390px !important;
+    }
+
+    .swiper-slide[data-slide-type="html"] .slide-content {
+      height: 390px !important;
+    }
+
+    .swiper-slide[data-slide-type="image"] .slide-content {
+      height: 390px !important;
+      aspect-ratio: unset;
+    }
+  }
+
+  /* ── Contenedores multimedia ─────────────────────────────────────────────── */
   .image-container {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .slide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .fallback-image {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     z-index: 1;
   }
-  
-  /* Imagen y video deben cubrir todo el área sin dejar espacios */
-  .fallback-image img,
-  .slide-video,
-  .slide-image {
+
+  .fallback-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* clave: cover para llenar sin dejar huecos */
-    display: block;
+    object-fit: cover;
   }
-  
-  .desktop-image {
-    display: none;
+
+  .video-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
   }
-  
-  .mobile-image {
-    display: block;
+
+  .slide-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
-  
+
+  /* ── Desktop/mobile image toggle ─────────────────────────────────────────── */
+  .desktop-image { display: none; }
+  .mobile-image  { display: block; }
+
+  @media (min-width: 768px) {
+    .desktop-image { display: block; }
+    .mobile-image  { display: none; }
+  }
+
+  /* ── Overlay ─────────────────────────────────────────────────────────────── */
   .overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 3;
-    pointer-events: none; /* permite clics en enlaces dentro del overlay sólo donde haya contenido */
-  }
-  
-  .overlay .text-content {
-    pointer-events: auto;
   }
   
   .text-content {
@@ -313,7 +365,12 @@ const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummie
     font-weight: 400;
     margin-bottom: 2rem;
   }
-  
+
+  @media (min-width: 768px) {
+    .slide-title   { font-size: 3.5rem; }
+    .slide-subtitle { font-size: 2rem; }
+  }
+
   .slide-link {
     display: inline-flex;
     align-items: center;
@@ -325,46 +382,22 @@ const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummie
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
-    pointer-events: auto;
   }
   
   .slide-link:hover {
     background-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
   }
-  
-  /* Responsive styles */
-  @media (min-width: 768px) {
-    .desktop-image {
-      display: block;
-    }
-    
-    .mobile-image {
-      display: none;
-    }
-    
-    .slide-title {
-      font-size: 3.5rem;
-    }
-    
-    .slide-subtitle {
-      font-size: 2rem;
-    }
-  }
-  
+
+  /* ── Animación html slide ────────────────────────────────────────────────── */
   .html-slide-active .slide-content {
     animation: htmlSlideFadeIn 260ms ease both;
   }
 
   @keyframes htmlSlideFadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
   }
-  
 </style>
 
 <script>
