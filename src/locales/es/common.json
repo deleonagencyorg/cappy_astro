@@ -105,6 +105,11 @@
       "href": "/es/productos"
     },
     {
+      "id": "blog",
+      "text": "Blog",
+      "href": "/es/blog"
+    },
+    {
       "id": "promos",
       "text": "Promociones",
       "href": "/es/promos"
