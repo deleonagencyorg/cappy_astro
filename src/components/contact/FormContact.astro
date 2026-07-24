@@ -27,6 +27,8 @@ const cityLabel = locale === 'es' ? 'Ciudad' : 'City';
 const countryPlaceholder = locale === 'es' ? 'Selecciona tu país' : 'Select your country';
 const departmentPlaceholder = locale === 'es' ? 'Primero selecciona un país' : 'First select a country';
 const contactReasonPlaceholder = locale === 'es' ? 'Selecciona el tipo de consulta' : 'Select the type of inquiry';
+const writeCountryPlaceholder = locale === 'es' ? 'ESCRIBE TU PAÍS' : 'WRITE YOUR COUNTRY';
+const writeCityPlaceholder = locale === 'es' ? 'ESCRIBE TU CIUDAD' : 'WRITE YOUR CITY';
 
 
 // Get API configuration from environment variables
@@ -142,8 +144,8 @@ const options = dynamicOptions[locale];
       </select>
     </div>
 
-    <!-- Country Selector -->
-    <div class="flex-1">
+    <!-- Country Selector / Input -->
+    <div class="flex-1" id="countryWrapper">
       <label class="block text-blue uppercase font-semibold mb-2">
         {countryLabel} *
       </label>
@@ -156,13 +158,20 @@ const options = dynamicOptions[locale];
       >
         <option value="">{countryPlaceholder}</option>
       </select>
+      <input 
+        type="text" 
+        id="countryInput"
+        disabled
+        placeholder={writeCountryPlaceholder}
+        class="hidden w-full font-semibold uppercase placeholder:text-blue/60 flex justify-center text-blue items-center gap-5 p-[15px_20px] border-2 border-[#0b2f87] rounded-full bg-transparent focus:bg-white focus:ring-2 focus:ring-[#0b2f87]/30 focus:border-[#0b2f87] transition-all"
+      />
     </div>
   </div>
 
   <!-- Fila para City y Name -->
   <div class="flex flex-col md:flex-row gap-6">
-    <!-- City Selector -->
-    <div class="flex-1">
+    <!-- City Selector / Input -->
+    <div class="flex-1" id="cityWrapper">
       <label class="block text-blue uppercase font-semibold mb-2">
         {cityLabel} *
       </label>
@@ -175,6 +184,13 @@ const options = dynamicOptions[locale];
       >
         <option value="">{departmentPlaceholder}</option>
       </select>
+      <input 
+        type="text" 
+        id="cityInput"
+        disabled
+        placeholder={writeCityPlaceholder}
+        class="hidden w-full font-semibold uppercase placeholder:text-blue/60 flex justify-center text-blue items-center gap-5 p-[15px_20px] border-2 border-[#0b2f87] rounded-full bg-transparent focus:bg-white focus:ring-2 focus:ring-[#0b2f87]/30 focus:border-[#0b2f87] transition-all"
+      />
     </div>
     
     <!-- Name -->
@@ -263,12 +279,14 @@ const options = dynamicOptions[locale];
   buttonText={locale === 'es' ? "Cerrar" : "Close"}
 />
 
-<script is:inline data-department-placeholder={departmentPlaceholder} data-country-placeholder={countryPlaceholder} data-locale={locale} data-api-host={apiHost} data-api-token={apiToken} data-contact-form-path={contactFormPath} data-labels={JSON.stringify(labels)} data-options={JSON.stringify(options)} data-message-placeholder={contact.form.message.placeholder}>
+<script is:inline data-department-placeholder={departmentPlaceholder} data-country-placeholder={countryPlaceholder} data-write-country-placeholder={writeCountryPlaceholder} data-write-city-placeholder={writeCityPlaceholder} data-locale={locale} data-api-host={apiHost} data-api-token={apiToken} data-contact-form-path={contactFormPath} data-labels={JSON.stringify(labels)} data-options={JSON.stringify(options)} data-message-placeholder={contact.form.message.placeholder}>
 (function() {
   // Get data from script attributes
   const scriptTag = document.currentScript;
   const departmentPlaceholder = scriptTag.getAttribute('data-department-placeholder');
   const countryPlaceholder = scriptTag.getAttribute('data-country-placeholder');
+  const writeCountryPlaceholder = scriptTag.getAttribute('data-write-country-placeholder') || 'ESCRIBE TU PAÍS';
+  const writeCityPlaceholder = scriptTag.getAttribute('data-write-city-placeholder') || 'ESCRIBE TU CIUDAD';
   const locale = scriptTag.getAttribute('data-locale');
   const apiHost = scriptTag.getAttribute('data-api-host');
   const apiToken = scriptTag.getAttribute('data-api-token');
@@ -318,11 +336,68 @@ const options = dynamicOptions[locale];
 
   let contactReasonSelect;
   let countrySelect;
+  let countryInput;
   let citySelect;
+  let cityInput;
   let dynamicFields;
   let form;
   let phoneInput;
   let messageTextarea;
+
+  // Function to toggle between select dropdowns and open text inputs
+  function toggleCountryCityMode(isExports) {
+    if (isExports) {
+      if (countrySelect) {
+        countrySelect.classList.add('hidden');
+        countrySelect.disabled = true;
+        countrySelect.removeAttribute('name');
+        countrySelect.required = false;
+      }
+      if (citySelect) {
+        citySelect.classList.add('hidden');
+        citySelect.disabled = true;
+        citySelect.removeAttribute('name');
+        citySelect.required = false;
+      }
+      if (countryInput) {
+        countryInput.classList.remove('hidden');
+        countryInput.disabled = false;
+        countryInput.setAttribute('name', 'country');
+        countryInput.required = true;
+      }
+      if (cityInput) {
+        cityInput.classList.remove('hidden');
+        cityInput.disabled = false;
+        cityInput.setAttribute('name', 'city');
+        cityInput.required = true;
+      }
+    } else {
+      if (countryInput) {
+        countryInput.classList.add('hidden');
+        countryInput.disabled = true;
+        countryInput.removeAttribute('name');
+        countryInput.required = false;
+        countryInput.value = '';
+      }
+      if (cityInput) {
+        cityInput.classList.add('hidden');
+        cityInput.disabled = true;
+        cityInput.removeAttribute('name');
+        cityInput.required = false;
+        cityInput.value = '';
+      }
+      if (countrySelect) {
+        countrySelect.classList.remove('hidden');
+        countrySelect.setAttribute('name', 'country');
+        countrySelect.required = true;
+      }
+      if (citySelect) {
+        citySelect.classList.remove('hidden');
+        citySelect.setAttribute('name', 'city');
+        citySelect.required = true;
+      }
+    }
+  }
 
   // Simple file validation function
   function validateFile(file) {
@@ -443,7 +518,9 @@ const options = dynamicOptions[locale];
   function initFormFunctionality() {
     contactReasonSelect = document.getElementById('contactReasonSelect');
     countrySelect = document.getElementById('countrySelect');
+    countryInput = document.getElementById('countryInput');
     citySelect = document.getElementById('departmentSelect');
+    cityInput = document.getElementById('cityInput');
     dynamicFields = document.getElementById('dynamicFields');
     form = document.getElementById('contactForm');
 
@@ -451,7 +528,9 @@ const options = dynamicOptions[locale];
     console.log('Form elements found:', {
       contactReasonSelect: !!contactReasonSelect,
       countrySelect: !!countrySelect,
+      countryInput: !!countryInput,
       citySelect: !!citySelect,
+      cityInput: !!cityInput,
       dynamicFields: !!dynamicFields,
       form: !!form
     });
@@ -483,13 +562,18 @@ const options = dynamicOptions[locale];
       const selectedReason = this.value;
       console.log('Contact reason changed to:', selectedReason);
       
-      // Enable country selector when a contact reason is selected
-      if (selectedReason && countrySelect) {
-        countrySelect.disabled = false;
-        countrySelect.classList.remove('disabled:opacity-50', 'disabled:cursor-not-allowed');
-      } else if (countrySelect) {
-        countrySelect.disabled = true;
-        countrySelect.classList.add('disabled:opacity-50', 'disabled:cursor-not-allowed');
+      if (selectedReason === 'Exportaciones') {
+        toggleCountryCityMode(true);
+      } else {
+        toggleCountryCityMode(false);
+        // Enable country selector when a contact reason is selected
+        if (selectedReason && countrySelect) {
+          countrySelect.disabled = false;
+          countrySelect.classList.remove('disabled:opacity-50', 'disabled:cursor-not-allowed');
+        } else if (countrySelect) {
+          countrySelect.disabled = true;
+          countrySelect.classList.add('disabled:opacity-50', 'disabled:cursor-not-allowed');
+        }
       }
       
       updateDynamicFields(selectedReason);
@@ -578,6 +662,7 @@ const options = dynamicOptions[locale];
           
           // Reset form
           this.reset();
+          toggleCountryCityMode(false);
           if (citySelect) {
             citySelect.disabled = true;
             citySelect.classList.add('disabled:bg-gray-100', 'disabled:cursor-not-allowed');
