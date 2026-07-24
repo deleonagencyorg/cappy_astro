@@ -10,15 +10,17 @@ import ShareButton from '../../../components/common/ShareButton.astro';
 import LazyImage from '../../../components/common/LazyImage.astro';
 import MediaCarousel from '../../../components/blog/MediaCarousel.astro';
 import VideoModal from '../../../components/common/VideoModal.astro';
+import VideoCarousel from '../../../components/common/VideoCarousel/index.astro';
 
 interface Props {
   blogPost: {
     id: string;
     slug: string;
     title: string;
+    banner?: string;
     content: string;
     image: string;
-    videos?: string[]; 
+    videos?: string[];
     author: string;
     published_date: string;
   };
@@ -54,64 +56,97 @@ const getYoutubeId = (url: string) => {
 
 const videos = blogPost.videos || [];
 
-// Build media items array (main image + videos)
-interface MediaItem { type: 'image' | 'video'; src?: string; url?: string; youtubeId: string | null; thumb: string; }
+interface MediaItem {
+  type: 'image' | 'video';
+  src?: string;
+  url?: string;
+  youtubeId: string | null;
+  thumb: string;
+}
+
 const mediaItems: MediaItem[] = [];
 
 if (blogPost.image) {
-  mediaItems.push({ 
-    type: 'image', 
-    src: blogPost.image, 
-    url: undefined, 
-    youtubeId: null, 
-    thumb: blogPost.image 
+  mediaItems.push({
+    type: 'image',
+    src: blogPost.image,
+    url: undefined,
+    youtubeId: null,
+    thumb: blogPost.image
   });
 }
 
 for (const v of videos) {
   const ytId = getYoutubeId(v.trim());
-  const thumb = ytId 
-    ? `https://img.youtube.com/vi/${ytId}/mqdefault.jpg` 
+  const thumb = ytId
+    ? `https://img.youtube.com/vi/${ytId}/mqdefault.jpg`
     : "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_Banner-diversion.webp";
-  
-  mediaItems.push({ 
-    type: 'video', 
-    url: v, 
-    src: undefined, 
-    youtubeId: ytId, 
-    thumb 
+
+  mediaItems.push({
+    type: 'video',
+    url: v,
+    src: undefined,
+    youtubeId: ytId,
+    thumb
   });
 }
 ---
 
-<div style="bg-primary" class="pb-0 overflow-hidden">
+<div class="bg-primary pb-0 overflow-hidden">
+  {/* Banner solo si existe banner */}
+  {blogPost.banner && (
+    <div
+      class="relative w-full overflow-hidden py-4 bg-yellow"
+      data-animate="bounce"
+      data-animate-delay="0"
+    >
+      <div class="w-[90%] mx-auto overflow-hidden shadow-xl rounded-2xl">
+        <LazyImage
+          src={blogPost.banner}
+          alt={blogPost.title || 'Cappy'}
+          class="w-full h-auto object-cover block"
+          loading="eager"
+        />
+      </div>
+    </div>
+  )}
+
   <div class="w-full max-w-6xl mx-auto px-4 py-16">
-  {isLoading
-    ? <BlogDetailSkeleton />
-    : <>
+    {isLoading ? (
+      <BlogDetailSkeleton />
+    ) : (
+      <>
+        {/* Título */}
         <div class="w-full mx-auto my-6">
           <div class="mb-8">
-            <h1 class="font-title text-9xl md:text-5xl font-bold text-blue mb-4 text-center" transition:name={`blog-title-${blogPost.id}`}>{blogPost.title}</h1>
+            <h1
+              class="font-title text-4xl md:text-5xl font-bold text-blue mb-4 text-center"
+              transition:name={`blog-title-${blogPost.id}`}
+            >
+              {blogPost.title}
+            </h1>
           </div>
+        </div>
 
-        <!-- Media Carousel -->
+        {/* Media Carousel*/}
         {mediaItems.length > 0 && (
           <div class="max-w-6xl mx-auto mb-8">
-            <MediaCarousel 
-              items={mediaItems} 
-              aspectRatio="16/9"
-            />
+            <MediaCarousel items={mediaItems} aspectRatio="16/9" />
           </div>
         )}
 
-        <!-- Content -->
-        <div class="blog-content prose prose-lg max-w-none my-8 text-md md:text-lg text-blue" transition:animate={fade({ duration: '0.5s' })}>
+        {/* Contenido */}
+        <div
+          class="blog-content prose prose-lg max-w-none my-8 text-md md:text-lg text-blue"
+          transition:animate={fade({ duration: '0.5s' })}
+        >
           <Fragment set:html={blogPost.content} />
         </div>
 
-        <!-- Share -->
+        {/* Share */}
         <div class="w-full flex justify-end mb-8">
-          <button type="button"
+          <button
+            type="button"
             class="flex items-center gap-2 px-4 py-2 font-bold text-white bg-blue rounded-md hover:brightness-110 transition"
             onclick="window.showShareModal && window.showShareModal('shareModal-blog')"
           >
@@ -125,10 +160,12 @@ for (const v of videos) {
 
         {suggestedPosts.length > 0 && (
           <section class="mt-16 mb-0 pb-8" transition:animate={fade({ duration: '0.7s' })}>
-            <h2 class="text-white font-title text-4xl md:text-6xl font-bold text-left mb-8">{readMoreTitle}</h2>
+            <h2 class="text-white font-title text-4xl md:text-6xl font-bold text-left mb-8">
+              {readMoreTitle}
+            </h2>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mx-auto max-w-7xl">
               {suggestedPosts.map((post) => (
-                <BlogCard 
+                <BlogCard
                   preview={post.preview}
                   image={post.image}
                   title={post.title}
@@ -141,7 +178,7 @@ for (const v of videos) {
           </section>
         )}
       </>
-    }
+    )}
   </div>
 </div>
 
