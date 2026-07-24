@@ -5,14 +5,16 @@ import { Image } from 'astro:assets';
 import { fade } from 'astro:transitions';
 
 interface Props {
-  image: string;
+  image?: string;
   title: string;
   id: string;
   slug: string;
+  preview?: string;
   textColor?: string;
   iconColor?: string;
   hoverImage?: string;
   currentLang?: string;
+  published_date?: string;
 }
 
 const { 
@@ -20,11 +22,15 @@ const {
   title, 
   id,
   slug,
+  preview,
   textColor = 'text-blue-900',
   iconColor = 'text-blue-900',
-  hoverImage = image,
-  currentLang = getLocale()
+  hoverImage = image || preview,
+  currentLang = getLocale(),
+  published_date
 } = Astro.props;
+
+const imageSrc = image || preview || 'https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_Banner-diversion.webp';
 
 const blogLink = `/${currentLang}/blog/${slug || id}`;
 const viewBlogText = currentLang === 'es' ? 'Leer más' : 'Read more';
@@ -33,7 +39,7 @@ const viewBlogText = currentLang === 'es' ? 'Leer más' : 'Read more';
 <div class="news-card">
   <a href={blogLink} class="block group relative overflow-hidden rounded-[1rem]" style="aspect-ratio: 9/16;">
     <img 
-      src={image || '/images/blog/placeholder.jpg'} 
+      src={imageSrc}
       alt={title} 
       class="absolute inset-0 w-full h-full object-cover transform transition-transform duration-500 ease-out group-hover:scale-105" 
       loading="lazy" 
