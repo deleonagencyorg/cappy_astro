@@ -18,7 +18,7 @@ export async function getStaticPaths() {
       const fm = mod.frontmatter || {};
       if (fm && fm.slug && fm.id) {
         const content = typeof mod.compiledContent === 'function' ? mod.compiledContent() : '';
-        allPosts.push({ ...fm, content });
+        allPosts.push({ ...fm, content: content ?? '' });
       }
     }
     for (const blogPost of allPosts) {

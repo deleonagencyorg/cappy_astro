@@ -101,7 +101,7 @@ const blogDetailClasses = {
 };
 
 const blogContentHtml = formatMarkdownHtml(
-  promoteBlogQuestionsToH2(blogPost.content),
+  promoteBlogQuestionsToH2(blogPost.content ?? ''),
   blogDetailClasses
 );
 ---
