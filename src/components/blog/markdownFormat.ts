@@ -102,6 +102,15 @@ export function formatMarkdownHtml(html: string, classes: MarkdownClassMap = def
   return out;
 }
 
+/** Convierte párrafos que son preguntas (¿...?) en encabezados h2. */
+export function promoteBlogQuestionsToH2(html: string): string {
+  if (!html) return html;
+
+  return html.replace(/<p>\s*(¿[^<]+?\?)\s*<\/p>/gi, (_match, question: string) => {
+    return `<h2>${question.trim()}</h2>`;
+  });
+}
+
 /**
  * Envuelve el HTML con un contenedor que recibe clases de root, si se desea.
  */
