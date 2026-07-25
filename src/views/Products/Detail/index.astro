@@ -206,22 +206,60 @@ if (allProductsArray.length > 1) {
 {detailPage?.crunch && (
   <section class="w-full bg-yellow py-10 md:py-14">
     <div class="container mx-auto px-4">
-      <div class="pd-anim rounded-[28px] bg-orange p-6 sm:p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div class="pd-anim relative rounded-[28px] bg-blue overflow-hidden p-6 sm:p-8 md:p-10">
+        {safeProduct.background_image && (
+          <div
+            class="absolute inset-0 bg-center bg-cover bg-no-repeat"
+            style={{ backgroundImage: `url(${safeProduct.background_image})` }}
+          />
+        )}
+        <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
-          <h2 class="text-white font-title italic font-extrabold text-3xl sm:text-4xl md:text-5xl leading-[0.95]">
+          <h2
+            class="font-title italic font-extrabold text-3xl sm:text-4xl md:text-5xl leading-[0.95]"
+            style={{ color: (product as any)?.text_color || '#FFFFFF' }}
+          >
             {detailPage.crunch.title}
           </h2>
-          <p class="mt-3 sm:mt-4 text-white/95 font-text italic font-medium text-sm sm:text-base md:text-lg max-w-xl">
+          <p
+            class="mt-3 sm:mt-4 font-text italic font-medium text-sm sm:text-base md:text-lg max-w-xl"
+            style={{ color: (product as any)?.text_color || '#FFFFFF' }}
+          >
             {detailPage.crunch.description}
           </p>
         </div>
         <div class="flex justify-center md:justify-end">
-          <LazyImage
-            src={(product as any)?.crunch?.image || detailPage.crunch.image}
-            alt={detailPage.crunch.title}
-            class="w-[150px] h-[150px] md:w-[220px] md:h-[200px] object-contain m-10 md:mr-30"
-            loading="lazy"
-          />
+          <div
+            class="crunch-chip-cluster relative w-[280px] h-[190px] sm:w-[320px] sm:h-[210px] md:w-[380px] md:h-[240px]"
+            data-animate="bounce"
+            data-animate-delay="120"
+          >
+            <div class="crunch-chip crunch-chip--left" style="--chip-rotate: -24deg;">
+              <LazyImage
+                src={(product as any)?.crunch?.image || detailPage.crunch.image}
+                alt={detailPage.crunch.title}
+                class="w-full h-full object-contain"
+                loading="lazy"
+              />
+            </div>
+            <div class="crunch-chip crunch-chip--center" style="--chip-rotate: 6deg;">
+              <LazyImage
+                src={(product as any)?.crunch?.image || detailPage.crunch.image}
+                alt={detailPage.crunch.title}
+                class="w-full h-full object-contain"
+                loading="lazy"
+              />
+            </div>
+            <div class="crunch-chip crunch-chip--right" style="--chip-rotate: 20deg;">
+              <LazyImage
+                src={(product as any)?.crunch?.image || detailPage.crunch.image}
+                alt={detailPage.crunch.title}
+                class="w-full h-full object-contain"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
@@ -241,12 +279,17 @@ if (allProductsArray.length > 1) {
           products={relatedProducts}
           autoplay={true}
           speed={4000}
-          slidesPerView={3}
-          spaceBetween={0}
-          loop={true}
+          slidesPerView={4}
+          slidesPerViewMobile={4}
+          slidesPerViewTablet={3}
+          slidesPerViewDesktop={4}
+          spaceBetween={16}
+          spaceBetweenMobile={8}
+          spaceBetweenTablet={12}
+          spaceBetweenDesktop={16}
+          loop={false}
           paddingTop="24px"
           mobilePaddingTop="16px"
-          className="max-w-4xl mx-auto"
         />
       </div>
     </div>
