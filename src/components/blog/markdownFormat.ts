@@ -54,8 +54,9 @@ export const defaultBlogMarkdownClasses: MarkdownClassMap = {
  * Nota: Este método usa reemplazos por regex seguros para HTML simple de Markdown.
  */
 export function formatMarkdownHtml(html: string, classes: MarkdownClassMap = defaultBlogMarkdownClasses): string {
-  if (!html) return html;
-  let out = html;
+  if (!html) return '';
+  const source = typeof html === 'string' ? html : String(html);
+  let out = source;
 
   // Helper para insertar/mergear class en una etiqueta
   const addClasses = (tag: MarkdownTag, className: string) => {
@@ -100,6 +101,17 @@ export function formatMarkdownHtml(html: string, classes: MarkdownClassMap = def
   });
 
   return out;
+}
+
+/** Convierte párrafos que son preguntas (¿...?) en encabezados h2. */
+export function promoteBlogQuestionsToH2(html: string): string {
+  if (!html) return '';
+  const source = typeof html === 'string' ? html : String(html);
+  if (!source) return '';
+
+  return source.replace(/<p>\s*(¿[^<]+?\?)\s*<\/p>/gi, (_match, question: string) => {
+    return `<h2>${question.trim()}</h2>`;
+  });
 }
 
 /**
