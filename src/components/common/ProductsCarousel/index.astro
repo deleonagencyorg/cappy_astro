@@ -1,5 +1,4 @@
 ---
-// Componente de carrusel de productos con Swiper
 interface Product {
   id: string;
   slug: string;
@@ -17,7 +16,13 @@ export interface Props {
   autoplay?: boolean;
   speed?: number;
   slidesPerView?: number;
+  slidesPerViewMobile?: number;
+  slidesPerViewTablet?: number;
+  slidesPerViewDesktop?: number;
   spaceBetween?: number;
+  spaceBetweenMobile?: number;
+  spaceBetweenTablet?: number;
+  spaceBetweenDesktop?: number;
   loop?: boolean;
   color?: string;
   cardBackgroundImage?: string;
@@ -30,10 +35,15 @@ const {
   className = '',
   autoplay = true,
   speed = 5000,
-  slidesPerView = 3,
-  spaceBetween = 30,
-  loop = true,
-  color = '#F08C00',
+  slidesPerView = 4,
+  slidesPerViewMobile = 4,
+  slidesPerViewTablet = 3,
+  slidesPerViewDesktop = slidesPerView,
+  spaceBetween = 16,
+  spaceBetweenMobile = 8,
+  spaceBetweenTablet = 12,
+  spaceBetweenDesktop = spaceBetween,
+  loop = false,
   cardBackgroundImage = '',
   paddingTop = '120px',
   mobilePaddingTop = '4px'
@@ -42,22 +52,7 @@ const {
 const DEFAULT_CARD_BACKGROUND_IMAGE = 'https://snack.yummiespromociones.com/SnacksyummiesAssets/bgcardcappy.webp';
 
 const currentLang = Astro.url.pathname.split('/')[1] === 'es' ? 'es' : 'en';
-
-// Textos según idioma
-const texts = {
-  es: {
-    viewMore: 'Ver más'
-  },
-  en: {
-    viewMore: 'View more'
-  }
-};
-
-const currentTexts = texts[currentLang as keyof typeof texts];
-
-// Asegurarse de que products es un array
 const productsItems = Array.isArray(products) ? products : [];
-
 const productsCount = productsItems.length;
 const PLACEHOLDER_IMAGE_URL = 'https://snack.yummiespromociones.com/snacksyummies/placeholder.webp';
 
@@ -68,28 +63,33 @@ import LazyImage from '../LazyImage.astro';
   class={`products-carousel ${className}`}
   data-autoplay={autoplay}
   data-speed={speed}
-  data-slides-per-view={slidesPerView}
-  data-space-between={spaceBetween}
+  data-slides-mobile={slidesPerViewMobile}
+  data-slides-tablet={slidesPerViewTablet}
+  data-slides-desktop={slidesPerViewDesktop}
+  data-gap-mobile={spaceBetweenMobile}
+  data-gap-tablet={spaceBetweenTablet}
+  data-gap-desktop={spaceBetweenDesktop}
+  data-loop={loop}
   style={{
     '--pc-padding-top': paddingTop,
     '--pc-padding-top-mobile': mobilePaddingTop,
   }}
 >
-  
-  <div class="swiper-container">
-    <div class="swiper-wrapper">
+  <div class="products-carousel__viewport" data-pc-viewport>
+    <div class="products-carousel__track" data-pc-track>
       {productsCount === 0 ? (
-        <div class="swiper-slide">
+        <article class="products-carousel__slide" data-pc-slide>
           <div class="product-card-cta">
             <div class="product-card">
               <div
                 class="product-background"
                 style={{
-                '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                '--hover-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-              }}></div>
+                  '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                  '--hover-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                }}
+              />
               <div class="product-image-container">
-                <LazyImage 
+                <LazyImage
                   src={PLACEHOLDER_IMAGE_URL}
                   alt="Cappy"
                   class="product-image"
@@ -100,11 +100,11 @@ import LazyImage from '../LazyImage.astro';
             </div>
             <p class="product-title">&nbsp;</p>
           </div>
-        </div>
+        </article>
       ) : (
         productsItems.map((product) => (
-          <div class="swiper-slide">
-            <a 
+          <article class="products-carousel__slide" data-pc-slide>
+            <a
               href={`/${currentLang}/${currentLang === 'es' ? 'productos' : 'products'}/${product.slug}`}
               class="product-card-cta"
             >
@@ -112,12 +112,13 @@ import LazyImage from '../LazyImage.astro';
                 <div
                   class="product-background"
                   style={{
-                  '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                  '--hover-bg': `url(${product.background_image || cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
-                }}></div>
+                    '--default-bg': `url(${cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                    '--hover-bg': `url(${product.background_image || cardBackgroundImage || DEFAULT_CARD_BACKGROUND_IMAGE})`,
+                  }}
+                />
                 <div class="product-image-container">
-                  <LazyImage 
-                    src={product.imageMobile || product.image} 
+                  <LazyImage
+                    src={product.imageMobile || product.image}
                     alt={product.name}
                     class="product-image"
                     width={300}
@@ -125,26 +126,23 @@ import LazyImage from '../LazyImage.astro';
                   />
                 </div>
               </div>
-              <p class="product-title pr-5">
-                {product.name}
-              </p>
+              <p class="product-title">{product.name}</p>
             </a>
-          </div>
+          </article>
         ))
       )}
     </div>
   </div>
 
-  <!-- Navegación -->
   {productsCount > 1 && (
     <div class="carousel-controls">
-      <button class="carousel-btn carousel-btn-prev" type="button" aria-label="Anterior">
-        <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <button class="carousel-btn carousel-btn-prev" type="button" aria-label="Anterior" data-pc-prev>
+        <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M13.5 14L8.5 9.5L13.5 5" stroke="#004AB2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-      <button class="carousel-btn carousel-btn-next" type="button" aria-label="Siguiente">
-        <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <button class="carousel-btn carousel-btn-next" type="button" aria-label="Siguiente" data-pc-next>
+        <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M7.5 14L12.5 9.5L7.5 5" stroke="#004AB2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
@@ -153,91 +151,61 @@ import LazyImage from '../LazyImage.astro';
 </div>
 
 <style>
-    .products-carousel {
+  .products-carousel {
     width: 100%;
     padding: 1rem 0;
-    overflow: visible;
     padding-top: var(--pc-padding-top, 120px);
-  }
-
-  .swiper-container {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    padding: 0 2rem;
     overflow: hidden;
-    margin: 0 auto;
-    box-sizing: border-box;
   }
 
-  .swiper-wrapper {
+  .products-carousel__viewport {
+    width: 100%;
+    overflow: hidden;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .products-carousel__track {
     display: flex;
     align-items: stretch;
-    overflow: visible;
+    will-change: transform;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .swiper-slide {
-    height: auto;
-    display: flex;
+  .products-carousel__track.is-centered {
     justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    overflow: visible;
   }
 
-  /* Mobile: use native scroll-snap instead of Swiper */
-  @media (max-width: 767px) {
-    .swiper-container {
-      padding: 0;
-      overflow-x: scroll;
-      overflow-y: hidden;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-
-    .swiper-container::-webkit-scrollbar {
-      display: none;
-    }
-
-    .swiper-wrapper {
-      display: flex;
-      flex-wrap: nowrap;
-    }
-
-    .swiper-slide {
-      flex: 0 0 100vw;
-      width: 100vw;
-      max-width: 100vw;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      box-sizing: border-box;
-    }
+  .products-carousel__slide {
+    flex: 0 0 auto;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .product-card-cta {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
+    align-items: stretch;
+    gap: 0.5rem;
+    width: 100%;
+    min-width: 0;
     text-decoration: none;
   }
 
   .product-card {
     position: relative;
-    width: 260px;
+    width: 100%;
     aspect-ratio: 3 / 4;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
   }
 
   .product-background {
     position: absolute;
-    inset: 8%;
-    border-radius: 32px;
-    background-color: #f5d000; /* fallback */
+    inset: 7%;
+    border-radius: clamp(10px, 1.8vw, 24px);
+    background-color: #f5d000;
+    background-image: var(--default-bg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -265,31 +233,14 @@ import LazyImage from '../LazyImage.astro';
 
     .product-card-cta:hover .product-card,
     .product-card-cta:focus-visible .product-card {
-      animation: cappyHoverBounce 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      animation: pcHoverBounce 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
     }
   }
 
-  @keyframes cappyHoverBounce {
-    0% {
-      transform: translateY(0) scale(1);
-    }
-    55% {
-      transform: translateY(-6px) scale(1.02);
-    }
-    100% {
-      transform: translateY(0) scale(1);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .product-background,
-    .product-background::after {
-      transition: none;
-    }
-    .product-card-cta:hover .product-card,
-    .product-card-cta:focus-visible .product-card {
-      animation: none;
-    }
+  @keyframes pcHoverBounce {
+    0% { transform: translateY(0) scale(1); }
+    55% { transform: translateY(-6px) scale(1.02); }
+    100% { transform: translateY(0) scale(1); }
   }
 
   .product-image-container {
@@ -300,7 +251,7 @@ import LazyImage from '../LazyImage.astro';
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10%;
+    padding: 8%;
   }
 
   .product-image-container .product-image {
@@ -311,43 +262,50 @@ import LazyImage from '../LazyImage.astro';
   }
 
   .product-title {
-    font-size: 0.95rem;
+    font-size: clamp(0.75rem, 1.1vw, 0.95rem);
     font-weight: 600;
-    color: #004AB2; /* azul de Cappy */
-    text-align: left;
+    color: #004ab2;
+    text-align: center;
     width: 100%;
-    max-width: 250px;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
-  /* Controles de navegación */
   .carousel-controls {
     display: flex;
     justify-content: flex-end;
     gap: 0.5rem;
     margin-top: 1rem;
-    padding: 0 2rem;
   }
 
   .carousel-btn {
     width: 50px;
     height: 50px;
     background-color: transparent;
-    border: 2px solid #004AB2;
+    border: 2px solid #004ab2;
     border-radius: 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 12px;
-    transition: background-color 200ms ease;
+    transition: background-color 200ms ease, opacity 200ms ease;
     flex-shrink: 0;
   }
 
-  .carousel-btn:hover {
-    background-color: #004AB2;
+  .carousel-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
   }
 
-  .carousel-btn:hover svg path {
+  .carousel-btn:not(:disabled):hover {
+    background-color: #004ab2;
+  }
+
+  .carousel-btn:not(:disabled):hover svg path {
     stroke: white;
   }
 
@@ -357,234 +315,272 @@ import LazyImage from '../LazyImage.astro';
     display: block;
   }
 
-  /* Mobile */
   @media (max-width: 767px) {
     .products-carousel {
       padding-top: var(--pc-padding-top-mobile, 20px);
     }
 
-    .product-card {
-      width: min(320px, 85vw);
-      margin: 0 auto;
-      justify-content: flex-start;
+    .product-title {
+      font-size: clamp(0.8125rem, 3.6vw, 0.95rem);
+      line-height: 1.3;
+      font-weight: 700;
+      padding: 0 1px;
     }
 
-    .product-title {
-      max-width: min(320px, 85vw);
-      text-align: center;
-      font-size: 1rem;
+    .product-card-cta {
+      gap: 0.65rem;
     }
 
     .carousel-controls {
       justify-content: center;
     }
-    
-  /* Fondo hover siempre visible en móvil */
-  .product-background {
-    background-image: var(--hover-bg) !important;
+
+    .product-background {
+      inset: 5%;
+      border-radius: clamp(20px, 6vw, 30px);
+      background-image: var(--hover-bg) !important;
+    }
+
+    .product-background::after {
+      display: none;
+    }
   }
 
-  .product-background::after {
-    display: none;
-  }
+  @media (prefers-reduced-motion: reduce) {
+    .products-carousel__track {
+      transition: none;
+    }
+
+    .product-background,
+    .product-background::after {
+      transition: none;
+    }
+
+    .product-card-cta:hover .product-card,
+    .product-card-cta:focus-visible .product-card {
+      animation: none;
+    }
   }
 </style>
 
 <script>
-  import Swiper from 'swiper';
-  import { Navigation, Autoplay } from 'swiper/modules';
-  import 'swiper/css';
-  import 'swiper/css/navigation';
-import { fa } from 'zod/v4/locales';
-
-  interface ProductsCarouselOptions {
-    autoplay?: boolean;
-    speed?: number;
-    slidesPerView?: number;
-    spaceBetween?: number;
-    loop?: boolean;
+  interface CarouselConfig {
+    slidesMobile: number;
+    slidesTablet: number;
+    slidesDesktop: number;
+    gapMobile: number;
+    gapTablet: number;
+    gapDesktop: number;
+    autoplay: boolean;
+    speed: number;
+    loop: boolean;
   }
 
-  class ProductsCarousel {
-    private container: HTMLElement;
-    private swiper: Swiper | null = null;
-    private options: ProductsCarouselOptions;
+  function readInt(value: string | undefined, fallback: number): number {
+    const parsed = parseInt(value || '', 10);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+  }
 
-    constructor(container: HTMLElement, options: ProductsCarouselOptions = {}) {
-      this.container = container;
-      this.options = options;
-      this.init();
+  function getBreakpointConfig(width: number, config: CarouselConfig) {
+    if (width >= 1024) {
+      return { visible: config.slidesDesktop, gap: config.gapDesktop };
     }
+    if (width >= 768) {
+      return { visible: config.slidesTablet, gap: config.gapTablet };
+    }
+    return { visible: config.slidesMobile, gap: config.gapMobile };
+  }
 
-    private init(): void {
-      const swiperContainer = this.container.querySelector('.swiper-container') as HTMLElement;
-      
-      if (!swiperContainer) return;
+  class ProductsCarouselEngine {
+    private root: HTMLElement;
+    private viewport: HTMLElement;
+    private track: HTMLElement;
+    private slides: HTMLElement[];
+    private prevBtn: HTMLButtonElement | null;
+    private nextBtn: HTMLButtonElement | null;
+    private config: CarouselConfig;
+    private index = 0;
+    private autoplayTimer: ReturnType<typeof setInterval> | null = null;
+    private resizeObserver: ResizeObserver | null = null;
+    private touchStartX = 0;
+    private touchDeltaX = 0;
 
-      const slidesCount = swiperContainer.querySelectorAll('.swiper-slide').length;
-      if (slidesCount <= 1) return;
-
-      const prevBtn = this.container.querySelector('.carousel-btn-prev') as HTMLElement | null;
-      const nextBtn = this.container.querySelector('.carousel-btn-next') as HTMLElement | null;
-
-      // Add event listeners to prevent swiper from handling link clicks
-      const productLinks = swiperContainer.querySelectorAll('a[data-no-swipe]');
-      productLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          // Stop propagation to prevent Swiper from handling the click
-          e.stopPropagation();
-        });
-      });
-
-      // Read dataset overrides
-      const ds = this.container.dataset as any;
-      const dsSlides = parseInt(ds.slidesPerView || '3', 10);
-      const dsSpace = parseInt(ds.spaceBetween || '30', 10);
-
-      const isMobile = window.matchMedia('(max-width: 767px)').matches;
-
-      // On mobile, use native scroll-snap with manual navigation buttons
-      if (isMobile) {
-        this.initMobileNavigation(swiperContainer, prevBtn, nextBtn);
-        return;
+    constructor(root: HTMLElement) {
+      this.root = root;
+      const viewport = root.querySelector('[data-pc-viewport]');
+      const track = root.querySelector('[data-pc-track]');
+      if (!(viewport instanceof HTMLElement) || !(track instanceof HTMLElement)) {
+        throw new Error('Products carousel markup is incomplete');
       }
 
-      this.swiper = new Swiper(swiperContainer, {
-        modules: [Navigation, Autoplay],
-        slidesPerView: dsSlides || this.options.slidesPerView || 3,
-        spaceBetween: dsSpace || this.options.spaceBetween || 30,
-        loop: this.options.loop !== false,
-        roundLengths: true,
-        watchOverflow: true,
-        slideToClickedSlide: false,
-        centeredSlides: false,
-        centeredSlidesBounds: false,
-        slidesOffsetBefore: 0,
-        autoplay: this.options.autoplay ? {
-          delay: this.options.speed || 5000,
-          disableOnInteraction: false,
-        } : false,
-        navigation: {
-          nextEl: nextBtn,
-          prevEl: prevBtn,
-        },
-        breakpoints: {
-          0: {
-            slidesPerView: 1,
-            spaceBetween: 10,
-          },
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
-          640: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 30,
-          },
-          1024: {
-            slidesPerView: this.options.slidesPerView || 3,
-            spaceBetween: 50,
-          },
-          1280: {
-            slidesPerView: 3,   
-            spaceBetween: 40,
-          },
-        },
-        preventClicksPropagation: true,
-        preventClicks: false,
-        noSwiping: true,
-        noSwipingClass: 'swiper-no-swiping',
-      });
+      this.viewport = viewport;
+      this.track = track;
+      this.slides = Array.from(track.querySelectorAll('[data-pc-slide]')).filter(
+        (node): node is HTMLElement => node instanceof HTMLElement,
+      );
+      this.prevBtn = root.querySelector('[data-pc-prev]');
+      this.nextBtn = root.querySelector('[data-pc-next]');
 
+      const ds = root.dataset;
+      this.config = {
+        slidesMobile: readInt(ds.slidesMobile, 4),
+        slidesTablet: readInt(ds.slidesTablet, 3),
+        slidesDesktop: readInt(ds.slidesDesktop, 4),
+        gapMobile: readInt(ds.gapMobile, 8),
+        gapTablet: readInt(ds.gapTablet, 12),
+        gapDesktop: readInt(ds.gapDesktop, 16),
+        autoplay: ds.autoplay !== 'false',
+        speed: readInt(ds.speed, 5000),
+        loop: ds.loop === 'true',
+      };
 
-      prevBtn?.addEventListener('click', () => this.swiper?.slidePrev());
-      nextBtn?.addEventListener('click', () => this.swiper?.slideNext());
+      this.bindEvents();
+      this.render();
+      this.startAutoplay();
+
+      this.resizeObserver = new ResizeObserver(() => this.render());
+      this.resizeObserver.observe(this.viewport);
     }
 
-    private initMobileNavigation(
-      container: HTMLElement,
-      prevBtn: HTMLElement | null,
-      nextBtn: HTMLElement | null,
-    ): void {
-      const scroller = container;
-      const slides = Array.from(container.querySelectorAll('.swiper-slide'));
-      if (slides.length <= 1) return;
+    private bindEvents(): void {
+      this.prevBtn?.addEventListener('click', () => this.move(-1));
+      this.nextBtn?.addEventListener('click', () => this.move(1));
 
-      let currentIndex = 0;
-      scroller.scrollLeft = 0;
+      this.viewport.addEventListener('pointerdown', (event) => {
+        if (!(event instanceof PointerEvent) || event.pointerType === 'mouse') return;
+        this.touchStartX = event.clientX;
+        this.touchDeltaX = 0;
+      });
 
-      const getSlideWidth = (): number => {
-        // Usa el ancho real del primer slide, no del scroller
-        // (el scroller puede ser 90vw pero el slide es 100vw)
-        return slides[0]?.getBoundingClientRect().width || window.innerWidth;
-      };
+      this.viewport.addEventListener('pointermove', (event) => {
+        if (!(event instanceof PointerEvent) || event.pointerType === 'mouse') return;
+        this.touchDeltaX = event.clientX - this.touchStartX;
+      });
 
-      const scrollToIndex = (index: number) => {
-        if (index < 0) index = 0;
-        if (index >= slides.length) index = slides.length - 1;
-        currentIndex = index;
-        const slideW = getSlideWidth();
-        requestAnimationFrame(() => {
-          scroller.scrollTo({ left: index * slideW, behavior: 'smooth' });
-        });
-      };
-
-      const updateIndexFromScroll = () => {
-        const slideW = getSlideWidth();
-        if (slideW > 0) {
-          currentIndex = Math.round(scroller.scrollLeft / slideW);
+      this.viewport.addEventListener('pointerup', () => {
+        if (Math.abs(this.touchDeltaX) > 40) {
+          this.move(this.touchDeltaX < 0 ? 1 : -1);
         }
-      };
+        this.touchStartX = 0;
+        this.touchDeltaX = 0;
+      });
 
-  prevBtn?.addEventListener('click', () => scrollToIndex(currentIndex - 1));
-  nextBtn?.addEventListener('click', () => scrollToIndex(currentIndex + 1));
+      window.addEventListener('resize', this.handleResize, { passive: true });
+    }
 
-  scroller.addEventListener('scroll', updateIndexFromScroll, { passive: true });
-}
+    private handleResize = (): void => {
+      this.render();
+    };
+
+    private getMetrics() {
+      const { visible, gap } = getBreakpointConfig(window.innerWidth, this.config);
+      const viewportWidth = this.viewport.clientWidth;
+      const slideWidth = visible > 0
+        ? (viewportWidth - gap * (visible - 1)) / visible
+        : viewportWidth;
+      const maxIndex = Math.max(0, this.slides.length - visible);
+
+      return { visible, gap, viewportWidth, slideWidth, maxIndex };
+    }
+
+    private render(): void {
+      if (this.slides.length === 0) return;
+
+      const { visible, gap, slideWidth, maxIndex } = this.getMetrics();
+      const shouldCenter = this.slides.length <= visible;
+
+      this.index = Math.min(this.index, maxIndex);
+
+      this.track.style.gap = `${gap}px`;
+      this.slides.forEach((slide) => {
+        slide.style.width = `${slideWidth}px`;
+        slide.style.flexBasis = `${slideWidth}px`;
+      });
+
+      if (shouldCenter) {
+        this.track.classList.add('is-centered');
+        this.track.style.transform = 'translateX(0)';
+      } else {
+        this.track.classList.remove('is-centered');
+        const offset = this.index * (slideWidth + gap);
+        this.track.style.transform = `translateX(-${offset}px)`;
+      }
+
+      if (this.prevBtn) {
+        this.prevBtn.disabled = shouldCenter || (!this.config.loop && this.index <= 0);
+      }
+      if (this.nextBtn) {
+        this.nextBtn.disabled = shouldCenter || (!this.config.loop && this.index >= maxIndex);
+      }
+    }
+
+    private move(direction: number): void {
+      const { maxIndex } = this.getMetrics();
+      if (maxIndex === 0) return;
+
+      if (this.config.loop) {
+        if (direction > 0) {
+          this.index = this.index >= maxIndex ? 0 : this.index + 1;
+        } else {
+          this.index = this.index <= 0 ? maxIndex : this.index - 1;
+        }
+      } else if (direction > 0) {
+        this.index = Math.min(this.index + 1, maxIndex);
+      } else {
+        this.index = Math.max(this.index - 1, 0);
+      }
+
+      this.render();
+      this.restartAutoplay();
+    }
+
+    private startAutoplay(): void {
+      this.stopAutoplay();
+      if (!this.config.autoplay || this.slides.length <= 1) return;
+
+      this.autoplayTimer = setInterval(() => {
+        const { maxIndex } = this.getMetrics();
+        if (maxIndex === 0) return;
+        this.move(1);
+      }, this.config.speed);
+    }
+
+    private restartAutoplay(): void {
+      this.startAutoplay();
+    }
+
+    private stopAutoplay(): void {
+      if (this.autoplayTimer) {
+        clearInterval(this.autoplayTimer);
+        this.autoplayTimer = null;
+      }
+    }
 
     public destroy(): void {
-      if (this.swiper) {
-        this.swiper.destroy();
-        this.swiper = null;
-      }
+      this.stopAutoplay();
+      this.resizeObserver?.disconnect();
+      window.removeEventListener('resize', this.handleResize);
     }
   }
 
-  // Variable global para almacenar instancias
-  let carouselInstances: ProductsCarousel[] = [];
+  let carouselInstances: ProductsCarouselEngine[] = [];
 
-  // Función para limpiar instancias existentes
-  function cleanupCarousels() {
-    carouselInstances.forEach(instance => instance.destroy());
+  function cleanupCarousels(): void {
+    carouselInstances.forEach((instance) => instance.destroy());
     carouselInstances = [];
   }
 
-  // Función para inicializar carruseles
-  function initializeCarousels() {
+  function initializeCarousels(): void {
     cleanupCarousels();
-    document.querySelectorAll('.products-carousel').forEach((element: Element) => {
+    document.querySelectorAll('.products-carousel').forEach((element) => {
       if (element instanceof HTMLElement) {
-        const instance = new ProductsCarousel(element, {
-          autoplay: element.dataset.autoplay !== 'false',
-          speed: parseInt(element.dataset.speed || '5000', 10),
-          slidesPerView: 3,
-          spaceBetween: 30,
-          loop: true,
-        });
-        carouselInstances.push(instance);
+        carouselInstances.push(new ProductsCarouselEngine(element));
       }
     });
   }
 
-  // Inicializar en DOMContentLoaded
   document.addEventListener('DOMContentLoaded', initializeCarousels);
-  // Reinicializar en navegaciones parciales
   document.addEventListener('astro:page-load', initializeCarousels);
   document.addEventListener('astro:after-swap', initializeCarousels);
-  // Limpiar antes del swap de Astro
   document.addEventListener('astro:before-swap', cleanupCarousels);
 </script>

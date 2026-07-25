@@ -162,17 +162,15 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
             <div class="w-full overflow-hidden">
               <ProductsCarousel 
                 products={products}
-                color={'white'}
                 autoplay={true}
                 speed={4000}
-                data-slides-per-view-desktop="2"
-                data-slides-per-view-tablet="2"
-                data-slides-per-view-mobile="1"
-                data-space-between-desktop="30"
-                data-space-between-tablet="20"
-                data-space-between-mobile="10"
+                slidesPerViewMobile={1}
+                slidesPerViewTablet={2}
+                slidesPerViewDesktop={2}
+                spaceBetweenMobile={10}
+                spaceBetweenTablet={20}
+                spaceBetweenDesktop={30}
                 loop={true}
-                className=""
               />
             </div>
           </div>
