@@ -12,7 +12,7 @@ import LazyImage from '../../../components/common/LazyImage.astro';
 import MediaCarousel from '../../../components/blog/MediaCarousel.astro';
 import VideoModal from '../../../components/common/VideoModal.astro';
 import VideoCarousel from '../../../components/common/VideoCarousel/index.astro';
-import { formatMarkdownHtml, promoteBlogQuestionsToH2 } from '../../../components/blog/markdownFormat';
+import { formatMarkdownHtml, promoteBlogQuestionsToH2, normalizeBlogHtmlContent, hasVisibleBlogContent } from '../../../components/blog/markdownFormat';
 
 interface Props {
   blogPost: {
@@ -100,10 +100,16 @@ const blogDetailClasses = {
   li: 'text-blue leading-relaxed',
 };
 
-const blogContentHtml = formatMarkdownHtml(
-  promoteBlogQuestionsToH2(blogPost.content ?? ''),
-  blogDetailClasses
-);
+const rawBlogContent = normalizeBlogHtmlContent(blogPost.content);
+
+const blogContentHtml = rawBlogContent
+  ? formatMarkdownHtml(
+      promoteBlogQuestionsToH2(rawBlogContent),
+      blogDetailClasses
+    )
+  : '';
+
+const showBlogContent = hasVisibleBlogContent(blogContentHtml);
 ---
 
 <div class="bg-primary pb-0 overflow-hidden">
@@ -150,12 +156,14 @@ const blogContentHtml = formatMarkdownHtml(
         )}
 
         {/* Contenido */}
-        <div
-          class="blog-content prose prose-lg max-w-none my-8 text-md md:text-lg text-blue"
-          transition:animate={fade({ duration: '0.5s' })}
-        >
-          <Fragment set:html={blogContentHtml} />
-        </div>
+        {showBlogContent && (
+          <div
+            class="blog-content prose prose-lg max-w-none my-8 text-md md:text-lg text-blue"
+            transition:animate={fade({ duration: '0.5s' })}
+          >
+            <Fragment set:html={blogContentHtml} />
+          </div>
+        )}
 
         {SHARE_UI_ENABLED && (
           <div class="w-full flex justify-end mb-8">

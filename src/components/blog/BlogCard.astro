@@ -3,6 +3,7 @@ import LazyImage from '../common/LazyImage.astro';
 import { getLocale } from '../../i18n/i18n';
 import { Image } from 'astro:assets';
 import { fade } from 'astro:transitions';
+import './blogCard.css';
 
 interface Props {
   image?: string;
@@ -58,27 +59,3 @@ const viewBlogText = currentLang === 'es' ? 'Leer más' : 'Read more';
     </div>
   </a>
 </div>
-
-<style is:global>
-  .news-card .blog-card__overlay {
-    height: 52%;
-    background: linear-gradient(
-      to top,
-      rgba(0, 54, 160, 0.96) 0%,
-      rgba(0, 54, 160, 0.9) 38%,
-      rgba(0, 54, 160, 0.72) 68%,
-      rgba(0, 54, 160, 0) 100%
-    );
-    transition: background 0.3s ease;
-  }
-
-  .news-card .group:hover .blog-card__overlay {
-    background: linear-gradient(
-      to top,
-      rgba(0, 54, 160, 0.98) 0%,
-      rgba(0, 54, 160, 0.94) 42%,
-      rgba(0, 54, 160, 0.78) 72%,
-      rgba(0, 54, 160, 0.1) 100%
-    );
-  }
-</style>
