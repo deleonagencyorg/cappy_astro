@@ -1,0 +1,21 @@
+.news-card .blog-card__overlay {
+  height: 52%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 54, 160, 0.97) 0%,
+    rgba(0, 54, 160, 0.92) 38%,
+    rgba(0, 54, 160, 0.78) 68%,
+    rgba(0, 54, 160, 0) 100%
+  );
+  transition: background 0.3s ease;
+}
+
+.news-card .group:hover .blog-card__overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 54, 160, 0.99) 0%,
+    rgba(0, 54, 160, 0.95) 42%,
+    rgba(0, 54, 160, 0.82) 72%,
+    rgba(0, 54, 160, 0.12) 100%
+  );
+}

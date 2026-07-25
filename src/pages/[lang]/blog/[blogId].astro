@@ -17,8 +17,11 @@ export async function getStaticPaths() {
       const mod: any = await modules[p]();
       const fm = mod.frontmatter || {};
       if (fm && fm.slug && fm.id) {
-        const content = typeof mod.compiledContent === 'function' ? mod.compiledContent() : '';
-        allPosts.push({ ...fm, content: content ?? '' });
+        const rawContent = typeof mod.compiledContent === 'function'
+          ? await mod.compiledContent()
+          : '';
+        const content = typeof rawContent === 'string' ? rawContent.trim() : '';
+        allPosts.push({ ...fm, content });
       }
     }
     for (const blogPost of allPosts) {

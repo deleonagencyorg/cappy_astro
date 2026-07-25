@@ -49,8 +49,29 @@ export const defaultBlogMarkdownClasses: MarkdownClassMap = {
   td: "align-top px-3 py-2",
 };
 
+/** Normaliza el HTML compilado de un post de blog. */
+export function normalizeBlogHtmlContent(content: unknown): string {
+  if (!content) return '';
+  if (typeof content !== 'string') return '';
+
+  const trimmed = content.trim();
+  if (!trimmed || trimmed === '[object Promise]') return '';
+
+  return trimmed;
+}
+
+/** Indica si el HTML del blog tiene texto visible para mostrar. */
+export function hasVisibleBlogContent(html: string): boolean {
+  const normalized = normalizeBlogHtmlContent(html);
+  if (!normalized) return false;
+
+  return normalized
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/gi, ' ')
+    .trim().length > 0;
+}
+
 /**
- * Inyecta clases CSS a etiquetas HTML comunes generadas por Markdown.
  * Nota: Este método usa reemplazos por regex seguros para HTML simple de Markdown.
  */
 export function formatMarkdownHtml(html: string, classes: MarkdownClassMap = defaultBlogMarkdownClasses): string {
