@@ -45,8 +45,8 @@ const viewBlogText = currentLang === 'es' ? 'Leer más' : 'Read more';
       loading="lazy" 
       transition:name={`blog-image-${id}`}
     />
-    <!-- Overlay oscuro base que aumenta en hover -->
-    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors duration-300"></div>
+    <!-- Overlay inferior azul oscuro para título y botón -->
+    <div class="blog-card__overlay absolute inset-x-0 bottom-0 z-[1] pointer-events-none"></div>
     <!-- Contenido inferior -->
     <div class="absolute inset-x-0 bottom-0 p-3 z-10 flex flex-col gap-2">
       <h3 class="text-white font-bold text-sm md:text-base leading-tight">{title}</h3>
@@ -59,6 +59,26 @@ const viewBlogText = currentLang === 'es' ? 'Leer más' : 'Read more';
   </a>
 </div>
 
-<style>
-  /* Mantener los mismos estilos que RecipeCard */
+<style is:global>
+  .news-card .blog-card__overlay {
+    height: 52%;
+    background: linear-gradient(
+      to top,
+      rgba(0, 54, 160, 0.96) 0%,
+      rgba(0, 54, 160, 0.9) 38%,
+      rgba(0, 54, 160, 0.72) 68%,
+      rgba(0, 54, 160, 0) 100%
+    );
+    transition: background 0.3s ease;
+  }
+
+  .news-card .group:hover .blog-card__overlay {
+    background: linear-gradient(
+      to top,
+      rgba(0, 54, 160, 0.98) 0%,
+      rgba(0, 54, 160, 0.94) 42%,
+      rgba(0, 54, 160, 0.78) 72%,
+      rgba(0, 54, 160, 0.1) 100%
+    );
+  }
 </style>

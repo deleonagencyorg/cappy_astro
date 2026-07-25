@@ -237,15 +237,14 @@ function formatTime(minutes: number): string {
 {SHARE_UI_ENABLED && (
   <ShareModal
     id="shareModal-recipe"
-    url={Astro.url.href}
     title={recipe.title}
     description={recipe.description}
     hashtags={recipe.tags || []}
     showLabels={false}
     iconSize={40}
     round={true}
-    openTextEs="Comparte esta receta en tus redes sociales"
-    openTextEn="Share this recipe on your social networks"
+    openTextEs="Comparte este artículo en tus redes sociales"
+    openTextEn="Share this article on your social networks"
     acceptTextEs="Aceptar"
     acceptTextEn="Accept"
   />
