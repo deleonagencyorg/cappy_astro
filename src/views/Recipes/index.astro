@@ -71,11 +71,10 @@ function normalizeType(r: Recipe): string {
   return 'other';
 }
 ---
-<div class="-mt-px -mb-px overflow-hidden" style=" background-image: url('https://snack.yummiespromociones.com/SnacksyummiesAssets/bgcontactzibas.webp'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+<div class="-mt-px -mb-px overflow-hidden" style=" bg-primary">
   
   <div class="container mx-auto px-4 mt-0">
     <div class="pt-4">
-      <Breadcrumb bgColor="bg-transparent" textColor="text-white" hoverColor="hover:text-white" />
     </div>
     <div class="pt-0 pb-0">
       <div class="text-center mb-16 relative z-20 overflow-hidden" >
@@ -89,20 +88,20 @@ function normalizeType(r: Recipe): string {
              background="none"
            />
         </div>
-      <h2 class="text-3xl md:text-4xl italic font-bold mt-0 mb-4 text-white relative z-10">
+      <h2 class="text-3xl md:text-4xl font-bold mt-0 mb-4 text-blue relative z-10">
         {currentLang==='es' ? 'Descubre nuestras' : 'Discover our'}
       </h2>
-        <h1 class="text-6xl md:text-9xl italic font-bold mt-0 mb-4 text-white relative z-10 flex items-center justify-center">
+        <h1 class="text-6xl md:text-9xl font-bold mt-0 mb-4 text-blue relative z-10 flex items-center justify-center">
           <span class="font-title pl-2 relative z-10">{currentLang==='es' ? 'Recetas' : 'Recipes'}</span>
         </h1>
     </div>
     </div>
     <!-- Filter Buttons -->
     <div id="recipeFilters" class="grid grid-cols-2 gap-3 mb-8 max-w-md mx-auto md:max-w-none md:grid-cols-4 md:gap-4 md:flex md:justify-center">
-      <button type="button" class="filter-btn w-full text-center px-6 py-2 rounded-full bg-orange text-white font-bold hover:text-white hover:bg-orange-400 hover:opacity-100 active:text-white active:bg-orange-400 transition-colors border border-white" data-filter="all">{filterLabels.all}</button>
-      <button type="button" class="filter-btn w-full text-center px-6 py-2 rounded-full bg-orange text-white font-bold hover:text-white hover:bg-orange-400 hover:opacity-100 active:text-white active:bg-orange-400 transition-colors border border-white" data-filter="breakfast">{filterLabels.breakfast}</button>
-      <button type="button" class="filter-btn w-full text-center px-6 py-2 rounded-full bg-orange text-white font-bold hover:text-white hover:bg-orange-400 hover:opacity-100 active:text-white active:bg-orange-400 transition-colors border border-white" data-filter="brunch">{filterLabels.brunch}</button>
-      <button type="button" class="filter-btn w-full text-center px-6 py-2 rounded-full bg-orange text-white font-bold hover:text-white hover:bg-orange-400 hover:opacity-100 active:text-white active:bg-orange-400 transition-colors border border-white" data-filter="lunch">{filterLabels.lunch}</button>
+      <button type="button" class="filter-btn w-full text-center px-6 py-2 rounded-full bg-blue text-white font-bold hover:text-white hover:bg-blue-400 hover:opacity-100 active:text-white active:bg-blue-400 transition-colors border border-white" data-filter="all">{filterLabels.all}</button>
+      <button type="button" class="filter-btn w-full text-center px-6 py-2 rounded-full bg-blue text-white font-bold hover:text-white hover:bg-blue-400 hover:opacity-100 active:text-white active:bg-blue-400 transition-colors border border-white" data-filter="breakfast">{filterLabels.breakfast}</button>
+      <button type="button" class="filter-btn w-full text-center px-6 py-2 rounded-full bg-blue text-white font-bold hover:text-white hover:bg-blue-400 hover:opacity-100 active:text-white active:bg-blue-400 transition-colors border border-white" data-filter="brunch">{filterLabels.brunch}</button>
+      <button type="button" class="filter-btn w-full text-center px-6 py-2 rounded-full bg-blue text-white font-bold hover:text-white hover:bg-blue-400 hover:opacity-100 active:text-white active:bg-blue-400 transition-colors border border-white" data-filter="lunch">{filterLabels.lunch}</button>
     </div>
 
     {allRecipes.length === 0 ? (
@@ -126,7 +125,7 @@ function normalizeType(r: Recipe): string {
       </div>
       <!-- No results message for filters -->
       <div id="noResults" class="hidden mt-6 items-center justify-center h-48 md:h-64">
-        <span class="text-white text-lg md:text-xl font-semibold">{noFilterResultsText}</span>
+        <span class="text-blue text-lg md:text-xl font-semibold">{noFilterResultsText}</span>
       </div>
       <!-- Infinite scroll sentinel -->
       <div id="infiniteSentinel" class="w-full h-10"></div>
@@ -204,12 +203,12 @@ function normalizeType(r: Recipe): string {
     function setActive(btn: HTMLButtonElement) {
       // Reset styles for all buttons
       filterButtons.forEach(b => {
-        b.classList.remove('bg-orange', 'opacity-40', 'opacity-50', 'text-brown');
+        b.classList.remove('bg-blue', 'opacity-40', 'opacity-50', 'text-brown');
         // Asegurar texto blanco siempre
         b.classList.add('text-white');
       });
       // Highlight active
-      btn.classList.add('bg-orange', 'text-white');
+      btn.classList.add('bg-blue', 'text-white');
       // Dim the rest
       filterButtons.forEach(b => {
         if (b !== btn) b.classList.add('opacity-40');
@@ -228,7 +227,7 @@ function normalizeType(r: Recipe): string {
     // Prevent duplicate listener binding across transitions
     if (filtersRoot.dataset.rfInitialized === 'true') {
       // Re-apply current state quickly
-      const activeBtn = filterButtons.find(b => b.classList.contains('bg-orange')) || filterButtons.find(b => b.getAttribute('data-filter') === 'all');
+      const activeBtn = filterButtons.find(b => b.classList.contains('bg-blue')) || filterButtons.find(b => b.getAttribute('data-filter') === 'all');
       if (activeBtn) {
         setActive(activeBtn as HTMLButtonElement);
         applyFilter(activeBtn.getAttribute('data-filter') || 'all');
