@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FacebookShareButton } from 'react-share';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -65,27 +65,60 @@ const SocialShare = ({
   showLabels = false,
 }) => {
   const [shareUrl, setShareUrl] = useState(() => resolveShareUrl(url));
+  // Feedback visual para el fallback de Instagram: 'idle' | 'copied' | 'error'
+  const [igStatus, setIgStatus] = useState('idle');
+  const igTimeoutRef = useRef(null);
 
   useEffect(() => {
     setShareUrl(resolveShareUrl(url));
   }, [url]);
 
-  const handleInstagramShare = async () => {
-    const text = description ? `${title}\n${description}\n${shareUrl}` : `${title}\n${shareUrl}`;
+  useEffect(() => {
+    return () => {
+      if (igTimeoutRef.current) clearTimeout(igTimeoutRef.current);
+    };
+  }, []);
+  const flashIgStatus = (status) => {
+    setIgStatus(status);
+    if (igTimeoutRef.current) clearTimeout(igTimeoutRef.current);
+    igTimeoutRef.current = setTimeout(() => setIgStatus('idle'), 3000);
+  };
 
-    if (navigator.share) {
+  const handleInstagramShare = async () => {
+    const text = [title, description, shareUrl].filter(Boolean).join('\n\n');
+    const shareData = { title, text, url: shareUrl };
+    const instagramWebUrl = 'https://www.instagram.com/';
+    let popupWindow = null;
+    const canUseWebShare = typeof navigator !== 'undefined' && !!navigator.share;
+
+    if (!canUseWebShare) {
+      popupWindow = window.open(instagramWebUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    // si el navegador soporta Web Share API
+    if (canUseWebShare) {
       try {
-        await navigator.share({ title, text, url: shareUrl });
+        await navigator.share(shareData);
         return;
-      } catch {
-        // user cancelled or unsupported payload
+      } catch (error) {
+        if (error?.name === 'AbortError') return;
+        // si falla entra el fallback de copiar y abrir
+        popupWindow = window.open(instagramWebUrl, '_blank', 'noopener,noreferrer');
       }
     }
 
     try {
-      await navigator.clipboard.writeText(text);
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        flashIgStatus('copied');
+      } else {
+        throw new Error('Clipboard unavailable');
+      }
     } catch {
-      window.prompt('Copia este enlace para compartir en Instagram:', shareUrl);
+      if (!popupWindow || popupWindow.closed) {
+        window.open(instagramWebUrl, '_blank', 'noopener,noreferrer');
+      }
+      flashIgStatus('error');
     }
   };
 
@@ -114,7 +147,7 @@ const SocialShare = ({
 
     if (platforms.includes('instagram')) {
       buttons.push(
-        <div key="instagram" className={wrapperClass}>
+        <div key="instagram" className={`${wrapperClass} relative flex-col`}>
           <button
             type="button"
             onClick={handleInstagramShare}
@@ -124,6 +157,17 @@ const SocialShare = ({
             <BrandShareIcon brand="instagram" size={iconSize} />
             {showLabels && <span className="block text-xs mt-1">{labels.instagram}</span>}
           </button>
+
+          {igStatus !== 'idle' && (
+            <span
+              role="status"
+              className="absolute top-full mt-1 whitespace-nowrap text-[11px] px-2 py-1 rounded bg-black/80 text-white"
+            >
+              {igStatus === 'copied'
+                ? 'Enlace copiado. Pégalo en Instagram'
+                : 'No se pudo copiar. Cópialo manualmente'}
+            </span>
+          )}
         </div>
       );
     }
