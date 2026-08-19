@@ -34,7 +34,7 @@
     },
     "phone": {
       "label": "Mobile Number",
-      "placeholder": "XXXXXXXX",
+      "placeholder": "Phone Number",
       "required": false
     },
     "message": {
