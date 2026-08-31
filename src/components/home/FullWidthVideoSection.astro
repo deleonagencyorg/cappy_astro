@@ -1,11 +1,13 @@
 ---
 export interface Props {
   videoUrl?: string;
+  mobileVideoUrl?: string;
   posterUrl?: string;
 }
 
 const { 
   videoUrl = "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_VIDEOLOOP-NUEVO.mp4",
+  mobileVideoUrl = "https://snack.yummiespromociones.com/SnacksyummiesAssets/Bodegon_800x1200.mp4",
   posterUrl = "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgvideocappy.png"
 } = Astro.props;
 ---
@@ -21,6 +23,8 @@ const {
       autoplay
       preload="metadata"
       poster={posterUrl}
+      data-desktop-video={videoUrl}
+      data-mobile-video={mobileVideoUrl}
     >
       <source src={videoUrl} type="video/mp4">
       Tu navegador no soporta el elemento de video.
@@ -29,45 +33,67 @@ const {
 </section>
 
 <script>
-  // Intersection Observer para autoplay cuando el video entra en viewport
-  function initVideoAutoplay() {
+  function setupVideoSource() {
     const video = document.getElementById('fullwidth-video') as HTMLVideoElement | null;
-    
     if (!video) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Video está visible, reproducir
-            video.play().catch((error: unknown) => {
-              console.log('Autoplay prevented:', error);
-            });
-          } else {
-            // Video no está visible, pausar
-            video.pause();
-          }
-        });
-      },
-      {
-        threshold: 0.5, // Se activa cuando el 50% del video es visible
-      }
-    );
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    const targetUrl = isMobile ? video.dataset.mobileVideo : video.dataset.desktopVideo;
+
+    if (!targetUrl || video.currentSrc === targetUrl) return;
+
+    video.src = targetUrl;
+    video.load();
+  }
+
+  function initVideoAutoplay() {
+    const video = document.getElementById('fullwidth-video') as HTMLVideoElement | null;
+    if (!video) return;
+
+    setupVideoSource();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          video.play().catch((error: unknown) => {
+            console.log('Autoplay prevented:', error);
+          });
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.5 });
 
     observer.observe(video);
   }
 
-  // Inicializar cuando el DOM esté listo
   if (typeof window !== 'undefined') {
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initVideoAutoplay);
+      document.addEventListener('DOMContentLoaded', () => {
+        setupVideoSource();
+        initVideoAutoplay();
+      });
     } else {
+      setupVideoSource();
       initVideoAutoplay();
+    }
+
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const handleMediaChange = () => {
+      setupVideoSource();
+    };
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', handleMediaChange);
+    } else if (typeof mediaQuery.addListener === 'function') {
+      mediaQuery.addListener(handleMediaChange);
     }
   }
 
-  // Reinicializar en navegación de Astro
-  document.addEventListener('astro:page-load', initVideoAutoplay);
+  document.addEventListener('astro:page-load', () => {
+    setupVideoSource();
+    initVideoAutoplay();
+  });
 </script>
 
 <style>
