@@ -5,6 +5,7 @@ import LazyImage from '../common/LazyImage.astro';
 export interface Props {
   games?: any[];
   title?: string;
+  titleImage?: string;
   subtitle?: string;
   howToPlay?: {
     title: string;
@@ -28,6 +29,8 @@ const {
   },
   ctaText = "Jugar ahora mismo",
   ctaUrl = "https://yummiespromociones.com/cappy-game/"
+  ,
+  titleImage = ''
 } = Astro.props;
 
 const currentLang = Astro.url.pathname.split('/')[1] === 'es' ? 'es' : 'en';
@@ -68,9 +71,19 @@ const currentLang = Astro.url.pathname.split('/')[1] === 'es' ? 'es' : 'en';
 
       <!-- Columna derecha: Textos e información -->
       <div class="space-y-6">
-        <h2 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-blue uppercase">
-          {title}
-        </h2>
+        {titleImage ? (
+          <div class="title-logo">
+            <LazyImage
+              src={titleImage}
+              alt={title || 'Cappy'}
+              class="title-logo-image w-auto h-16 md:h-24 lg:h-24 object-contain"
+            />
+          </div>
+        ) : (
+          <h2 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-blue uppercase">
+            {title}
+          </h2>
+        )}
         
         <div class="space-y-4">
           <h3 class="text-xl md:text-2xl font-bold text-blue">

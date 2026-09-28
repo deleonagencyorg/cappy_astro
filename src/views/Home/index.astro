@@ -22,7 +22,6 @@ import { InstagramEmbed } from 'react-social-media-embed';
 import { tr } from 'framer-motion/m';
 
 
-
 // Props
 export interface Props {
   loading?: boolean;
@@ -127,11 +126,6 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
       </div>
     </div>
     
-    <!-- Sección Back To School -->
-    <!--div data-animate="bounce" data-animate-delay="80">
-      <BackToSchoolSection />
-    </div>
-    
     <!-- Sección de Productos Cappy -->
     {cappyProducts.length > 0 && (
       <section id="products" class="w-full bg-yellow py-12 md:py-16" data-animate="bounce" data-animate-delay="140">
@@ -182,7 +176,7 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
     <div data-animate="bounce" data-animate-delay="220">
       <GamesSection 
         games={games}
-        title={currentLang === 'es' ? 'Diviertete con cappy' : 'Have fun with cappy'}
+        titleImage={currentLang === 'es' ? 'https://snack.yummiespromociones.com/SnacksyummiesAssets/logo_caapy_new.webp' : 'https://snack.yummiespromociones.com/SnacksyummiesAssets/logo_caapy_new.webp'}
         howToPlay={{
           title: currentLang === 'es' ? '¿Cómo participar?' : 'How to participate?',
           steps: currentLang === 'es' 
@@ -201,69 +195,6 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
         ctaUrl={`/${currentLang}/${currentLang === 'es' ? 'juegos' : 'games'}`}
       />
     </div>
-
-    <!-- Sección de recetas con carrusel -->
-    <!-- <section id="recipes" class="w-full py-12" transition:animate="slide">
-      <div class="container mx-auto px-4">
-        {recipesAssets.home?.title && (
-          <div class="text-center mb-16 relative z-20" >
-            <h2 class="text-3xl md:text-4xl italic font-bold mb-4" style={`color: #5B3F2E`}>
-              {recipesAssets.home?.title}
-            </h2>
-            {recipesAssets.home?.subtitle && (
-              <h1 class="text-6xl md:text-9xl italic font-bold mb-4" style={`color: #5B3F2E`}>
-                {recipesAssets.home?.subtitle}
-              </h1>
-            )}
-          </div>
-        )}
-        <RecipesCarousel 
-          title={recipesAssets.home?.title || 'DESCUBRE NUEVOS SABORES CON NUESTRAS'}
-          textButton={recipesAssets.home?.view_more || 'Ver Todas'}
-        />
-      </div>
-    </section> -->
-
-
-    <!-- Sección Gallery -->
-
-
-
-
-    <!-- Sección Abaout -->
-<!-- <section id="about" class="bg-red w-full py-12" transition:animate="slide">
-  <div class="container mx-auto px-4">
-    <div class="text-center mb-8">
-      {aboutAssets.title && (
-        <div class="text-center mb-16 relative z-20" >
-          <h2 class="text-3xl md:text-4xl italic font-bold mb-4 text-white">
-            {aboutAssets.title}
-          </h2>
-          {aboutAssets.subtitle && (
-            <h1 class="text-6xl md:text-9xl italic font-bold mb-4 text-white">
-              {aboutAssets.subtitle}
-            </h1>
-          )}
-        </div>
-      )}
-    </div>
-    <div class="flex flex-col md:flex-row items-center justify-center gap-8">
-      <div>
-        <h4 class="md:text-4xl text-lg font-bold text-white font-title">LOREM IPSUM DOLOR</h4>
-        <p class="text-white font-sans  text-xl leading-relaxed w-100%">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante bibendum finibus. Nullam nec metus vel ante bibendum finibus.</p>
-      </div>
-      <div>
-        <LazyImage src="https://snack.yummiespromociones.com/cappy/gallery16.webp" class="py-4" alt="Cappy" />
-      </div>
-      <div>
-        <LazyImage src="https://snack.yummiespromociones.com/cappy/gallery15.webp" class="py-4" alt="Cappy" />
-        <h4 class="md:text-4xl text-lg font-bold text-white font-title">LOREM IPSUM DOLOR</h4>
-        <p class="text-white font-sans text-xl  leading-relaxed w-100%">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante bibendum finibus. Nullam nec metus vel ante bibendum finibus.</p>
-      </div>
-    </div>
-  </div>
-</section> -->
-
     <!-- Sección de Video a Pantalla Completa -->
     <div data-animate="bounce" data-animate-delay="300">
       <FullWidthVideoSection />
