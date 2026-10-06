@@ -5,7 +5,7 @@
   "email": "contacto@yummies.com",
   "phone": "1234-56789",
   "form": {
-    "title": "¿Tienes preguntas? ¡Estamos aquí para ti!",
+    "title": "",
     "contactReason": {
       "label": "Motivo de contacto",
       "placeholder": "Quiero ser cliente",
