@@ -5,7 +5,6 @@ import LazyImage from '../common/LazyImage.astro';
 export interface Props {
   games?: any[];
   title?: string;
-  titleImage?: string;
   subtitle?: string;
   howToPlay?: {
     title: string;
@@ -29,11 +28,10 @@ const {
   },
   ctaText = "Jugar ahora mismo",
   ctaUrl = "https://yummiespromociones.com/cappy-game/"
-  ,
-  titleImage = ''
 } = Astro.props;
 
 const currentLang = Astro.url.pathname.split('/')[1] === 'es' ? 'es' : 'en';
+const parts = title.split(/(cappy)/i);
 ---
 
 <section class="w-full bg-yellow py-12 md:py-16">
@@ -71,19 +69,19 @@ const currentLang = Astro.url.pathname.split('/')[1] === 'es' ? 'es' : 'en';
 
       <!-- Columna derecha: Textos e información -->
       <div class="space-y-6">
-        {titleImage ? (
-          <div class="title-logo">
-            <LazyImage
-              src={titleImage}
-              alt={title || 'Cappy'}
-              class="title-logo-image w-auto h-16 md:h-24 lg:h-24 object-contain"
-            />
-          </div>
-        ) : (
-          <h2 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-blue uppercase">
-            {title}
-          </h2>
-        )}
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-blue uppercase">
+          {parts.map((part) =>
+            part.toLowerCase() === 'cappy' ? (
+              <LazyImage
+                src="https://snack.yummiespromociones.com/SnacksyummiesAssets/logo_caapy_new.webp"
+                alt="Cappy"
+                class="inline-block align-middle h-14 md:h-20 lg:h-35 w-auto object-contain"
+              />
+            ) : (
+              part
+            )
+          )}
+        </h2>
         
         <div class="space-y-4">
           <h3 class="text-xl md:text-2xl font-bold text-blue">
