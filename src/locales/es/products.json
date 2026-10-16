@@ -78,7 +78,7 @@
     { 
       "id": "cappy-explosion-de-queso",
       "slug": "cappy-explosion-de-queso",
-      "name": "Cappy Explosion de Queso",
+      "name": "Cappy Explosión de Queso",
       "category": "gorditos",
       "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",
       "imageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_Gordito_Queso.webp",      
@@ -89,7 +89,7 @@
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
       "text_color": "#0036A0",
-      "description": "Extruido de maiz con sabor a queso",
+      "description": "Extruido de maíz con sabor a queso",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_amarillo.webp",
       "sizes": [
@@ -138,7 +138,7 @@
       "header_text_color": "#5B3F2E",
       "color_button": "#FDE820",
       "text_color": "#FFFFFF",
-      "description": "Extruidos de maiz con sabor a queso y mantequilla",
+      "description": "Extruidos de maíz con sabor a queso y mantequilla",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-blue.webp",
       "sizes": [
@@ -188,7 +188,7 @@
       "header_text_color": "#FFFFFF",
       "color_button": "#FE5A00",
       "text_color": "#FFFFFF",
-      "description": "Extruidos de maiz con sabor a queso, mantequilla y jalapeño",
+      "description": "Extruidos de maíz con sabor a queso, mantequilla y jalapeño",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
       "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_rojo.webp",
       "sizes": [
@@ -237,7 +237,7 @@
       "category": "tornitos",
       "color_button": "#004AB2",
       "text_color": "#FFFFFF",
-      "description": "Extruidos de maiz con sabor a queso y mantequilla",
+      "description": "Extruidos de maíz con sabor a queso y mantequilla",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
             "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-orange.webp",
       "sizes": [
@@ -335,7 +335,7 @@
       "category": "tornitos",
       "color_button": "#004AB2",
       "text_color": "#FFFFFF",
-      "description": "Extruidos de maiz con sabor a chiles toreados",
+      "description": "Extruidos de maíz con sabor a chiles toreados",
       "available": "https://snack.yummiespromociones.com/taqueritos/banderas.webp",
             "background_image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-p-green.webp",
       "sizes": [
