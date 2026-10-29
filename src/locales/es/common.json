@@ -89,7 +89,7 @@
           "backgroundMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_FONDO-BANNER_MOBILE.webp",
           "products": [
             {
-              "src": "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_QUESO.webp",
+              "src": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Pack1.webp",
               "alt": "Cappy Queso"
             },
             {
@@ -97,11 +97,11 @@
               "alt": "Cappy Queso Mantequilla"
             },
             {
-              "src": "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_PICOSITOS.webp",
+              "src": "https://snack.yummiespromociones.com/SnacksyummiesAssets/Pack3-2.webp",
               "alt": "Cappy Picitos"
             },
             {
-              "src": "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_CHILE-TOREADO.webp",
+              "src": "https://snack.yummiespromociones.com/SnacksyummiesAssets/pack2-2.webp",
               "alt": "Cappy Chile Toreado"
             }
           ]
@@ -147,7 +147,7 @@
     "imageAlt": "Cappy",
     "title": "¿Quién es Cappy?",
     "paragraphs": [
-      "Un león latino de mente inquieta, ingenioso, inesperado y recursivo... que claramente no necesita manual ni permiso para crear.",
+      "León de mente inquieta, ingenioso, inesperado y recursivo... que claramente no necesita manual ni permiso para crear.",
       "Cada vez que aparezca el aburrimiento, Cappy nos ayudará a salir de ese estado con diversión..."
     ]
   },
