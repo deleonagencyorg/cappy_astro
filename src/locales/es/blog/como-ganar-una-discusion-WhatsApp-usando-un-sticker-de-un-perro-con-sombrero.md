@@ -3,7 +3,7 @@ id: "como-ganar-una-discusion-WhatsApp-usando-un-sticker-de-un-perro-con-sombrer
 slug: "como-ganar-una-discusion-WhatsApp-usando-un-sticker-de-un-perro-con-sombrero"
 title: "¿Cómo ganar una discusión en WhatsApp usando un sticker de un perro con sombrero?"
 banner: "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_BANNERS-BLOG_DESKTOP-2.webp"
-preview: "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_BANNERS-BLOG_MOBILE-2.webp"
+preview: "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy_2.webp"
 published_date: "2026-08-31"
 category: "comunidad"
 tags: ["comunidad"]

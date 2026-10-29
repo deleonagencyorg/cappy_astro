@@ -83,9 +83,29 @@
       },
       {
         "id": "slide2",
-        "type": "image",
-        "desktop": "https://snack.yummiespromociones.com/SnacksyummiesAssets/nuevo-banner-2.webp",
-        "mobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/BANNER-WEB-YUMMIES-CAPPY-800X800-2.webp "
+        "type": "scene",
+        "scene": {
+          "background": "https://snack.yummiespromociones.com/SnacksyummiesAssets/1500X375.webp",
+          "backgroundMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_FONDO-BANNER_MOBILE.webp",
+          "products": [
+            {
+              "src": "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_QUESO.webp",
+              "alt": "Cappy Queso"
+            },
+            {
+              "src": "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_QUESO-MANTEQUILLA.webp",
+              "alt": "Cappy Queso Mantequilla"
+            },
+            {
+              "src": "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_PICOSITOS.webp",
+              "alt": "Cappy Picitos"
+            },
+            {
+              "src": "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_CHILE-TOREADO.webp",
+              "alt": "Cappy Chile Toreado"
+            }
+          ]
+        }
       }
     ]
   },

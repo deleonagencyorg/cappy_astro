@@ -56,6 +56,8 @@
           "description": "Volver a clases es más divertido con Cappy, podrás ganar uno de los 8 kits escolares",
           "buttonText": "Registrarme ahora",
           "buttonUrl": "https://backtoschool.yummiespromociones.com",
+          "bannerImage": "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY-B2S_BANNER-WEB_DESKTOP.png",
+          "bannerImageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY-B2S_BANNER-WEB_MOBILE.png",
           "backgroundImage": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
           "backgroundImageMobile": "https://snack.yummiespromociones.com/SnacksyummiesAssets/bgherocappy.webp",
           "image": "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy_leon_1.webp",

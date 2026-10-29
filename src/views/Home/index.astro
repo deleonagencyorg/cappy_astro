@@ -47,6 +47,18 @@ const slides = Array.isArray(commonAssets)
   ? commonAssets
     .filter(asset => asset && typeof asset === 'object')
     .map(asset => {
+      if (asset.type === 'scene' && asset.scene) {
+        return {
+          type: 'scene' as const,
+          scene: asset.scene
+        };
+      }
+      if (asset.type === 'html' && asset.scene) {
+        return {
+          type: 'scene' as const,
+          scene: asset.scene
+        };
+      }
       if (asset.type === 'html' && asset.html) {
         return {
           type: 'html' as const,
@@ -114,11 +126,12 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
           data-animate="bounce"
           data-animate-delay="0"
         >
-      <div class="w-[90%] mx-auto overflow-hidden shadow-xl rounded-2xl">
+      <div class="w-[90%] mx-auto overflow-hidden rounded-2xl">
         <VideoCarousel
           slides={slides}
           height="auto"
           mobileHeight="auto"
+          containerClass="home-banner"
           showOverlay={true}
           width="100%"
           borderRadius="0"
@@ -176,7 +189,6 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
     <div data-animate="bounce" data-animate-delay="220">
       <GamesSection 
         games={games}
-        titleImage={currentLang === 'es' ? 'https://snack.yummiespromociones.com/SnacksyummiesAssets/logo_caapy_new.webp' : 'https://snack.yummiespromociones.com/SnacksyummiesAssets/logo_caapy_new.webp'}
         howToPlay={{
           title: currentLang === 'es' ? '¿Cómo participar?' : 'How to participate?',
           steps: currentLang === 'es' 
