@@ -3,7 +3,7 @@ id: "pausas-activas-en-la-vida-real"
 slug: "pausas-activas-en-la-vida-real"
 title: "¿Cómo deberían ser las pausas activas en la vida real? "
 banner: "https://snack.yummiespromociones.com/SnacksyummiesAssets/cappy-v1.webp"
-preview: "https://snack.yummiespromociones.com/SnacksyummiesAssets/CAPPY_BANNERS-BLOG_PREVIEW.webp"
+preview: "https://snack.yummiespromociones.com/SnacksyummiesAssets/Cappy1.webp"
 published_date: "2026-05-29"
 category: "comunidad"
 tags: ["comunidad"]

@@ -22,6 +22,8 @@ interface PromoItem {
       description?: string;
       buttonText?: string;
       buttonUrl?: string;
+      bannerImage?: string;
+      bannerImageMobile?: string;
       backgroundImage?: string;
       backgroundImageMobile?: string;
       image?: string;
@@ -98,6 +100,7 @@ const hasFaqs = Array.isArray(faqs.items) && faqs.items.length > 0;
 
 // Modify hero, prizes, and terms to hide buttons if expired
 const modifiedHero = isExpired ? { ...hero, buttonText: undefined, buttonUrl: undefined } : hero;
+const bannerHref = !isExpired ? (hero.buttonUrl || promo.url?.[0]) : undefined;
 const modifiedPrizes = isExpired ? { ...prizes, buttonText: undefined, buttonUrl: undefined } : prizes;
 const modifiedTerms = isExpired ? { ...terms, buttonText: undefined, url: undefined } : terms;
 
@@ -145,19 +148,52 @@ const carouselTitle = currentLang === 'es' ? 'Descubre nuestros productos' : 'Di
 
 <div class="bg-primary -mt-px -mb-px overflow-hidden">
   <div class="container mx-auto px-4 pt-4 pb-16">
-    <div class="mt-6 overflow-hidden shadow-xl rounded-[24px]" style="min-height: clamp(320px, 52vw, 560px);" data-animate="bounce" data-animate-delay="0" transition:persist="">
-      <HeroBanner
-        backgroundImage={hero.backgroundImage || promo.imagen}
-        backgroundImageMobile={hero.backgroundImageMobile || hero.backgroundImage || promo.imagen}
-        image={hero.image || promo.imagen}
-        imageMobile={hero.imageMobile || hero.image || promo.imagen}
-        title={hero.title || promo.descripcion}
-        subtitle={hero.subtitle}
-        description={hero.description}
-        buttonText={!isExpired ? String(hero.buttonText ?? '') || undefined : undefined}
-        buttonUrl={!isExpired ? String(hero.buttonUrl ?? '') || undefined : undefined}
-        
-      />
+    <div class="mt-6 overflow-hidden shadow-xl rounded-[24px]" data-animate="bounce" data-animate-delay="0" transition:persist="">
+      {hero.bannerImage ? (
+        bannerHref ? (
+          <a href={bannerHref} class="block">
+            <picture class="block">
+              {hero.bannerImageMobile && (
+                <source media="(max-width: 767px)" srcset={hero.bannerImageMobile} />
+              )}
+              <img
+                src={hero.bannerImage}
+                alt={hero.title || promo.descripcion}
+                class="w-full h-auto block aspect-square md:aspect-video"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </picture>
+          </a>
+        ) : (
+          <picture class="block">
+            {hero.bannerImageMobile && (
+              <source media="(max-width: 767px)" srcset={hero.bannerImageMobile} />
+            )}
+            <img
+              src={hero.bannerImage}
+              alt={hero.title || promo.descripcion}
+              class="w-full h-auto block aspect-square md:aspect-video"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </picture>
+        )
+      ) : (
+        <HeroBanner
+          backgroundImage={hero.backgroundImage || promo.imagen}
+          backgroundImageMobile={hero.backgroundImageMobile || hero.backgroundImage || promo.imagen}
+          image={hero.image || promo.imagen}
+          imageMobile={hero.imageMobile || hero.image || promo.imagen}
+          title={hero.title || promo.descripcion}
+          subtitle={hero.subtitle}
+          description={hero.description}
+          buttonText={!isExpired ? String(hero.buttonText ?? '') || undefined : undefined}
+          buttonUrl={!isExpired ? String(hero.buttonUrl ?? '') || undefined : undefined}
+        />
+      )}
     </div>
 
     <div class="mt-10 md:mt-14 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
