@@ -34,10 +34,10 @@ const noContent = currentLang === 'es' ? 'No hay contenido disponible' : 'No con
           <!-- Slides will be built by script -->
         </div>
         <!-- Nav Buttons overlaid, centered vertically -->
-        <button data-prev class="absolute left-2 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center bg-white/90 hover:bg-white text-brown w-10 h-10 rounded-full shadow" aria-label="Prev">
+        <button data-prev hidden class="hidden absolute left-2 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center bg-white/90 hover:bg-white text-brown w-10 h-10 rounded-full shadow" aria-label="Prev">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
         </button>
-        <button data-next class="absolute right-2 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center bg-white/90 hover:bg-white text-brown w-10 h-10 rounded-full shadow" aria-label="Next">
+        <button data-next hidden class="hidden absolute right-2 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center bg-white/90 hover:bg-white text-brown w-10 h-10 rounded-full shadow" aria-label="Next">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
         </button>
       </div>
@@ -102,6 +102,7 @@ const noContent = currentLang === 'es' ? 'No hay contenido disponible' : 'No con
         track.style.transform = 'translateX(0)';
         index = 0;
         if (empty) { empty.classList.remove('hidden'); empty.classList.add('flex'); }
+        updateNav();
         return;
       }
       if (empty) { empty.classList.add('hidden'); empty.classList.remove('flex'); }
@@ -114,13 +115,13 @@ const noContent = currentLang === 'es' ? 'No hay contenido disponible' : 'No con
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-4">
             ${group.map((item) => `
               <div class=\"news-card\" data-category=\"${(item.category||'other').toLowerCase()}\">\
-                <a href=\"/${lang}/blog/${item.slug||item.id}\" class=\"block group relative overflow-hidden rounded-[1rem]\" style=\"aspect-ratio: 9/16;\">\
+                <a href=\"/${lang}/blog/${item.slug||item.id}\" class=\"block group relative overflow-hidden rounded-[1.5rem]\" style=\"aspect-ratio: 9/16;\">\
                   <img src=\"${item.image || '/images/blog/placeholder.jpg'}\" alt=\"${item.title}\" class=\"absolute inset-0 w-full h-full object-cover transform transition-transform duration-500 ease-out group-hover:scale-105\" loading=\"lazy\" />\
                   <div class=\"blog-card__overlay absolute inset-x-0 bottom-0 z-[1] pointer-events-none\"></div>\
                   <!-- Contenido inferior -->\
-                  <div class=\"absolute inset-x-0 bottom-0 p-3 z-10 flex flex-col gap-2\">\
+                  <div class=\"absolute inset-x-0 bottom-0 z-10 p-4 md:p-5 flex flex-col gap-2\">\
                     <h3 class=\"text-white font-bold text-sm md:text-base leading-tight\">${item.title}</h3>\
-                    <div><span class=\"inline-block border-2 border-white bg-transparent text-white py-1.5 px-4 rounded-md text-center text-xs md:text-sm font-medium\">${lang==='es' ? 'Leer más' : 'Read more'}</span></div>\
+                    <span class=\"block w-[90%] mx-auto mt-1 text-center border-2 border-white text-white py-2 px-4 rounded-full text-xs md:text-sm font-medium\">${lang==='es' ? 'Leer más' : 'Read more'}</span>\
                   </div>\
                 </a>\
               </div>
@@ -137,9 +138,20 @@ const noContent = currentLang === 'es' ? 'No hay contenido disponible' : 'No con
       update();
     }
 
+    function updateNav(){
+      const slidesCount = track ? track.children.length : 0;
+      const needed = slidesCount > 1;
+      [prev, next].forEach((btn) => {
+        if (!btn) return;
+        btn.classList.toggle('hidden', !needed);
+        btn.toggleAttribute('hidden', !needed);
+      });
+    }
+
     function update(){
       if (!track) return;
       const slidesCount = track.children.length;
+      updateNav();
       if (slidesCount === 0) return;
       track.style.transform = `translateX(-${index * (100 / slidesCount) }%)`;
     }
