@@ -82,6 +82,9 @@ const formatDate = (value: string) => {
   return new Intl.DateTimeFormat(locale, { year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
 };
 
+const promosUi = t('ui', { namespace: 'promos', locale: currentLang }) || {};
+const endedBadge = promosUi.labels?.endedBadge || (currentLang === 'es' ? 'Finalizada' : 'Ended');
+
 const validityLabel = currentLang === 'es' ? 'Vigencia' : 'Validity';
 const linksTitle = currentLang === 'es' ? 'Links' : 'Links';
 const backText = currentLang === 'es' ? 'Volver a Promos' : 'Back to promos';
@@ -148,7 +151,12 @@ const carouselTitle = currentLang === 'es' ? 'Descubre nuestros productos' : 'Di
 
 <div class="bg-primary -mt-px -mb-px overflow-hidden">
   <div class="container mx-auto px-4 pt-4 pb-16">
-    <div class="mt-6 overflow-hidden shadow-xl rounded-[24px]" data-animate="bounce" data-animate-delay="0" transition:persist="">
+    <div class="promo-banner relative mt-6 overflow-hidden shadow-xl rounded-[24px]" data-animate="bounce" data-animate-delay="0" transition:persist="">
+      {isExpired && (
+        <span class="promo-ended-badge absolute z-10 rounded-full bg-white text-blue font-bold leading-none">
+          {endedBadge}
+        </span>
+      )}
       {hero.bannerImage ? (
         bannerHref ? (
           <a href={bannerHref} class="block">
@@ -357,3 +365,16 @@ const carouselTitle = currentLang === 'es' ? 'Descubre nuestros productos' : 'Di
     </div>
   </div>
 </div>
+
+<style>
+  .promo-banner {
+    container-type: inline-size;
+  }
+
+  .promo-ended-badge {
+    top: 3.6cqw;
+    right: 4.5cqw;
+    padding: 0.95cqw 2.9cqw;
+    font-size: 2.9cqw;
+  }
+</style>

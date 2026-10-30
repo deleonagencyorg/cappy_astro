@@ -22,6 +22,7 @@ interface BlogPostFrontmatter {
   image?: string;
   published_date?: string;
   category?: string;
+  featured?: boolean;
 }
 
 const { currentLang } = Astro.props;
@@ -48,7 +49,8 @@ for (const path in mdModules) {
         preview: fm.preview ? String(fm.preview) : '',
         image: fm.preview ? String(fm.preview) : (fm.image ? String(fm.image) : '/images/blog/placeholder.jpg'),
         published_date: fm.published_date ? String(fm.published_date) : '',
-        category: fm.category ? String(fm.category).toLowerCase() : 'other'
+        category: fm.category ? String(fm.category).toLowerCase() : 'other',
+        featured: fm.featured === true
       });
     }
   }
@@ -83,7 +85,7 @@ const topNewsLabel = currentLang === 'es' ? 'NOTICIAS MÁS IMPORTANTES' : 'TOP N
 const featuredLabel = currentLang === 'es' ? 'DESTACADOS' : 'FEATURED';
 const firstFive = allPosts.slice(0, 5);
 const leftThree = firstFive.slice(0, 3);
-const rightTwo = firstFive.slice(3, 5);
+const featuredPosts = allPosts.filter((post) => post.featured);
 const restPosts = allPosts.slice(5);
 ---
 <MainLayout title={pageTitle} description={pageDescription} class="bg-primary">
@@ -104,11 +106,8 @@ const restPosts = allPosts.slice(5);
       </div>
 
       <!-- Filter Buttons -->
-      <div id="blogFilters" class="grid grid-cols-2 gap-3 mb-8 max-w-md mx-auto md:max-w-none md:grid-cols-4 md:gap-4 md:flex md:justify-center">
+      <div id="blogFilters" class="grid grid-cols-1 gap-3 mb-8 max-w-md mx-auto md:max-w-none md:grid-cols-4 md:gap-4 md:flex md:justify-center">
         <button type="button" class="filter-btn w-full text-center px-6 py-2 rounded-full bg-blue text-white font-bold hover:text-white hover:bg-orange-400 transition-colors" data-filter="all">{filterLabels.all}</button>
-        {categories.map((cat) => (
-          <button type="button" class="filter-btn w-full text-center px-6 py-2 rounded-full bg-blue text-white font-bold hover:text-white hover:bg-orange-400 transition-colors" data-filter={cat}>{getCategoryName(cat, currentLang).toUpperCase()}</button>
-        ))}
       </div>
 
       <!-- News Carousel listing 4 per slide -->
@@ -119,44 +118,16 @@ const restPosts = allPosts.slice(5);
       <!-- Two column: TOP NEWS + FEATURED -->
       {firstFive.length > 0 && (
       <div class="max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 items-start">
+        <div class:list={["grid grid-cols-1 gap-6 md:gap-10 items-start", featuredPosts.length > 0 && "md:grid-cols-3"]}>
 
           <!-- Left column: TOP NEWS -->
-          <div class="md:col-span-2">
+          <div class:list={[featuredPosts.length > 0 && "md:col-span-2"]}>
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-blue font-title text-lg md:text-xl font-bold uppercase tracking-wide">{topNewsLabel}</h3>
               <div class="flex-1 ml-4 border-b border-blue/40"></div>
             </div>
 
-            <!-- Mobile: 1 card -->
-            <div class="md:hidden">
-              {leftThree.slice(0,1).map((post) => (
-                <div class="news-card">
-                  <a
-                    href={`/${currentLang}/blog/${post.slug || post.id}`}
-                    class="block group relative overflow-hidden rounded-[1.5rem]"
-                    style="aspect-ratio: 3/4;"
-                  >
-                    <img
-                      src={post.image || '/images/blog/placeholder.jpg'}
-                      alt={post.title}
-                      class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div class="blog-card__overlay absolute inset-x-0 bottom-0 z-[1] pointer-events-none"></div>
-                    <div class="absolute inset-x-0 bottom-0 z-10 p-4 md:p-5 flex flex-col gap-2">
-                      <h4 class="text-white font-bold text-sm md:text-base leading-tight">{post.title}</h4>
-                      <span class="block w-[90%] mx-auto mt-1 text-center border-2 border-white text-white py-2 px-4 rounded-full text-xs md:text-sm font-medium">
-                        {currentLang === 'es' ? 'Leer más' : 'Read more'}
-                      </span>
-                    </div>
-                  </a>
-                </div>
-              ))}
-            </div>
-
-            <!-- Desktop: 3 cards grid -->
-            <div class="hidden md:grid md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
               {leftThree.map((post) => (
                 <div class="news-card">
                   <a
@@ -181,14 +152,14 @@ const restPosts = allPosts.slice(5);
                 </div>
               ))}
             </div>
-          </div>
 
-          <!-- Right column: FEATURED -->
-          <div class="md:col-span-1">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-blue font-title text-lg md:text-xl font-bold uppercase tracking-wide">{featuredLabel}</h3>
+            <div class="flex items-center justify-between mb-4 mt-8">
+              <h3 class="text-blue font-title text-lg md:text-xl font-bold uppercase tracking-wide">
+                {currentLang === 'es' ? 'SUSCRIBIRME' : 'SUBSCRIBE'}
+              </h3>
               <div class="flex-1 ml-4 border-b border-blue/40"></div>
             </div>
+
             <div>
               <p class="text-blue font-bold text-sm md:text-base leading-snug mb-4">
                 {currentLang === 'es'
@@ -197,39 +168,49 @@ const restPosts = allPosts.slice(5);
               </p>
               <a
                 href="https://www.snacksyummies.com/es/yummiesone"
-                class="inline-flex items-center justify-center border-2 border-blue bg-tertiary text-blue py-3 px-6 rounded-full text-center text-sm md:text-base font-bold hover:bg-blue hover:text-white transition-colors mb-6"
+                class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-blue text-white font-semibold text-sm md:text-base shadow-md hover:shadow-lg transition-all duration-200"
               >
                 {currentLang === 'es' ? 'QUIERO SUSCRIBIRME' : 'SUBSCRIBE'}
               </a>
-
-              <div class="grid grid-cols-1 gap-4">
-                {rightTwo.map((post) => (
-                  <a
-                    href={`/${currentLang}/blog/${post.slug || post.id}`}
-                    class="flex items-center gap-4 rounded-[1.25rem] bg-white/20 hover:bg-white/30 transition-colors p-3"
-                  >
-                    <img
-                      src={post.image || '/images/blog/placeholder.jpg'}
-                      alt={post.title}
-                      class="w-20 h-20 object-cover rounded-[1rem] flex-shrink-0"
-                      loading="lazy"
-                    />
-                    <div class="min-w-0">
-                      <p class="text-white font-bold text-sm md:text-base leading-snug line-clamp-3">{post.title}</p>
-                    </div>
-                  </a>
-                ))}
-              </div>
             </div>
           </div>
 
+          {featuredPosts.length > 0 && (
+          <div class="md:col-span-1">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-blue font-title text-lg md:text-xl font-bold uppercase tracking-wide">{featuredLabel}</h3>
+              <div class="flex-1 ml-4 border-b border-blue/40"></div>
+            </div>
+            <div class="grid grid-cols-1 gap-4">
+              {featuredPosts.map((post) => (
+                <a
+                  href={`/${currentLang}/blog/${post.slug || post.id}`}
+                  class="flex items-center gap-4 rounded-[1.25rem] bg-white/20 hover:bg-white/30 transition-colors p-3"
+                >
+                  <img
+                    src={post.image || '/images/blog/placeholder.jpg'}
+                    alt={post.title}
+                    class="w-20 h-20 object-cover rounded-[1rem] flex-shrink-0"
+                    loading="lazy"
+                  />
+                  <div class="min-w-0">
+                    <p class="text-white font-bold text-sm md:text-base leading-snug line-clamp-3">{post.title}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+          )}
+
         </div>
 
+        {restPosts.length > 0 && (
         <div class="flex justify-center mt-10">
           <a href={`/${currentLang}/blog`} class="border-2 border-blue bg-tertiary text-blue py-2 px-8 rounded-full text-center text-sm md:text-base font-medium hover:bg-blue hover:text-white transition-colors">
             {currentLang === 'es' ? 'Ver más' : 'View more'}
           </a>
         </div>
+        )}
       </div>
       )}
     </div>
