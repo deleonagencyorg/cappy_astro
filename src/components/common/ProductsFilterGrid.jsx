@@ -76,7 +76,7 @@ export default function ProductsFilterGrid({
                 />
               </div>
 
-              <div className="mt-4 text-blue font-title italic font-bold leading-tight text-lg sm:text-xl md:text-2xl">
+              <div className="mt-4 text-blue font-title italic font-bold leading-tight text-lg sm:text-xl md:text-2xl text-center">
                 {product.name}
               </div>
             </a>

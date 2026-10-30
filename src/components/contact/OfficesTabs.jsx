@@ -66,7 +66,6 @@ export default function OfficesTabs({ title = '', locations = {} }) {
                   <div className="space-y-2">
                     {active.phones.map((phone) => (
                       <div key={phone} className="flex items-start gap-3">
-                        <span className="mt-[2px]">+</span>
                         <a href={`tel:${phone}`} className="underline">
                           {phone}
                         </a>

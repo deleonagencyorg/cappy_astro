@@ -90,6 +90,9 @@ const brandChipImages = [
   (zibasBrand as any)?.imageChip4,
 ].filter(Boolean) as string[];
 
+const crunchImage = (product as any)?.crunch?.image || (detailPage as any)?.crunch?.image;
+const singleCrunch = product.id === 'cappy-explosion-de-queso';
+
 const chipImage =
   (product as any)?.chip_image ||
   (brandChipImages.length
@@ -229,6 +232,14 @@ if (allProductsArray.length > 1) {
           </p>
         </div>
         <div class="flex justify-center md:justify-end">
+          {singleCrunch ? (
+            <LazyImage
+              src={crunchImage}
+              alt={detailPage.crunch.title}
+              class="w-[220px] h-[200px] md:w-[247px] md:h-[230px] object-contain"
+              loading="lazy"
+            />
+          ) : (
           <div
             class="crunch-chip-cluster relative w-[280px] h-[190px] sm:w-[320px] sm:h-[210px] md:w-[380px] md:h-[240px]"
             data-animate="bounce"
@@ -236,7 +247,7 @@ if (allProductsArray.length > 1) {
           >
             <div class="crunch-chip crunch-chip--left" style="--chip-rotate: -24deg;">
               <LazyImage
-                src={(product as any)?.crunch?.image || detailPage.crunch.image}
+                src={crunchImage}
                 alt={detailPage.crunch.title}
                 class="w-full h-full object-contain"
                 loading="lazy"
@@ -244,7 +255,7 @@ if (allProductsArray.length > 1) {
             </div>
             <div class="crunch-chip crunch-chip--center" style="--chip-rotate: 6deg;">
               <LazyImage
-                src={(product as any)?.crunch?.image || detailPage.crunch.image}
+                src={crunchImage}
                 alt={detailPage.crunch.title}
                 class="w-full h-full object-contain"
                 loading="lazy"
@@ -252,13 +263,14 @@ if (allProductsArray.length > 1) {
             </div>
             <div class="crunch-chip crunch-chip--right" style="--chip-rotate: 20deg;">
               <LazyImage
-                src={(product as any)?.crunch?.image || detailPage.crunch.image}
+                src={crunchImage}
                 alt={detailPage.crunch.title}
                 class="w-full h-full object-contain"
                 loading="lazy"
               />
             </div>
           </div>
+          )}
         </div>
         </div>
       </div>
