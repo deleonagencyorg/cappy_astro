@@ -1,40 +1,47 @@
 ---
+import { resolveStaticPath } from '../../../utils/staticPaths';
 import BlogDetail from '../../../views/Blog/Detail/index.astro';
 import { setLocale, type Locale } from '../../../i18n/i18n';
 import MainLayout from '../../../layouts/MainLayout.astro';
+import { getCmsNews, mediaUrl } from '../../../services/api/content';
 
 export async function getStaticPaths() {
   const locales = ['en', 'es'];
   const paths: any[] = [];
-  // Use a static glob and then filter by locale from the file path
-  const modules = import.meta.glob('../../../locales/*/blog/*.md');
   for (const locale of locales) {
-    const allPosts: any[] = [];
-    for (const p in modules) {
-      const parts = p.split('/');
-      const fileLocale = parts[4]; // ../../../locales/<lang>/blog/file.md
-      if (fileLocale !== locale) continue;
-      const mod: any = await modules[p]();
-      const fm = mod.frontmatter || {};
-      if (fm && fm.slug && fm.id) {
-        const rawContent = typeof mod.compiledContent === 'function'
-          ? await mod.compiledContent()
-          : '';
-        const content = typeof rawContent === 'string' ? rawContent.trim() : '';
-        allPosts.push({ ...fm, content });
+    const news = (await getCmsNews(locale)) ?? [];
+    {
+      const posts = news.map((item) => ({
+        id: item.id,
+        slug: item.slug || item.id,
+        title: item.title,
+        summary: item.excerpt || item.subtitle || '',
+        preview: item.image || '',
+        image: mediaUrl(item.image),
+        content: item.content || '',
+        author: item.author || '',
+        published_date: item.publishedAt || item.createdAt || '',
+        tags: item.tags || [],
+        videos: [],
+        gallery: item.gallery || [],
+      }));
+      for (const blogPost of posts) {
+        paths.push({
+          params: { lang: locale, blogId: blogPost.slug },
+          props: { blogPost, currentLang: locale as Locale, allBlogPosts: posts },
+        });
       }
-    }
-    for (const blogPost of allPosts) {
-      paths.push({
-        params: { lang: locale, blogId: blogPost.slug || blogPost.id },
-        props: { blogPost, currentLang: locale as Locale, allBlogPosts: allPosts }
-      });
     }
   }
   return paths;
 }
 
-const { blogPost, currentLang, allBlogPosts } = Astro.props;
+const staticPath = await resolveStaticPath(getStaticPaths, Astro.params);
+if (!staticPath) {
+  return Astro.rewrite('/es/404');
+}
+
+const { blogPost, currentLang, allBlogPosts } = staticPath.props;
 const { lang, blogId } = Astro.params;
 
 // Set locale for this page

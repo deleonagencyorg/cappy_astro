@@ -1,38 +1,43 @@
 ---
+import { resolveStaticPath } from '../../../utils/staticPaths';
 // src/pages/[lang]/productos/[productId].astro
 import { t, setLocale, type Locale } from '../../../i18n/i18n';
 import MainLayout from '../../../layouts/MainLayout.astro';
 import ProductDetail from '../../../views/Products/Detail/index.astro';
+import { getCmsProducts, mediaUrl } from '../../../services/api/content';
 
-export function getStaticPaths() {
-  // Obtener todos los idiomas y productos disponibles
-  const locales = ['en'];
-  const paths = [];
-
-  for (const locale of locales) {
-    // Obtener productos para este idioma
-    const products = t('items', { namespace: 'products', locale: locale as Locale }) || [];
-    
-    // Para cada producto, crear una ruta
-    for (const product of products) {
-      paths.push({
-        params: { lang: locale, productId: product.id },
-        props: { product, currentLang: locale }
-      });
-    }
-  }
-
-  console.log(`Generadas ${paths.length} rutas de productos en español`);
-  return paths;
+export async function getStaticPaths() {
+  const locale: Locale = 'en';
+  const cmsProducts = await getCmsProducts(locale);
+  const products = (cmsProducts ?? []).map((item) => ({
+    ...item,
+    id: item.slug || item.id,
+    slug: item.slug || item.id,
+    image: mediaUrl(item.image),
+    background_color: item.backgroundColor,
+    header_text_color: item.headerTextColor,
+    color_button: item.colorButton,
+    text_color: item.textColor,
+    background_image: item.backgroundImage,
+  }));
+  return products.map((product) => ({
+    params: { lang: locale, productId: product.slug || product.id },
+    props: { product, allProducts: products, currentLang: locale },
+  }));
 }
 
-const { product, currentLang } = Astro.props;
-const { lang, productId } = Astro.params;
+const staticPath = await resolveStaticPath(getStaticPaths, Astro.params);
+if (!staticPath) {
+  return Astro.rewrite('/es/404');
+}
+
+const { product, allProducts, currentLang } = staticPath.props;
+const { lang } = Astro.params;
 
 // Establecer el idioma para las traducciones
 setLocale(lang as Locale);
 ---
 
 <MainLayout title={product.name}>
-  <ProductDetail currentLang={currentLang} productId={productId} />
+  <ProductDetail currentLang={currentLang} productId={product.slug || product.id} product={product} allProducts={allProducts} />
 </MainLayout>

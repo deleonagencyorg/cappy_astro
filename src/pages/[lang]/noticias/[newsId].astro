@@ -1,24 +1,37 @@
 ---
+import { resolveStaticPath } from '../../../utils/staticPaths';
 // src/pages/[lang]/noticias/[newsId].astro
 import { t, setLocale, type Locale } from '../../../i18n/i18n';
 import MainLayout from '../../../layouts/MainLayout.astro';
 import BlogDetail from '../../../views/Blog/Detail/index.astro';
+import { getCmsNews, mediaUrl } from '../../../services/api/content';
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
   // Obtener todos los idiomas y entradas de blog disponibles
   const locales = ['es'];
   const paths = [];
 
   for (const locale of locales) {
     // Obtener entradas de blog para este idioma
-    const blogPosts = t('items', { namespace: 'news', locale: locale as Locale }) || [];
-    console.log(`Encontradas ${blogPosts.length} entradas de blog para idioma ${locale}`);
+    const cmsNews = await getCmsNews(locale);
+    const blogPosts = (cmsNews ?? []).map((item) => ({
+      id: item.id,
+      slug: item.slug || item.id,
+      title: item.title,
+      summary: item.excerpt || item.subtitle || '',
+      image: mediaUrl(item.image),
+      content: item.content || '',
+      author: item.author || '',
+      published_date: item.publishedAt || item.createdAt || '',
+      tags: item.tags || [],
+      gallery: item.gallery || [],
+    }));
     
     // Para cada entrada de blog, crear una ruta
     for (const blogPost of blogPosts) {
       paths.push({
-        params: { lang: locale, newsId: blogPost.id },
-        props: { blogPost, currentLang: locale as Locale }
+        params: { lang: locale, newsId: blogPost.slug || blogPost.id },
+        props: { blogPost, currentLang: locale as Locale, allBlogPosts: blogPosts }
       });
     }
   }
@@ -27,15 +40,19 @@ export function getStaticPaths() {
   return paths;
 }
 
-const { blogPost, currentLang } = Astro.props;
-const { lang, newsId } = Astro.params;
+const staticPath = await resolveStaticPath(getStaticPaths, Astro.params);
+if (!staticPath) {
+  return Astro.rewrite('/es/404');
+}
+
+const { blogPost, currentLang, allBlogPosts } = staticPath.props;
+const { lang } = Astro.params;
 
 // Establecer el idioma para las traducciones
 setLocale(currentLang);
 
-console.log(`Renderizando blog: ${newsId} en idioma: ${lang}`);
 ---
 
 <MainLayout title={blogPost.title}>
-  <BlogDetail blogPost={blogPost} currentLang={currentLang} />
+  <BlogDetail blogPost={blogPost} currentLang={currentLang} allBlogPosts={allBlogPosts} />
 </MainLayout>

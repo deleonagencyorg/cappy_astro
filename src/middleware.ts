@@ -1,6 +1,8 @@
 // src/middleware.ts
 import { defineMiddleware } from 'astro:middleware';
+import { requestLocale } from './i18n/requestContext';
 import { routesConfig, findRouteBySlug } from './config/routes';
+import { getCmsSiteTexts } from './services/api/content';
 
 // Mapeo de rutas que necesitan redirección
 const routeMappings = {
@@ -13,7 +15,7 @@ const routeMappings = {
 // Secciones que existen como rutas file-based (src/pages/...) pero no viven en routesConfig
 const staticSections = new Set(['promos']);
 
-export const onRequest = defineMiddleware(async ({ request, redirect }, next) => {
+const handleRequest = defineMiddleware(async ({ request, redirect }, next) => {
   const url = new URL(request.url);
   const pathSegments = url.pathname.split('/').filter(Boolean);
   
@@ -35,17 +37,12 @@ export const onRequest = defineMiddleware(async ({ request, redirect }, next) =>
     return next();
   }
 
-  // Caso especial para yummiesone: redirigir a home en inglés
-  if (section === 'yummiesone' && lang === 'en') {
-    return redirect('/en');
-  }
-
   // Verificar si la ruta existe en la configuración
   const routeExists = findRouteBySlug(lang, section) || staticSections.has(section);
   
   // Si la ruta no existe, redirigir al home
   if (!routeExists) {
-    return redirect(`/${lang}/404`);
+    return next();
   }
 
   // Verificar si hay una discrepancia entre el idioma y la sección
@@ -79,4 +76,17 @@ export const onRequest = defineMiddleware(async ({ request, redirect }, next) =>
   }
 
   return next();
+});
+
+export const onRequest = defineMiddleware((context, next) => {
+  const [firstSegment] = context.url.pathname.split('/').filter(Boolean);
+  const locale = firstSegment === 'en' ? 'en' : 'es';
+  const requestContext = { locale };
+  return requestLocale.run(requestContext, () => handleRequest(context, async () => {
+    if (firstSegment === 'api' || firstSegment?.includes('.')) return next();
+    const texts = await getCmsSiteTexts(locale);
+    if (!texts) throw new Error(`Unable to load CMS common texts for site locale '${locale}'`);
+    requestContext.commonTexts = texts;
+    return next();
+  }));
 });

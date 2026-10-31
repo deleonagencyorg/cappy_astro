@@ -1,4 +1,5 @@
 ---
+import { resolveStaticPath } from '../../utils/staticPaths';
 import MainLayout from '../../layouts/MainLayout.astro';
 import LazyImage from '../../components/common/LazyImage.astro';
 import { setLocale, t, type Locale } from '../../i18n/i18n';
@@ -11,7 +12,13 @@ export async function getStaticPaths() {
   ];
 }
 
+const staticPath = await resolveStaticPath(getStaticPaths, Astro.params);
+if (!staticPath) {
+  return Astro.rewrite('/es/404');
+}
+
 const { lang } = Astro.params as { lang: Locale };
+Astro.response.status = 404;
 setLocale(lang);
 
 const isEs = lang === 'es';

@@ -7,6 +7,7 @@ import MessageCarousel from '../MessageCarousel/index.astro';
 import { t, type Locale } from '../../../i18n/i18n';
 import { logos } from '../../../config/assets';
 import { getHeaderColors } from '../../../config/headerColors';
+import { getCmsModal } from '../../../services/api/content';
 import './styles.css';
 
 export interface Props {
@@ -25,6 +26,7 @@ const logosData = logos;
 // Obtener configuración de colores basada en la ruta actual
 const { pathname } = Astro.url;
 const headerColorConfig = getHeaderColors(pathname);
+const cappyModal = await getCmsModal('quien-es-cappy', currentLang);
 
 // Si se pasan colores de header específicos (por ejemplo, desde un producto), 
 // crear una configuración personalizada
@@ -111,11 +113,11 @@ const mobileHeaderColorConfig = (customStyles.backgroundColor || '').toLowerCase
           class="cappy-modal-trigger p-0 bg-transparent border-0 cursor-pointer hover:opacity-80 transition-opacity"
           aria-haspopup="dialog"
           aria-controls="cappyInfoModal"
-          aria-label={t('cappy_modal.openLabel', { namespace: 'common', locale: currentLang }) || 'Open Cappy info'}
+          aria-label={cappyModal?.openLabel}
         >
           <LocalizedImage
-            src="https://snack.yummiespromociones.com/SnacksyummiesAssets/Gemini_Generated-leon.webp"
-            alt={t('cappy_modal.imageAlt', { namespace: 'common', locale: currentLang }) || 'Cappy'}
+            src={cappyModal?.image}
+            alt={cappyModal?.imageAlt}
             class="h-10 w-auto"
             loading="eager"
             width="40"

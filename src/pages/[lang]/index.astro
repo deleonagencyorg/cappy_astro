@@ -1,9 +1,11 @@
 ---
+import { resolveStaticPath } from '../../utils/staticPaths';
 import { routesConfig, getRouteById } from '../../config/routes';
-import { setLocale, t, type Locale } from '../../i18n/i18n';
+import { setLocale, type Locale } from '../../i18n/i18n';
 import MainLayout from '../../layouts/MainLayout.astro';
 // Importa el componente de contenido directamente
 import HomePageContent from '../../views/Home/index.astro';
+import { getCmsHomePage } from '../../services/api/content';
 
 export async function getStaticPaths() {
   const homeRoute = getRouteById('home');
@@ -12,6 +14,11 @@ export async function getStaticPaths() {
   return Object.keys(homeRoute.slugs).map(lang => ({
     params: { lang },
   }));
+}
+
+const staticPath = await resolveStaticPath(getStaticPaths, Astro.params);
+if (!staticPath) {
+  return Astro.rewrite('/es/404');
 }
 
 const { lang } = Astro.params as { lang: Locale };
@@ -24,8 +31,9 @@ if (!homeRoute) {
   throw new Error("Home route configuration is missing.");
 }
 
-const pageTitle = homeRoute.metaTitleKey ? t(homeRoute.metaTitleKey) : 'Home';
-const pageDescription = homeRoute.metaDescriptionKey ? t(homeRoute.metaDescriptionKey) : '';
+const homePage = await getCmsHomePage(lang);
+const pageTitle = homePage?.metaTitle || homePage?.title || '';
+const pageDescription = homePage?.metaDescription || homePage?.excerpt || '';
 
 const ContentComponent = HomePageContent; // Asignación directa para la página de inicio
 
@@ -109,6 +117,5 @@ const seoKeywords = lang === 'es'
       ]
     })}></script>
   </Fragment>
-  <ContentComponent />
+  <ContentComponent homePage={homePage} />
 </MainLayout>
-

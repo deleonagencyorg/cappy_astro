@@ -41,17 +41,15 @@ interface Product {
   weight?: string[];
 }
 
-const { currentLang, productId } = Astro.props;
+const { currentLang, productId, product: suppliedProduct, allProducts: suppliedProducts } = Astro.props;
 
 // Obtener datos desde traducciones
 const productsAssets = t('home', { namespace: 'products', locale: currentLang }) || {};
 
-const products = t('items', { namespace: 'products', locale: currentLang as Locale }) || [];
 const stockists = t('stockist', { namespace: 'products', locale: currentLang as Locale }) || [];
-const product = products.find((item: Product) => item.id === productId);
+const product = suppliedProduct;
 const detailPage = t('detailPage', { namespace: 'products', locale: currentLang as Locale }) || {};
 const brandsAssets = t('', { namespace: 'brands', locale: currentLang }) || {};
-const newsAssets =  t('', { namespace: 'news', locale: currentLang }) || {};
 const brandsList = brandsAssets.brands || [];
 const zibasBrand = brandsList.find((brand: any) => brand.id === 'cappy');
 const zibasProducts = (zibasBrand?.products || []).filter((product: any) => product.id !== productId);
@@ -62,7 +60,7 @@ function hashStringToInt(value: string) {
 
 // Si el producto no existe, lanzar error
 if (!product || Object.keys(product).length === 0) {
-  throw new Error(t('errors.product_not_found', { locale: currentLang }));
+  throw new Error(`Product '${productId}' was not found for locale '${currentLang}'`);
 }
 
 // Asegurar que todas las propiedades necesarias existan
@@ -99,7 +97,7 @@ const chipImage =
   safeProduct.image;
 
 // Obtener todos los productos como un array
-const productsData = t('items', { locale: currentLang, namespace: 'products' }) || [];
+const productsData = suppliedProducts ?? [];
 const allProductsArray = Array.isArray(productsData) ? productsData : [];
 
 // Mostrar todos los productos excepto el actual
@@ -266,7 +264,7 @@ if (allProductsArray.length > 1) {
   </section>
 )}
 {/* Carousel de Productos */}
-{products.length > 0 && (
+{productsData.length > 0 && (
   <section class="w-full bg-yellow pb-10 md:pb-14">
     <div class="container mx-auto px-4">
       <div class="flex mb-6 md:mb-8">

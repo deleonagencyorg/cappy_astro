@@ -1,7 +1,8 @@
 ---
 //src/views/AboutUs/index.astro
 import Layout from '../../layouts/MainLayout.astro';
-import { t } from '../../i18n/i18n';
+import { getRouteById } from '../../config/routes';
+import { getCmsPageBySlug } from '../../services/api/content';
 import type { Locale } from '../../i18n/i18n';
 import type { HeaderColorConfig } from '../../config/headerColors';
 import Breadcrumb from '../../components/common/Breadcrumb/Breadcrumb.astro';
@@ -19,9 +20,10 @@ export interface Props {
 
 const { currentLang, headerColorConfig } = Astro.props;
 
-// Get translations from common.json
-const title = t('about_us.title', { namespace: 'common', locale: currentLang });
-const metaDescription = t('meta.about_us.description', { namespace: 'common', locale: currentLang });
+const aboutSlug = getRouteById('about_us')?.slugs[currentLang] ?? '';
+const aboutPage = aboutSlug ? await getCmsPageBySlug(aboutSlug, currentLang) : null;
+const title = aboutPage?.metaTitle || aboutPage?.title || '';
+const metaDescription = aboutPage?.metaDescription || aboutPage?.excerpt || '';
 
 // Importar contenido específico de aboutus.json
 const aboutUsContent = await import(`../../locales/${currentLang}/aboutus.json`);

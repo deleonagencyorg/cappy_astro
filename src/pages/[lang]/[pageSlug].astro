@@ -1,9 +1,11 @@
 ---
+import { resolveStaticPath } from '../../utils/staticPaths';
 // src/pages/[lang]/[pageSlug].astro
 import { routesConfig, findRouteBySlug } from '../../config/routes';
 import { setLocale, t, type Locale } from '../../i18n/i18n';
 import MainLayout from '../../layouts/MainLayout.astro';
 import RecipeDetail from '../../views/Recipes/Detail/index.astro';
+import { getCmsPageBySlug } from '../../services/api/content';
 
 // Define the expected structure of the dynamically imported modules
 interface PageModule {
@@ -30,8 +32,14 @@ export async function getStaticPaths() {
   return paths;
 }
 
+const staticPath = await resolveStaticPath(getStaticPaths, Astro.params);
+if (!staticPath) {
+  return Astro.rewrite('/es/404');
+}
+
 const { lang, pageSlug } = Astro.params as { lang: Locale; pageSlug: string };
-const { routeId } = Astro.props as { routeId: string };
+const { routeId } = staticPath.props as { routeId: string };
+const cmsPage = await getCmsPageBySlug(pageSlug, lang);
 
 setLocale(lang);
 
@@ -145,8 +153,8 @@ if (!isRecipeDetail) {
     return Astro.redirect(`/${lang}/404`);
   }
 console.log('Buscando:', targetModulePath);
-  pageTitle = currentRoute.metaTitleKey ? t(currentRoute.metaTitleKey) : 'Page';
-  pageDescription = currentRoute.metaDescriptionKey ? t(currentRoute.metaDescriptionKey) : '';
+  pageTitle = cmsPage?.metaTitle || cmsPage?.title || pageSlug.charAt(0).toUpperCase() + pageSlug.slice(1).replace(/-/g, ' ');
+  pageDescription = cmsPage?.metaDescription || cmsPage?.excerpt || '';
 
   // Canonical URL (normalized with trailing slash)
   canonicalUrl = `${baseDomain}/${lang}/${pageSlug}/`;

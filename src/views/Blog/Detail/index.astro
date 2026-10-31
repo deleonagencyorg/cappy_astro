@@ -23,6 +23,7 @@ interface Props {
     content: string;
     image: string;
     videos?: string[];
+    gallery?: string[];
     author: string;
     published_date: string;
   };
@@ -91,6 +92,17 @@ for (const v of videos) {
     youtubeId: ytId,
     thumb
   });
+}
+for (const image of blogPost.gallery || []) {
+  if (image && image !== blogPost.image) {
+    mediaItems.push({
+      type: 'image',
+      src: image,
+      url: undefined,
+      youtubeId: null,
+      thumb: image,
+    });
+  }
 }
 
 const blogDetailClasses = {

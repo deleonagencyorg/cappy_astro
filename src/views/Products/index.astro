@@ -4,13 +4,30 @@ import { t } from '../../i18n/i18n';
 import type { Locale } from '../../i18n/i18n';
 import VideoCarousel from '../../components/common/VideoCarousel/index.astro';
 import ProductsFilterGrid from '../../components/common/ProductsFilterGrid.jsx';
+import { getCmsProducts, getCmsProductCategories, getCmsPageBySlug, cmsBannerSlides, mediaUrl } from '../../services/api/content';
 
 const langFromUrl = (Astro.url.pathname.split('/')[1] || 'es') as Locale;
 const currentLang: Locale = langFromUrl === 'en' ? 'en' : 'es';
 
-const products = t('items', { namespace: 'products', locale: currentLang });
-const categories = t('categories', { namespace: 'products', locale: currentLang }) || {};
-const slides = t('carousel', { namespace: 'products', locale: currentLang }) || [];
+const [cmsProducts, cmsCategories, productsPage] = await Promise.all([
+  getCmsProducts(currentLang),
+  getCmsProductCategories(currentLang),
+  getCmsPageBySlug(currentLang === 'es' ? 'productos' : 'products', currentLang),
+]);
+const products = (cmsProducts ?? []).map((product) => ({
+  ...product,
+  id: product.slug || product.id,
+  slug: product.slug || product.id,
+  image: mediaUrl(product.image),
+  background_color: product.backgroundColor,
+  header_text_color: product.headerTextColor,
+  color_button: product.colorButton,
+  text_color: product.textColor,
+  background_image: product.backgroundImage,
+}));
+const allLabel = (t('categories', { namespace: 'products', locale: currentLang }) || {}).all;
+const categories = { all: allLabel, ...(cmsCategories ?? {}) };
+const slides = cmsBannerSlides(productsPage);
 ---
 
   <main class="bg-primary w-full flex flex-col items-center justify-center mt-0">

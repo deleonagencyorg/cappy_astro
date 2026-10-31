@@ -1,4 +1,5 @@
 ---
+import { resolveStaticPath } from '../../../utils/staticPaths';
 import MainLayout from '../../../layouts/MainLayout.astro';
 import PromoDetailView from '../../../views/Promos/Detail/index.astro';
 import { setLocale, type Locale, t } from '../../../i18n/i18n';
@@ -21,7 +22,12 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { currentLang } = Astro.props as { currentLang: Locale };
+const staticPath = await resolveStaticPath(getStaticPaths, Astro.params);
+if (!staticPath) {
+  return Astro.rewrite('/es/404');
+}
+
+const { currentLang } = staticPath.props as { currentLang: Locale };
 const { lang, slug } = Astro.params as { lang: Locale; slug: string };
 
 setLocale(lang as Locale);

@@ -1,13 +1,14 @@
 ---
 import { t, type Locale } from '../../i18n/i18n';
 import { logos } from '../../config/assets';
+import { getCmsModal } from '../../services/api/content';
 
 export interface Props {
   currentLang: Locale;
 }
 
 const { currentLang } = Astro.props;
-const cappyModal = t('cappy_modal', { namespace: 'common', locale: currentLang }) as any;
+const cappyModal = await getCmsModal('quien-es-cappy', currentLang);
 ---
 
 <!-- Modal con z-index máximo, completamente fuera del flujo del header -->
@@ -51,7 +52,7 @@ const cappyModal = t('cappy_modal', { namespace: 'common', locale: currentLang }
         <!-- Columna izquierda: Imagen -->
         <div class="flex justify-center p-6 md:p-10">
           <img
-            src="https://snack.yummiespromociones.com/SnacksyummiesAssets/Gemini_Generated-leon.webp"
+            src={cappyModal?.image}
             alt={cappyModal?.imageAlt || logos.principal.alt}
             class="w-40 md:w-72 h-auto"
             loading="eager"

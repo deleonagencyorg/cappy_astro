@@ -13,6 +13,7 @@ import contactEn from '../../locales/en/contact.json';
 
 // Importar estilos separados
 import './styles.css';
+import { getCmsContact } from '../../services/api/content';
 
 interface Props {
   title: string;
@@ -28,7 +29,38 @@ const langFromUrl = (Astro.url.pathname.split('/')[1] || 'es') as Locale;
 const locale: Locale = currentLang || (langFromUrl === 'en' ? 'en' : 'es');
 
 // Get contact data from locale
-const contact = locale === 'es' ? contactEs : contactEn;
+const localContact = locale === 'es' ? contactEs : contactEn;
+const cmsContact = await getCmsContact(locale);
+if (!cmsContact) {
+  throw new Error(`[CMS] Falta el contenido de Contacto para el idioma ${locale}`);
+}
+const contact = {
+  title: cmsContact.title || '',
+  subtitle: cmsContact.subtitle || '',
+  description: cmsContact.description || '',
+  email: cmsContact.email || '',
+  phone: cmsContact.phone || '',
+  form: {
+    title: cmsContact.form?.title || '',
+    submit: cmsContact.form?.submit || '',
+    contactReason: { label: '', placeholder: '', ...cmsContact.form?.contactReason },
+    fullName: { label: '', placeholder: '', ...cmsContact.form?.fullName },
+    email: { label: '', placeholder: '', ...cmsContact.form?.email },
+    phone: { label: '', placeholder: '', ...cmsContact.form?.phone },
+    message: { label: '', placeholder: '', ...cmsContact.form?.message },
+  },
+  offices: {
+    title: cmsContact.offices?.title || '',
+    locations: Object.fromEntries((cmsContact.offices?.locations ?? []).map((office) => [
+      office.countryCode || office.id || '',
+      {
+        ...office,
+        tab: office.tab || office.countryCode,
+        image: localContact.offices.locations[office.countryCode || '']?.image,
+      },
+    ])),
+  },
+};
 
 // Meta information
 const title = contact.title;
@@ -54,7 +86,7 @@ const metaDescription = contact.description;
           </div>
 
           <div class="lg:col-span-6">
-            <FormContact currentLang={locale} />
+            <FormContact currentLang={locale} contactData={contact} />
           </div>
         </div>
       </div>

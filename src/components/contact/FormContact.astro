@@ -4,21 +4,20 @@ import type { Locale } from '../../i18n/i18n';
 import SuccessModal from '../common/SuccessModal.astro';
 
 // Import locale files statically
-import contactEs from '../../locales/es/contact.json';
-import contactEn from '../../locales/en/contact.json';
 
 interface Props {
   currentLang?: Locale;
+  contactData?: any;
 }
 
-const { currentLang } = Astro.props;
+const { currentLang, contactData } = Astro.props;
 
 // Get current locale if not provided
 const langFromUrl = (Astro.url.pathname.split('/')[1] || 'es') as Locale;
 const locale: Locale = currentLang || (langFromUrl === 'en' ? 'en' : 'es');
 
 // Get contact data from locale
-const contact = locale === 'es' ? contactEs : contactEn;
+const contact = contactData;
 
 // Get localized labels for fields not in contact.json
 const countryLabel = locale === 'es' ? 'País' : 'Country';

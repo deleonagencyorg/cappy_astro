@@ -17,94 +17,45 @@ import BlogCard from '../../components/blog/BlogCard.astro';
 import './styles.css';
 
 // i18n and Data Imports
-import { t, getLocale } from '../../i18n/i18n';
+import { t, tOptional, getLocale } from '../../i18n/i18n';
 import { InstagramEmbed } from 'react-social-media-embed';
 import { tr } from 'framer-motion/m';
+import { getCmsProducts, cmsBannerSlides, mediaUrl } from '../../services/api/content';
 
 
 
 // Props
 export interface Props {
   loading?: boolean;
+  homePage?: import('../../services/api/content').CmsPage | null;
 }
-const { loading = false } = Astro.props;
+const { loading = false, homePage = null } = Astro.props;
 
 // Language and Data Setup
 const currentLang = getLocale();
-const homeAssets = t('home', { namespace: 'common', locale: currentLang }) || {};
 const recipesAssets = t('', { namespace: 'recipes', locale: currentLang }) || {};
 const galleryAssets = t('', { namespace: 'gallery', locale: currentLang }) || {};
 const aboutAssets = t('', { namespace: 'aboutus', locale: currentLang }) || {};
 const brandsAssets = t('', { namespace: 'brands', locale: currentLang }) || {};
-const newsAssets =  t('', { namespace: 'news', locale: currentLang }) || {};
-const products = t('items', { namespace: 'products', locale: currentLang }) || [];
 const brandsList = brandsAssets.brands || [];
 const cappyBrand = brandsList.find((brand: any) => brand.id === 'cappy');
-const cappyProducts = cappyBrand?.products || [];
-const games = t('games', { namespace: 'common', locale: currentLang }) || [];
+const cmsProducts = await getCmsProducts(currentLang);
+const products = (cmsProducts ?? []).map((product) => ({
+  ...product,
+  id: product.slug || product.id,
+  slug: product.slug || product.id,
+  image: mediaUrl(product.image),
+  background_color: product.backgroundColor,
+  header_text_color: product.headerTextColor,
+  color_button: product.colorButton,
+  text_color: product.textColor,
+  background_image: product.backgroundImage,
+}));
+const cappyProducts = products;
+const games = tOptional<any[]>('games', [], { locale: currentLang });
+const hasBackToSchool = Object.keys(tOptional<Record<string, unknown>>('home.back_to_school', {}, { locale: currentLang })).length > 0;
 
-const commonAssets = t('assets.slider', { namespace: 'common', locale: currentLang }) || [];
-const slides = Array.isArray(commonAssets)
-  ? commonAssets
-    .filter(asset => asset && typeof asset === 'object')
-    .map(asset => {
-      if (asset.type === 'html' && asset.html) {
-        return {
-          type: 'html' as const,
-          html: asset.html
-        };
-      } else if (asset.type === 'video') {
-        return {
-          type: 'video' as const,
-          desktop: asset.desktop,
-          mobile: asset.mobile,
-          alt: asset.alt || "Cappy",
-          title: asset.title || '',
-          subtitle: asset.description || '',
-          link: asset.url || asset.link || ''
-        };
-      } else {
-        return {
-          type: 'image' as const,
-          desktop: asset.desktop,
-          mobile: asset.mobile,
-          alt: asset.alt || "Cappy",
-          title: asset.title || '',
-          subtitle: asset.description || '',
-          link: asset.url || asset.link || ''
-        };
-      }
-    })
-  : [];
-
-// Load latest blog posts by current language from markdown
-const blogModules = import.meta.glob('../../locales/*/blog/*.md');
-let latestBlogPosts: Array<{ id: string; slug: string; title: string; image?: string; published_date?: string; }>= [];
-for (const path in blogModules) {
-  const lang = path.split('/')[3];
-  if (lang === currentLang) {
-    const mod: any = await blogModules[path]();
-    const fm = mod.frontmatter || {};
-    if (fm && fm.id && fm.slug && fm.title) {
-      latestBlogPosts.push({
-        id: String(fm.id),
-        slug: String(fm.slug),
-        title: String(fm.title),
-        image: fm.image ? String(fm.image) : '/images/blog/placeholder.jpg',
-        published_date: fm.published_date ? String(fm.published_date) : ''
-      });
-    }
-  }
-}
-function toDate(s?: string){
-  if(!s) return 0; 
-  if(/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)){ const [d,m,y]=s.split('/').map(Number); return new Date(y,(m||1)-1,d||1).getTime(); }
-  const t=Date.parse(s); return isNaN(t)?0:t;
-}
-latestBlogPosts = latestBlogPosts.sort((a,b)=> toDate(b.published_date)-toDate(a.published_date)).slice(0,5);
-const noNewsText = currentLang==='es' ? 'No se encuentra novedades aún para mostrar' : 'There are no updates to show yet';
-const topNewsLabel = currentLang==='es' ? 'NOTICIAS MÁS IMPORTANTES' : 'TOP NEWS';
-const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
+const homeSlides = cmsBannerSlides(homePage);
 
 ---
 
@@ -117,7 +68,7 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
         >
       <div class="w-[90%] mx-auto overflow-hidden shadow-xl rounded-2xl">
         <VideoCarousel
-          slides={slides}
+          slides={homeSlides}
           height="auto"
           mobileHeight="auto"
           showOverlay={true}
@@ -129,7 +80,7 @@ const featuredLabel = currentLang==='es' ? 'DESTACADOS' : 'FEATURED';
     
     <!-- Sección Back To School -->
     <!--div data-animate="bounce" data-animate-delay="80">
-      <BackToSchoolSection />
+      {hasBackToSchool && <BackToSchoolSection />}
     </div>
     
     <!-- Sección de Productos Cappy -->

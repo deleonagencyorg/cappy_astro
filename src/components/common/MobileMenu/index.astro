@@ -3,6 +3,7 @@ import LanguageSwitcher from '../../i18n/LanguageSwitcher.astro';
 import LocalizedImage from '../LazyImage.astro';
 import { t, type Locale } from '../../../i18n/i18n';
 import { logos } from '../../../config/assets';
+import { getCmsMenuItems, getCmsNavigation, getCmsSocialForUi } from '../../../services/api/content';
 import type { HeaderColorConfig } from '../../../config/headerColors';
 
 export interface Props {
@@ -13,13 +14,17 @@ export interface Props {
 const { currentLang, headerColorConfig } = Astro.props;
 
 // Obtener los datos de menú desde las traducciones
-const menuItems = t('menu_items', { namespace: 'common', locale: currentLang }) as any[];
-const socialMediaObj = t('social_media', { namespace: 'common', locale: currentLang });
-const socialMedia = socialMediaObj ? Object.values(socialMediaObj) : [];
+const [cmsMenuItems, cmsSocialMedia] = await Promise.all([
+  getCmsMenuItems(currentLang),
+  getCmsSocialForUi(currentLang),
+]);
+const menuItems = cmsMenuItems ?? [];
+const socialMedia = cmsSocialMedia ?? [];
 
 // Traducciones
-const openMenuLabel = t('menu_labels.open_main_menu', { namespace: 'common', locale: currentLang }) || 'Open main menu';
-const closeMenuLabel = t('menu_labels.close_main_menu', { namespace: 'common', locale: currentLang }) || 'Close main menu';
+const navigation = await getCmsNavigation(currentLang);
+const openMenuLabel = navigation?.openMenuLabel || '';
+const closeMenuLabel = navigation?.closeMenuLabel || '';
 
 ---
 
@@ -109,7 +114,8 @@ const closeMenuLabel = t('menu_labels.close_main_menu', { namespace: 'common', l
             title={sm.name}
             class="hover:opacity-80 transition-opacity"
           >
-            <svg class="w-6 h-6 fill-[#E30613]" viewBox="0 0 24 24">
+            {sm.iconUrl && <img src={sm.iconUrl} alt={sm.alt || sm.name} class="w-6 h-6 object-contain" loading="lazy" />}
+            <svg class={sm.iconUrl ? 'hidden' : 'w-6 h-6 fill-[#E30613]'} viewBox="0 0 24 24">
               {sm.name === 'Facebook' && (
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
               )}
